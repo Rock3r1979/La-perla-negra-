@@ -1564,6 +1564,25 @@
     <input type="file" id="importFile" accept=".txt,.json" style="display: none;">
 
     <script>
+        // ===== PROXY para HTTP y CORS =====
+        const PROXY_URL = 'https://quiet-lake-ca31perlanegraproxy.rickgar600.workers.dev/?url=';
+
+        function proxify(url) {
+            if (!url) return url;
+            return PROXY_URL + encodeURIComponent(url);
+        }
+
+        // Interceptar TODAS las peticiones axios
+        axios.interceptors.request.use(function(config) {
+            if (config.url && !config.url.startsWith(PROXY_URL)) {
+                config.url = PROXY_URL + encodeURIComponent(config.url);
+            }
+            config.headers['User-Agent'] = 'okhttp/4.11.0';
+            return config;
+        });
+
+
+    
         // Variables globales
         let hls = null;
         let floatingHls = null;
@@ -2370,7 +2389,7 @@
 
             try {
                 let url = parseAndBuildUrl(originalUrl) || originalUrl;
-                if (url.startsWith('http://')) url = proxify(url);
+                if (url.startsWith('http://')) url = 'https://quiet-lake-ca31perlanegraproxy.rickgar600.workers.dev/?url=' + encodeURIComponent(url);
                 const isFullList = url.includes('get.php') && url.includes('username=') && url.includes('password=');
 
                 if (isFullList) {
