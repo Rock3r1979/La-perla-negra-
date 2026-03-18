@@ -1691,7 +1691,8 @@
             const video = document.getElementById('videoPlayer');
             const titleEl = document.getElementById('inlinePlayerTitle');
 
-            if (!player || !video) { showToast('❌ Error: recarga la página', false); return; }
+            if (!player) { showToast('❌ DEBUG: inlinePlayer no encontrado en DOM', false); console.error('inlinePlayer is null'); return; }
+            if (!video) { showToast('❌ DEBUG: videoPlayer no encontrado en DOM', false); console.error('videoPlayer is null'); return; }
 
             if (titleEl) titleEl.textContent = '▶️ ' + (title || 'Reproduciendo...');
             player.style.display = 'block';
