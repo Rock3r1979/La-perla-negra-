@@ -1412,6 +1412,22 @@
     <input type="file" id="importFile" accept=".txt,.json" style="display: none;">
 
     <script>
+        
+        // Configuración de Proxy para User-Agent okhttp/4.11.0
+        const PROXY_URL = 'https://quiet-lake-ca31perlanegraproxy.rickgar600.workers.dev/?url='; 
+
+        // Interceptor de Axios para usar el proxy en todas las peticiones
+        axios.interceptors.request.use(function (config) {
+            if (config.url && !config.url.startsWith(PROXY_URL)) {
+                // Pasamos la URL original a través del proxy
+                config.url = PROXY_URL + encodeURIComponent(config.url);
+                config.headers['X-Custom-User-Agent'] = 'okhttp/4.11.0';
+            }
+            return config;
+        }, function (error) {
+            return Promise.reject(error);
+        });
+
         // Variables globales
         let hls = null;
         let floatingHls = null;
