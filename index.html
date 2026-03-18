@@ -1255,6 +1255,62 @@
             box-shadow: 0 10px 30px rgba(255,51,51,0.4);
         }
 
+    
+        /* Reproductor Inline */
+        #inlinePlayer {
+            display: none;
+            background: #000;
+            border: 2px solid #ff3333;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 40px rgba(255,51,51,0.4);
+            position: relative;
+        }
+        #inlinePlayer video {
+            width: 100%;
+            max-height: 500px;
+            display: block;
+            background: #000;
+        }
+        #inlinePlayerHeader {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 20px;
+            background: linear-gradient(90deg, #1a0000, #0a0000);
+            border-bottom: 1px solid #ff3333;
+        }
+        #inlinePlayerTitle {
+            color: #FFD700;
+            font-weight: bold;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 14px;
+        }
+        #closeInlinePlayer {
+            background: #ff3333;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px; height: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        #fullscreenBtn {
+            background: rgba(255,215,0,0.2);
+            color: #FFD700;
+            border: 1px solid #FFD700;
+            border-radius: 20px;
+            padding: 5px 15px;
+            cursor: pointer;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        #fullscreenBtn:hover { background: #FFD700; color: #000; }
+
     </style>
 </head>
 <body>
@@ -1426,6 +1482,19 @@
             <input type="text" id="searchInput" class="search-input" placeholder="🏴‍☠️ Buscar canal, película o serie...">
         </div>
 
+        
+        <!-- Reproductor Inline -->
+        <div id="inlinePlayer">
+            <div id="inlinePlayerHeader">
+                <span id="inlinePlayerTitle">🏴‍☠️ La Perla Negra</span>
+                <div>
+                    <button id="fullscreenBtn" onclick="toggleFullscreenInline()">⛶ Pantalla Completa</button>
+                    <button id="closeInlinePlayer" onclick="closeInlinePlayerFn()">×</button>
+                </div>
+            </div>
+            <video id="videoPlayer" controls playsinline crossorigin></video>
+        </div>
+
         <!-- CONTENIDO DE LAS PESTAÑAS -->
         <div id="liveTab" class="tab-content active">
             <div id="liveContent"></div>
@@ -1480,29 +1549,7 @@
         </div>
 
         <!-- REPRODUCTOR MODAL -->
-        <div class="player-modal" id="playerModal">
-            <div class="player-container">
-                <button class="close-player" onclick="closePlayer()">×</button>
-            <div id="playerTitle" style="color:#FFD700; font-size:15px; font-weight:bold; text-align:center; margin:10px 0; font-family:'Orbitron',sans-serif;">Reproduciendo...</div>
-                <button class="minimize-player-btn" >📺</button>
-                <div class="video-container">
-                    <video 
-                        id="videoPlayer" 
-                        controls 
-                        playsinline 
-                        preload="auto"
-                        x-webkit-airplay="allow"
-                        x5-playsinline
-                        webkit-playsinline
-                    >
-                        Tu navegador no soporta el elemento video.
-                    </video>
-                    <div class="video-watermark">PERLA NEGRA 🏴‍☠️</div>
-                </div>
-                <div class="player-status" id="playerStatus"></div>
             </div>
-        </div>
-    </div>
 
     <!-- Input file oculto para importar -->
     <input type="file" id="importFile" accept=".txt,.json" style="display: none;">
@@ -1630,49 +1677,47 @@
         }
         
         
+        
         let plyrInstance = null;
         let activeHls = null;
-
-        
-
-        function fallbackToNativePlayer(video, url, title) {
-            video.src = url;
-            video.play().catch(e => {
-                showToast("⚠️ Toca para reproducir (o formato no soportado en web)", true);
-            });
-        }
 
         function playStream(url, title, type) {
             if (!url || url === '#') { showToast('❌ URL inválida', false); return; }
 
-            // Pasar URLs HTTP por el proxy para evitar Mixed Content
-            const proxyUrl = typeof PROXY_URL !== 'undefined' ? PROXY_URL : '';
-            const finalUrl = (proxyUrl && url.startsWith('http://')) ? proxyUrl + encodeURIComponent(url) : url;
-
-            const modal = document.getElementById('playerModal');
+            const player = document.getElementById('inlinePlayer');
             const video = document.getElementById('videoPlayer');
-            const titleEl = document.getElementById('playerTitle');
+            const titleEl = document.getElementById('inlinePlayerTitle');
 
-            if (!modal || !video) { showToast('❌ No se encontró el reproductor', false); return; }
+            if (!player || !video) { showToast('❌ Error de reproductor', false); return; }
 
-            if (titleEl) titleEl.textContent = title || 'Reproduciendo...';
-            modal.style.display = 'flex';
+            if (titleEl) titleEl.textContent = '▶️ ' + (title || 'Reproduciendo...');
 
+            // Show player and scroll to it
+            player.style.display = 'block';
+            player.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+            // Clean previous
             if (activeHls) { activeHls.destroy(); activeHls = null; }
             video.pause();
             video.removeAttribute('src');
             video.load();
 
+            // Init Plyr once
             if (!plyrInstance) {
                 plyrInstance = new Plyr(video, {
-                    controls: ['play-large','play','progress','current-time','mute','volume','captions','settings','pip','fullscreen'],
+                    controls: ['play-large','play','progress','current-time','mute','volume','captions','settings','fullscreen'],
                     settings: ['captions','quality','speed']
                 });
             }
 
-            const lowerUrl = (finalUrl || '').toLowerCase();
+            // The proxy interceptor handles CORS/HTTP for API calls,
+            // but for video streaming we set src directly.
+            // For http:// stream URLs, wrap through proxy too.
+            const finalUrl = url.startsWith('http://') ? proxify(url) : url;
+            const lowerUrl = finalUrl.toLowerCase();
+
             if (lowerUrl.includes('.m3u8') && Hls.isSupported()) {
-                activeHls = new Hls();
+                activeHls = new Hls({ maxMaxBufferLength: 60 });
                 activeHls.loadSource(finalUrl);
                 activeHls.attachMedia(video);
                 activeHls.on(Hls.Events.MANIFEST_PARSED, () => video.play().catch(() => {}));
@@ -1688,13 +1733,26 @@
             }
         }
 
-        function closePlayer() {
+        function closeInlinePlayerFn() {
             if (activeHls) { activeHls.destroy(); activeHls = null; }
             const video = document.getElementById('videoPlayer');
             if (video) { video.pause(); video.src = ''; }
-            const modal = document.getElementById('playerModal');
-            if (modal) modal.style.display = 'none';
+            const player = document.getElementById('inlinePlayer');
+            if (player) player.style.display = 'none';
         }
+
+        function toggleFullscreenInline() {
+            const video = document.getElementById('videoPlayer');
+            if (!video) return;
+            if (document.fullscreenElement) {
+                document.exitFullscreen();
+            } else {
+                video.requestFullscreen().catch(e => console.log(e));
+            }
+        }
+
+        function closePlayer() { closeInlinePlayerFn(); }
+
 
 
         function exportFavoritesAsM3U() {
