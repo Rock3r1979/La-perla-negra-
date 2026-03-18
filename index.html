@@ -1537,9 +1537,9 @@
             makeDraggable(floatPlayer);
             makeResizable(floatPlayer);
             
-            document.getElementById('floatCloseBtn').addEventListener('click', hideFloatingPlayer);
-            document.getElementById('floatExpandBtn').addEventListener('click', expandToFullPlayer);
-            document.getElementById('floatPipBtn').addEventListener('click', togglePictureInPicture);
+            const _btn_floatCloseBtn = document.getElementById('floatCloseBtn'); if(_btn_floatCloseBtn) _btn_floatCloseBtn.addEventListener('click', hideFloatingPlayer);
+            const _btn_floatExpandBtn = document.getElementById('floatExpandBtn'); if(_btn_floatExpandBtn) _btn_floatExpandBtn.addEventListener('click', expandToFullPlayer);
+            const _btn_floatPipBtn = document.getElementById('floatPipBtn'); if(_btn_floatPipBtn) _btn_floatPipBtn.addEventListener('click', togglePictureInPicture);
         }
         
         function makeDraggable(element) {
@@ -1891,7 +1891,7 @@
                                 <div class="channel-server">${item.server}</div>
                             </div>
                             <div class="channel-actions">
-                                <button class="play-btn" onclick="showFloatingPlayer('${item.url}', '${item.name.replace(/'/g, "\\'")}')">▶️</button>
+                                <button class="play-btn" onclick="playStream('${item.url}', '${item.name.replace(/'/g, "\\'")}')">▶️</button>
                                 <button class="fav-channel-btn active" onclick="removeFavoriteByIndex('live', ${index})">⭐</button>
                             </div>
                         </div>
@@ -1919,7 +1919,7 @@
                                 <div class="channel-server">${item.server}</div>
                             </div>
                             <div class="channel-actions">
-                                <button class="play-btn" onclick="showFloatingPlayer('${item.url}', '${item.name.replace(/'/g, "\\'")}')">▶️</button>
+                                <button class="play-btn" onclick="playStream('${item.url}', '${item.name.replace(/'/g, "\\'")}')">▶️</button>
                                 <button class="fav-channel-btn active" onclick="removeFavoriteByIndex('movies', ${index})">⭐</button>
                             </div>
                         </div>
@@ -1947,7 +1947,7 @@
                                 <div class="channel-server">${item.server}</div>
                             </div>
                             <div class="channel-actions">
-                                <button class="play-btn" onclick="showFloatingPlayer('${item.url}', '${item.name.replace(/'/g, "\\'")}')">▶️</button>
+                                <button class="play-btn" onclick="playStream('${item.url}', '${item.name.replace(/'/g, "\\'")}')">▶️</button>
                                 <button class="fav-channel-btn active" onclick="removeFavoriteByIndex('series', ${index})">⭐</button>
                             </div>
                         </div>
@@ -2226,9 +2226,7 @@
             isMinimized = false;
         }
         
-        function playStream(url, title, type = 'live') {
-            showFloatingPlayer(url, title, type);
-        }
+        
         
         function closePlayer() {
             const modal = document.getElementById('playerModal');
@@ -2685,20 +2683,20 @@ async function analyzeDomainOnly(url) {
         document.addEventListener('DOMContentLoaded', () => {
             
             
-            document.getElementById('analyzeBtn').addEventListener('click', analyzeUrl);
-            document.getElementById('clearBtn').addEventListener('click', clearForm);
+            const _btn_analyzeBtn = document.getElementById('analyzeBtn'); if(_btn_analyzeBtn) _btn_analyzeBtn.addEventListener('click', analyzeUrl);
+            const _btn_clearBtn = document.getElementById('clearBtn'); if(_btn_clearBtn) _btn_clearBtn.addEventListener('click', clearForm);
             
             
             
             
             
             
-            document.getElementById('importFile').addEventListener('change', handleFileImport);
+            const _btn_importFile = document.getElementById('importFile'); if(_btn_importFile) _btn_importFile.addEventListener('change', handleFileImport);
             
-            document.getElementById('miniExpandBtn').addEventListener('click', expandPlayer);
-            document.getElementById('miniCloseBtn').addEventListener('click', closeMiniPlayer);
+            const _btn_miniExpandBtn = document.getElementById('miniExpandBtn'); if(_btn_miniExpandBtn) _btn_miniExpandBtn.addEventListener('click', expandPlayer);
+            const _btn_miniCloseBtn = document.getElementById('miniCloseBtn'); if(_btn_miniCloseBtn) _btn_miniCloseBtn.addEventListener('click', closeMiniPlayer);
             
-            document.getElementById('url').addEventListener('keypress', (e) => {
+            const _btn_url = document.getElementById('url'); if(_btn_url) _btn_url.addEventListener('keypress', (e) => {
                 if (e.key === 'Enter') analyzeUrl();
             });
             
