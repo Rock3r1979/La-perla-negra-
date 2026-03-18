@@ -1313,14 +1313,24 @@
         </header>
 
         <div class="input-section">
-            <input type="text" class="main-input" id="url" placeholder="🏴‍☠️ Ingresa URL M3U o enlace Xtream..." required>
-                
+            <div style="display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap;">
+                <select id="savedListsDropdown" style="flex: 1; padding: 12px; background: rgba(0,0,0,0.8); border: 2px solid #FFD700; color: #FFD700; border-radius: 15px; font-family: 'Orbitron', sans-serif; outline: none; min-width: 200px;">
+                    <option value="">Cargar lista guardada...</option>
+                </select>
+                <button type="button" id="deleteListBtn" style="background: rgba(255,51,51,0.2); border: 1px solid #ff3333; color: #ff3333; border-radius: 15px; padding: 10px 15px; cursor: pointer; font-weight: bold; display: none;">✖ Borrar</button>
+            </div>
+
+            <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                <input type="text" class="main-input" id="url" placeholder="🏴‍☠️ Ingresa URL M3U o enlace Xtream..." required style="margin-bottom: 0;">
+                <button type="button" id="saveListBtn" style="background: rgba(255,215,0,0.2); border: 2px solid #FFD700; color: #FFD700; border-radius: 15px; padding: 0 20px; cursor: pointer; font-size: 20px;" title="Guardar Lista en el navio">💾</button>
+            </div>
+
             <div class="button-row">
                 <button type="button" class="btn-analyze" id="analyzeBtn">
                     <span>🏴‍☠️</span> ANALIZAR AHORA
                 </button>
                 <button type="button" class="btn-clear" id="clearBtn">
-                    <span>🗑️</span> LIMPIAR LISTA
+                    <span>🗑️</span> LIMPIAR PANTALLA
                 </button>
             </div>
         </div>
@@ -2673,54 +2683,9 @@ async function analyzeDomainOnly(url) {
             document.getElementById('statusInfo').textContent = ip ? 'IP DETECTADA' : 'IP NO DETECTADA';
         }
 
-        function displayLiveContent(categories, streams, baseUrl) {
-            const container = document.getElementById('liveContent');
-            if (!streams?.length) {
-                container.innerHTML = '<p style="text-align: center; color: #888; padding: 20px;">No hay canales</p>';
-                return;
-            }
-            
-            const streamsByCountry = {};
-            streams.forEach(stream => {
-                const country = getCountryFromName(stream.name);
-                if (!streamsByCountry[country]) streamsByCountry[country] = [];
-                streamsByCountry[country].push(stream);
-            });
-            
-            let html = '<div class="categories-grid">';
-            Object.entries(streamsByCountry).forEach(([country, countryStreams]) => {
-                const categoryId = `live_${country.replace(/\s+/g, '_').toLowerCase()}`;
-                html += `
-                    <div class="category-card" onclick="toggleCategory('${categoryId}')">
-                        <div class="category-header">
-                            <div class="category-title">📺 ${country}</div>
-                            <div class="category-count">${countryStreams.length}</div>
-                        </div>
-                        <div class="channels-list" id="${categoryId}">
-                `;
-                
-                countryStreams.forEach(stream => {
-                    const streamUrl = buildStreamUrl(baseUrl, stream.stream_id, 'live');
-                    const isFav = favorites.live.some(fav => fav.url === streamUrl);
-                    html += `
-                        <div class="channel-item">
-                            <div class="channel-info">
-                                <div class="channel-name">${stream.name || 'Sin nombre'}</div>
-                            </div>
-                            <div class="channel-actions">
-                                <button class="play-btn" onclick="showFloatingPlayer('${streamUrl}', '${stream.name.replace(/'/g, "\\'")}', 'live')">▶️</button>
-                                <button class="fav-channel-btn ${isFav ? 'active' : ''}" data-favurl="${streamUrl}" onclick="toggleFavorite('live', {stream_id: ${stream.stream_id}, name: '${stream.name.replace(/'/g, "\\'")}'}, '${baseUrl}', '${new URL(baseUrl).hostname}')">${isFav ? '⭐' : '☆'}</button>
-                            </div>
-                        </div>
-                    `;
-                });
-                
-                html += '</div></div>';
-            });
-            html += '</div>';
-            container.innerHTML = html;
+        function displayLiveContent(categories, live, baseUrl) {
+            displayCategoryContent('liveContent', categories, live, baseUrl, 'live', 'live');
         }
-
         function displayMovieContent(categories, streams, baseUrl) {
             displayCategoryContent('moviesContent', categories, streams, baseUrl, 'movie', 'movies');
         }
@@ -2877,11 +2842,11 @@ async function analyzeDomainOnly(url) {
             document.getElementById('analyzeBtn').addEventListener('click', analyzeUrl);
             document.getElementById('clearBtn').addEventListener('click', clearForm);
             
-            document.getElementById('exportFavoritesBtn').addEventListener('click', exportFavorites);
-            document.getElementById('importFavoritesBtn').addEventListener('click', importFavorites);
-            document.getElementById('clearFavoritesBtn').addEventListener('click', clearAllFavorites);
-            document.getElementById('mergeFavoritesBtn').addEventListener('click', mergeFavoritesFromCurrentList);
-            document.getElementById('exportM3UBtn').addEventListener('click', exportFavoritesAsM3U);
+            
+            
+            
+            
+            
             document.getElementById('importFile').addEventListener('change', handleFileImport);
             
             document.getElementById('miniExpandBtn').addEventListener('click', expandPlayer);
