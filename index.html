@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>🏴‍☠️ LA PERLA NEGRA - IPTV</title>
+    <title>LA PERLA NEGRA - IPTV</title>
     <style>
         * {
             margin: 0;
@@ -68,7 +68,7 @@
             gap: 15px;
         }
 
-        /* COLUMNA IZQUIERDA - LISTA DE CANALES */
+        /* COLUMNA IZQUIERDA - LISTA */
         .channels-column {
             flex: 1;
             background: #1a1a1a;
@@ -110,10 +110,10 @@
 
         .stats-row {
             display: flex;
-            gap: 10px;
+            gap: 15px;
             margin-top: 10px;
-            font-size: 0.8em;
             color: #666;
+            font-size: 0.9em;
         }
 
         .tabs {
@@ -223,7 +223,7 @@
             font-size: 0.9em;
         }
 
-        /* MODALES (igual que antes) */
+        /* MODAL */
         .modal {
             display: none;
             position: fixed;
@@ -250,6 +250,45 @@
             max-width: 400px;
         }
 
+        .modal-content h3 {
+            color: #D4AF37;
+            margin-bottom: 20px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+        }
+
+        .checkbox-item input {
+            margin-right: 10px;
+            width: 18px;
+            height: 18px;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .modal-btn {
+            flex: 1;
+            background: #D4AF37;
+            border: none;
+            border-radius: 8px;
+            padding: 12px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .modal-btn.secondary {
+            background: #333;
+            color: #D4AF37;
+        }
+
+        /* TOAST */
         .toast {
             position: fixed;
             bottom: 20px;
@@ -268,6 +307,12 @@
             transform: translateX(-50%) translateY(0);
         }
 
+        .toast.error {
+            border-color: #ff4444;
+            background: #330000;
+            color: #ff9999;
+        }
+
         @media (max-width: 900px) {
             .main-content {
                 flex-direction: column;
@@ -282,11 +327,11 @@
 <body>
     <div class="header">
         <div class="logo">
-            <h1>🏴‍☠️ LA PERLA NEGRA</h1>
+            <h1>LA PERLA NEGRA</h1>
         </div>
         <div class="header-buttons">
-            <div class="icon-btn" id="warpBtn">🌐 WARP</div>
-            <div class="icon-btn" id="parentalBtn">🔒 CONTROL</div>
+            <div class="icon-btn" id="warpBtn">WARP</div>
+            <div class="icon-btn" id="parentalBtn">CONTROL</div>
         </div>
     </div>
 
@@ -299,21 +344,21 @@
                     <button id="loadBtn">CARGAR</button>
                 </div>
                 <div class="stats-row">
-                    <span>📺 <span id="liveCount">0</span></span>
-                    <span>🎬 <span id="movieCount">0</span></span>
-                    <span>📚 <span id="seriesCount">0</span></span>
+                    <span>TV <span id="liveCount">0</span></span>
+                    <span>PELIS <span id="movieCount">0</span></span>
+                    <span>SERIES <span id="seriesCount">0</span></span>
                 </div>
             </div>
 
             <div class="tabs">
                 <div class="tab active" data-tab="live">TV</div>
-                <div class="tab" data-tab="movies">PELÍCULAS</div>
+                <div class="tab" data-tab="movies">PELICULAS</div>
                 <div class="tab" data-tab="series">SERIES</div>
             </div>
 
             <div class="channels-list" id="channelsList">
                 <div style="text-align: center; padding: 30px; color: #666;">
-                    Cargá una lista M3U para empezar
+                    Carga una lista M3U para empezar
                 </div>
             </div>
         </div>
@@ -322,26 +367,26 @@
         <div class="player-column">
             <div class="player-container">
                 <div class="player-header">
-                    <h3 id="nowPlaying">⚓ Seleccioná un canal</h3>
+                    <h3 id="nowPlaying">Selecciona un canal</h3>
                 </div>
                 <div class="video-wrapper">
                     <video id="videoPlayer" controls playsinline></video>
                 </div>
                 <div class="player-info" id="playerStatus">
-                    <span>🌐 WARP: <span id="warpStatus">OFF</span></span>
+                    <span>WARP: <span id="warpStatus">OFF</span></span>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- MODAL PARENTAL (simplificado) -->
+    <!-- MODAL PARENTAL -->
     <div class="modal" id="parentalModal">
         <div class="modal-content">
-            <h3 style="color: #D4AF37; margin-bottom: 20px;">🔒 CONTROL PARENTAL</h3>
-            <div id="categoriesList" style="margin-bottom: 20px;"></div>
-            <div style="display: flex; gap: 10px;">
-                <button class="icon-btn" style="flex:1; justify-content: center;" id="saveParentalBtn">GUARDAR</button>
-                <button class="icon-btn" style="flex:1; justify-content: center;" id="closeParentalBtn">CERRAR</button>
+            <h3>CONTROL PARENTAL</h3>
+            <div id="categoriesList"></div>
+            <div class="modal-buttons">
+                <button class="modal-btn" id="saveParentalBtn">GUARDAR</button>
+                <button class="modal-btn secondary" id="closeParentalBtn">CERRAR</button>
             </div>
         </div>
     </div>
@@ -350,12 +395,12 @@
     <div class="toast" id="toast"></div>
 
     <script>
-        // ==================== CÓDIGO SIMPLIFICADO ====================
+        // CONFIGURACION
         const WORKER_URL = 'https://quiet-lake-ca31perlanegraproxy.rickgar600.workers.dev';
         
         class PerlaNegra {
             constructor() {
-                this.useWarp = true;
+                this.useWarp = localStorage.getItem('warp') === 'true' || true;
                 this.channels = [];
                 this.movies = [];
                 this.series = [];
@@ -365,14 +410,12 @@
             }
 
             init() {
-                // Eventos
                 document.getElementById('warpBtn').onclick = () => this.toggleWarp();
                 document.getElementById('parentalBtn').onclick = () => this.openParental();
                 document.getElementById('loadBtn').onclick = () => this.loadM3U();
                 document.getElementById('closeParentalBtn').onclick = () => this.closeParental();
                 document.getElementById('saveParentalBtn').onclick = () => this.saveParental();
                 
-                // Pestañas
                 document.querySelectorAll('.tab').forEach(tab => {
                     tab.onclick = () => this.switchTab(tab.dataset.tab);
                 });
@@ -384,13 +427,19 @@
                 this.useWarp = !this.useWarp;
                 localStorage.setItem('warp', this.useWarp);
                 this.updateWarpUI();
-                this.toast(this.useWarp ? '🌐 WARP activado' : '🌐 WARP desactivado');
+                this.toast(this.useWarp ? 'WARP activado' : 'WARP desactivado');
             }
 
             updateWarpUI() {
                 const btn = document.getElementById('warpBtn');
-                btn.classList.toggle('active', this.useWarp);
-                document.getElementById('warpStatus').textContent = this.useWarp ? 'ON' : 'OFF';
+                if (this.useWarp) {
+                    btn.classList.add('active');
+                    btn.innerHTML = 'WARP ON';
+                } else {
+                    btn.classList.remove('active');
+                    btn.innerHTML = 'WARP';
+                }
+                document.getElementById('warpStatus').innerHTML = this.useWarp ? 'ON' : 'OFF';
             }
 
             async playChannel(url, name) {
@@ -398,27 +447,26 @@
                 
                 let streamUrl = url;
                 if (this.useWarp && WORKER_URL) {
-                    streamUrl = `${WORKER_URL}/?url=${encodeURIComponent(url)}`;
+                    streamUrl = WORKER_URL + '/?url=' + encodeURIComponent(url);
                 }
                 
                 const video = document.getElementById('videoPlayer');
                 video.src = streamUrl;
                 video.load();
                 
-                document.getElementById('nowPlaying').textContent = `⚓ ${name || 'Reproduciendo'}`;
+                document.getElementById('nowPlaying').innerHTML = name || 'Reproduciendo';
                 
                 try {
                     await video.play();
-                    this.toast(`▶️ ${name}`);
+                    this.toast('Reproduciendo: ' + name);
                 } catch (error) {
                     console.error('Error:', error);
-                    this.toast('❌ Error al reproducir', 'error');
+                    this.toast('Error al reproducir', 'error');
                     
-                    // Si falla con WARP, intentar sin él
                     if (this.useWarp) {
                         this.useWarp = false;
                         this.updateWarpUI();
-                        this.playChannel(url, name);
+                        setTimeout(() => this.playChannel(url, name), 500);
                     }
                 }
             }
@@ -426,11 +474,11 @@
             async loadM3U() {
                 const url = document.getElementById('m3uUrl').value.trim();
                 if (!url) {
-                    this.toast('❌ Ingresá una URL', 'error');
+                    this.toast('Ingresa una URL', 'error');
                     return;
                 }
 
-                this.toast('⚓ Cargando...');
+                this.toast('Cargando...');
                 
                 try {
                     const response = await fetch(url, {
@@ -439,7 +487,8 @@
                     const text = await response.text();
                     this.parseM3U(text);
                 } catch (error) {
-                    this.toast('❌ Error al cargar', 'error');
+                    console.error(error);
+                    this.toast('Error al cargar', 'error');
                 }
             }
 
@@ -449,34 +498,35 @@
                 this.series = [];
                 
                 const lines = text.split('\n');
-                let current = null;
+                let currentItem = null;
                 
-                lines.forEach(line => {
+                for (let i = 0; i < lines.length; i++) {
+                    const line = lines[i].trim();
+                    
                     if (line.startsWith('#EXTINF:')) {
-                        const match = line.match(/group-title="([^"]+)"/);
-                        const category = match ? match[1] : 'General';
+                        const groupMatch = line.match(/group-title="([^"]+)"/);
+                        const category = groupMatch ? groupMatch[1] : 'General';
                         
                         const nameMatch = line.match(/,(.+)$/);
                         const name = nameMatch ? nameMatch[1] : 'Canal';
                         
-                        current = { name, category };
-                    } else if (line && !line.startsWith('#') && current) {
-                        current.url = line;
+                        currentItem = { name, category };
+                    } else if (line && !line.startsWith('#') && currentItem) {
+                        currentItem.url = line;
                         
-                        // Clasificar
                         if (line.includes('.mp4') || line.includes('.mkv') || 
-                            current.name.toLowerCase().includes('película')) {
-                            this.movies.push(current);
+                            currentItem.name.toLowerCase().includes('pelicula')) {
+                            this.movies.push({...currentItem});
                         } else {
-                            this.channels.push(current);
+                            this.channels.push({...currentItem});
                         }
-                        current = null;
+                        currentItem = null;
                     }
-                });
+                }
                 
                 this.updateCounts();
                 this.renderChannels();
-                this.toast(`✅ ${this.channels.length} canales, ${this.movies.length} películas`);
+                this.toast('Cargados: ' + this.channels.length + ' canales, ' + this.movies.length + ' peliculas');
             }
 
             renderChannels() {
@@ -493,54 +543,70 @@
                     return;
                 }
                 
-                container.innerHTML = items.map(item => {
-                    const blocked = this.blockedCategories.some(c => 
-                        item.category?.toLowerCase().includes(c.toLowerCase())
-                    );
+                let html = '';
+                for (let i = 0; i < items.length; i++) {
+                    const item = items[i];
+                    const blocked = this.isBlocked(item.category);
                     
-                    return `
-                        <div class="channel-item ${blocked ? 'blocked' : ''}" 
-                             onclick="${!blocked ? `perla.playChannel('${item.url}', '${item.name.replace(/'/g, "\\'")}')` : ''}">
-                            <span class="channel-name">${item.name}</span>
-                            <span class="channel-category">${item.category || 'General'}</span>
-                        </div>
-                    `;
-                }).join('');
+                    html += '<div class="channel-item ' + (blocked ? 'blocked' : '') + '" onclick="' + (blocked ? '' : 'perla.playChannel(\'' + item.url + '\', \'' + item.name.replace(/'/g, "\\'") + '\')') + '">';
+                    html += '<span class="channel-name">' + item.name + '</span>';
+                    html += '<span class="channel-category">' + (item.category || 'General') + '</span>';
+                    html += '</div>';
+                }
+                
+                container.innerHTML = html;
+            }
+
+            isBlocked(category) {
+                if (!category) return false;
+                for (let i = 0; i < this.blockedCategories.length; i++) {
+                    if (category.toLowerCase().includes(this.blockedCategories[i].toLowerCase())) {
+                        return true;
+                    }
+                }
+                return false;
             }
 
             switchTab(tab) {
                 document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-                document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
+                document.querySelector('[data-tab="' + tab + '"]').classList.add('active');
                 this.renderChannels();
             }
 
             updateCounts() {
-                document.getElementById('liveCount').textContent = this.channels.length;
-                document.getElementById('movieCount').textContent = this.movies.length;
-                document.getElementById('seriesCount').textContent = this.series.length;
+                document.getElementById('liveCount').innerHTML = this.channels.length;
+                document.getElementById('movieCount').innerHTML = this.movies.length;
+                document.getElementById('seriesCount').innerHTML = this.series.length;
             }
 
             openParental() {
                 const list = document.getElementById('categoriesList');
                 const categories = ['+18', 'Adultos', 'XXX', 'Violencia', 'Terror'];
                 
-                list.innerHTML = categories.map(cat => `
-                    <div style="display: flex; align-items: center; margin: 10px 0;">
-                        <input type="checkbox" value="${cat}" ${this.blockedCategories.includes(cat) ? 'checked' : ''}>
-                        <span style="margin-left: 10px;">${cat}</span>
-                    </div>
-                `).join('');
+                let html = '';
+                for (let i = 0; i < categories.length; i++) {
+                    const cat = categories[i];
+                    const checked = this.blockedCategories.includes(cat) ? 'checked' : '';
+                    html += '<div class="checkbox-item">';
+                    html += '<input type="checkbox" value="' + cat + '" ' + checked + '>';
+                    html += '<span>' + cat + '</span>';
+                    html += '</div>';
+                }
+                list.innerHTML = html;
                 
                 document.getElementById('parentalModal').classList.add('active');
             }
 
             saveParental() {
                 const checkboxes = document.querySelectorAll('#categoriesList input:checked');
-                this.blockedCategories = Array.from(checkboxes).map(cb => cb.value);
+                this.blockedCategories = [];
+                for (let i = 0; i < checkboxes.length; i++) {
+                    this.blockedCategories.push(checkboxes[i].value);
+                }
                 localStorage.setItem('blocked', JSON.stringify(this.blockedCategories));
                 this.renderChannels();
                 this.closeParental();
-                this.toast('✅ Guardado');
+                this.toast('Configuracion guardada');
             }
 
             closeParental() {
@@ -549,13 +615,18 @@
 
             toast(msg, type = 'success') {
                 const toast = document.getElementById('toast');
-                toast.textContent = msg;
+                toast.innerHTML = msg;
                 toast.className = 'toast show';
-                if (type === 'error') toast.style.borderColor = '#ff4444';
-                setTimeout(() => toast.classList.remove('show'), 2000);
+                if (type === 'error') {
+                    toast.classList.add('error');
+                }
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 2000);
             }
         }
 
+        // Inicializar
         const perla = new PerlaNegra();
         window.perla = perla;
     </script>
