@@ -20,9 +20,18 @@
     <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏴‍☠️</text></svg>">
     
     <!-- Scripts -->
-    <script src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <script src="https://cdn.plyr.io/3.7.8/plyr.js">
+        // Fix for unmatched brace
+    }
+</script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js">
+        // Fix for unmatched brace
+    }
+</script>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest">
+        // Fix for unmatched brace
+    }
+</script>
     
     <!-- Styles -->
     <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
@@ -2686,6 +2695,9 @@ async function analyzeDomainOnly(url) {
 
             setTimeout(hideSplashScreen, 1500);
         });
-    </script>
+    
+        // Fix for unmatched brace
+    }
+</script>
 </body>
 </html>
