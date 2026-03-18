@@ -1300,46 +1300,6 @@
         </div>
     </div>
 
-    <!-- Mini Player -->
-    <div class="mini-player" id="miniPlayer">
-        <video 
-            id="miniVideoPlayer" 
-            controls 
-            playsinline 
-            preload="auto"
-            x-webkit-airplay="allow"
-            x5-playsinline
-            webkit-playsinline
-        ></video>
-        <div class="mini-controls">
-            <button class="mini-btn" id="miniExpandBtn">🔍 Expandir</button>
-            <button class="mini-btn" id="miniCloseBtn">✖ Cerrar</button>
-        </div>
-        <div class="mini-title" id="miniPlayerTitle">PERLA NEGRA 🏴‍☠️</div>
-    </div>
-
-    <!-- Reproductor Flotante -->
-    <div class="floating-player" id="floatingPlayer">
-        <video 
-            id="floatingVideo" 
-            controls 
-            playsinline 
-            preload="auto"
-            x-webkit-airplay="allow"
-            x5-playsinline
-            x5-video-player-type="h5"
-            x5-video-player-fullscreen="true"
-            webkit-playsinline
-        ></video>
-        <div class="float-title" id="floatingTitle">PERLA NEGRA 🏴‍☠️</div>
-        <div class="floating-controls">
-            <button class="float-btn" id="floatCloseBtn">✖ Cerrar</button>
-            <button class="float-btn" id="floatExpandBtn">🔍 Expandir</button>
-            <button class="float-btn" id="floatPipBtn">📺 PiP</button>
-        </div>
-        <div class="resize-handle" id="resizeHandle"></div>
-    </div>
-
     <div class="container">
         <header>
             <div class="lion-emoji">🏴‍☠️</div>
@@ -1408,9 +1368,7 @@
             
             <div class="favorite-actions">
                 
-                <button class="favorite-btn" id="importFavoritesBtn">
-                    <span>📥</span> Importar Favoritos
-                </button>
+                
                 <button class="favorite-btn danger" id="clearFavoritesBtn">
                     <span>🗑️</span> Limpiar Todo
                 </button>
@@ -2635,6 +2593,7 @@
                 document.getElementById('seriesCountInfo').textContent = series.data.length || 0;
                 document.getElementById('liveCount').textContent = live.data.length || 0;
                 document.getElementById('moviesCount').textContent = vod.data.length || 0;
+                document.getElementById('searchContainer').style.display = 'flex';
                 document.getElementById('seriesCount').textContent = series.data.length || 0;
                 
                 displayLiveContent(liveCat.data, live.data, url);
@@ -2727,69 +2686,59 @@
                 container.innerHTML = '<p style="text-align: center; color: #888; padding: 20px;">No hay contenido</p>';
                 return;
             }
-            
+
             const categoryMap = {};
             categories?.forEach(cat => {
                 if (cat.category_id) categoryMap[cat.category_id] = cat.category_name;
             });
-            
+
             const itemsByCategory = {};
             items.forEach(item => {
                 const catName = categoryMap[item.category_id] || 'Sin categoría';
                 if (!itemsByCategory[catName]) itemsByCategory[catName] = [];
                 itemsByCategory[catName].push(item);
             });
-            
+
             let html = '<div class="categories-grid">';
             Object.entries(itemsByCategory).forEach(([categoryName, categoryItems]) => {
                 const categoryId = `${type}_${categoryName.replace(/\s+/g, '_').toLowerCase()}`;
                 html += `
                     <div class="category-card" onclick="toggleCategory('${categoryId}')">
                         <div class="category-header">
-                            <div class="category-title">${type === 'movie' ? '🎬' : '📚'} ${categoryName}</div>
+                            <div class="category-title">${type === 'movie' ? '🎬' : (type === 'series' ? '📚' : '📺')} ${categoryName}</div>
                             <div class="category-count">${categoryItems.length}</div>
                         </div>
                         <div class="channels-list" id="${categoryId}">
                 `;
-                
+
                 categoryItems.forEach(item => {
                     const streamUrl = buildStreamUrl(baseUrl, item.stream_id || item.series_id, type);
                     const itemId = item.stream_id || item.series_id;
                     const isFav = favorites[favType].some(fav => fav.url === streamUrl);
-                    
+
+                    const isSeries = type === 'series';
+                    const safeName = (item.name || 'Sin nombre').replace(/'/g, "\\'");
+                    const playAction = isSeries ? 
+                        `openSeriesModal('${itemId}', '${safeName}', '${baseUrl}')` : 
+                        `playStream('${streamUrl}', '${safeName}', '${type}')`;
+
                     html += `
                         <div class="channel-item">
                             <div class="channel-info">
                                 <div class="channel-name">${item.name || 'Sin nombre'}</div>
                             </div>
                             <div class="channel-actions">
-                                <button class="play-btn" onclick="showFloatingPlayer('${streamUrl}', '${item.name.replace(/'/g, "\\'")}', '${type}')">▶️</button>
-                                <button class="fav-channel-btn ${isFav ? 'active' : ''}" data-favurl="${streamUrl}" onclick="toggleFavorite('${favType}', {${type === 'series' ? 'series_id' : 'stream_id'}: ${itemId}, name: '${item.name.replace(/'/g, "\\'")}'}, '${baseUrl}', '${new URL(baseUrl).hostname}')">${isFav ? '⭐' : '☆'}</button>
+                                <button class="play-btn" onclick="${playAction}">▶️</button>
+                                <button class="fav-channel-btn ${isFav ? 'active' : ''}" data-favurl="${streamUrl}" onclick="toggleFavorite('${favType}', {${type === 'series' ? 'series_id' : 'stream_id'}: ${itemId}, name: '${safeName}'}, '${baseUrl}', '${new URL(baseUrl).hostname}')">${isFav ? '⭐' : '☆'}</button>
                             </div>
                         </div>
                     `;
                 });
-                
+
                 html += '</div></div>';
             });
             html += '</div>';
             container.innerHTML = html;
-        }
-
-        function getCountryFromName(name) {
-            if (!name) return 'Internacional';
-            const countries = {
-                'spain|españa|es|esp': '🇪🇸 España',
-                'mexico|mx|mex': '🇲🇽 México',
-                'argentina|ar|arg': '🇦🇷 Argentina',
-                'colombia|co|col': '🇨🇴 Colombia',
-                'chile|cl|chi': '🇨🇱 Chile'
-            };
-            
-            for (const [pattern, country] of Object.entries(countries)) {
-                if (new RegExp(pattern, 'i').test(name)) return country;
-            }
-            return '🌍 Internacional';
         }
 
         function buildStreamUrl(baseUrl, id, type) {
