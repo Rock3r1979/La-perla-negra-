@@ -1681,6 +1681,9 @@
         let plyrInstance = null;
         let activeHls = null;
 
+        
+
+        
         function playStream(url, title, type) {
             if (!url || url === '#') { showToast('❌ URL inválida', false); return; }
 
@@ -1688,21 +1691,17 @@
             const video = document.getElementById('videoPlayer');
             const titleEl = document.getElementById('inlinePlayerTitle');
 
-            if (!player || !video) { showToast('❌ Error de reproductor', false); return; }
+            if (!player || !video) { showToast('❌ Error: recarga la página', false); return; }
 
             if (titleEl) titleEl.textContent = '▶️ ' + (title || 'Reproduciendo...');
-
-            // Show player and scroll to it
             player.style.display = 'block';
-            player.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            setTimeout(() => player.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
 
-            // Clean previous
             if (activeHls) { activeHls.destroy(); activeHls = null; }
             video.pause();
             video.removeAttribute('src');
             video.load();
 
-            // Init Plyr once
             if (!plyrInstance) {
                 plyrInstance = new Plyr(video, {
                     controls: ['play-large','play','progress','current-time','mute','volume','captions','settings','fullscreen'],
@@ -1710,10 +1709,7 @@
                 });
             }
 
-            // The proxy interceptor handles CORS/HTTP for API calls,
-            // but for video streaming we set src directly.
-            // For http:// stream URLs, wrap through proxy too.
-            const finalUrl = url.startsWith('http://') ? proxify(url) : url;
+            const finalUrl = (typeof proxify === 'function' && url.startsWith('http://')) ? proxify(url) : url;
             const lowerUrl = finalUrl.toLowerCase();
 
             if (lowerUrl.includes('.m3u8') && Hls.isSupported()) {
@@ -1721,7 +1717,7 @@
                 activeHls.loadSource(finalUrl);
                 activeHls.attachMedia(video);
                 activeHls.on(Hls.Events.MANIFEST_PARSED, () => video.play().catch(() => {}));
-                activeHls.on(Hls.Events.ERROR, (e, data) => {
+                activeHls.on(Hls.Events.ERROR, (evt, data) => {
                     if (data.fatal) { activeHls.destroy(); video.src = finalUrl; video.play().catch(() => {}); }
                 });
             } else if (video.canPlayType('application/vnd.apple.mpegurl') && lowerUrl.includes('.m3u8')) {
@@ -1732,6 +1728,9 @@
                 video.play().catch(() => {});
             }
         }
+
+        function closePlayer() { closeInlinePlayerFn(); }
+        function minimizePlayer() {}
 
         function closeInlinePlayerFn() {
             if (activeHls) { activeHls.destroy(); activeHls = null; }
@@ -1751,43 +1750,7 @@
             }
         }
 
-        function closePlayer() { closeInlinePlayerFn(); }
-
-
-
-        function exportFavoritesAsM3U() {
-            if (favorites.live.length === 0 && favorites.movies.length === 0 && favorites.series.length === 0) {
-                showToast('❌ No hay favoritos para exportar', false);
-                return;
-            }
-            
-            let m3uContent = '#EXTM3U\n';
-            const now = new Date();
-            
-            favorites.live.forEach(item => {
-                m3uContent += `#EXTINF:-1 group-title="TV Favoritos",${item.name} (${item.server})\n${item.url}\n`;
-            });
-            
-            favorites.movies.forEach(item => {
-                m3uContent += `#EXTINF:-1 group-title="Películas Favoritas",${item.name} (${item.server})\n${item.url}\n`;
-            });
-            
-            favorites.series.forEach(item => {
-                m3uContent += `#EXTINF:-1 group-title="Series Favoritas",${item.name} (${item.server})\n${item.url}\n`;
-            });
-            
-            const blob = new Blob([m3uContent], { type: 'audio/x-mpegurl' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `favoritos_${now.getFullYear()}-${(now.getMonth()+1).toString().padStart(2,'0')}-${now.getDate().toString().padStart(2,'0')}.m3u`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-            
-            showToast('✅ Lista M3U exportada', true);
-        }
+        
 
         function toggleFavorite(type, item, baseUrl, serverInfo = '') {
             const itemId = item.stream_id || item.series_id;
@@ -2218,7 +2181,7 @@
         }
         
         function minimizePlayer() {
-            const modal = document.getElementById('playerModal');
+            const modal = 
             const video = document.getElementById('videoPlayer');
             const miniPlayer = document.getElementById('miniPlayer');
             const miniVideo = document.getElementById('miniVideoPlayer');
@@ -2238,7 +2201,7 @@
         }
         
         function expandPlayer() {
-            const modal = document.getElementById('playerModal');
+            const modal = 
             const miniPlayer = document.getElementById('miniPlayer');
             const video = document.getElementById('videoPlayer');
             const miniVideo = document.getElementById('miniVideoPlayer');
@@ -2252,7 +2215,7 @@
             miniVideo.pause();
             miniVideo.removeAttribute('src');
             miniPlayer.style.display = 'none';
-            modal.style.display = 'flex';
+            
             isMinimized = false;
         }
         
@@ -2268,59 +2231,9 @@
         
         
         
-        function playStream(url, title, type) {
-            if (!url || url === '#') { showToast('❌ URL inválida', false); return; }
+        
 
-            // Pasar URLs HTTP por el proxy para evitar Mixed Content
-            const proxyUrl = typeof PROXY_URL !== 'undefined' ? PROXY_URL : '';
-            const finalUrl = (proxyUrl && url.startsWith('http://')) ? proxyUrl + encodeURIComponent(url) : url;
-
-            const modal = document.getElementById('playerModal');
-            const video = document.getElementById('videoPlayer');
-            const titleEl = document.getElementById('playerTitle');
-
-            if (!modal || !video) { showToast('❌ No se encontró el reproductor', false); return; }
-
-            if (titleEl) titleEl.textContent = title || 'Reproduciendo...';
-            modal.style.display = 'flex';
-
-            if (activeHls) { activeHls.destroy(); activeHls = null; }
-            video.pause();
-            video.removeAttribute('src');
-            video.load();
-
-            if (!plyrInstance) {
-                plyrInstance = new Plyr(video, {
-                    controls: ['play-large','play','progress','current-time','mute','volume','captions','settings','pip','fullscreen'],
-                    settings: ['captions','quality','speed']
-                });
-            }
-
-            const lowerUrl = (finalUrl || '').toLowerCase();
-            if (lowerUrl.includes('.m3u8') && Hls.isSupported()) {
-                activeHls = new Hls();
-                activeHls.loadSource(finalUrl);
-                activeHls.attachMedia(video);
-                activeHls.on(Hls.Events.MANIFEST_PARSED, () => video.play().catch(() => {}));
-                activeHls.on(Hls.Events.ERROR, (e, data) => {
-                    if (data.fatal) { activeHls.destroy(); video.src = finalUrl; video.play().catch(() => {}); }
-                });
-            } else if (video.canPlayType('application/vnd.apple.mpegurl') && lowerUrl.includes('.m3u8')) {
-                video.src = finalUrl;
-                video.play().catch(() => {});
-            } else {
-                video.src = finalUrl;
-                video.play().catch(() => {});
-            }
-        }
-
-        function closePlayer() {
-            if (activeHls) { activeHls.destroy(); activeHls = null; }
-            const video = document.getElementById('videoPlayer');
-            if (video) { video.pause(); video.src = ''; }
-            const modal = document.getElementById('playerModal');
-            if (modal) modal.style.display = 'none';
-        }
+        
 
         function showToast(message, isSuccess = true) {
             const toast = document.getElementById('toastMessage');
