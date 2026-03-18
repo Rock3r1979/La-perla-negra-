@@ -3,27 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#00FFFF">
+    <meta name="theme-color" content="#ff3333">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="IPTV Checker">
     <meta name="mobile-web-app-capable" content="yes">
-    <meta name="msapplication-TileColor" content="#00FFFF">
+    <meta name="msapplication-TileColor" content="#ff3333">
     <meta name="msapplication-tap-highlight" content="no">
-    <title>ᑕᕼEKEᖇ IᑭTᐯ ᑭᖇO ᘻ3SSᗩ10 & ꪶⅈꪮꪀ𝕥ꪜ</title>
+    <title>🏴‍☠️ LA PERLA NEGRA IPTV 🏴‍☠️</title>
     
     <!-- Manifest -->
     <link rel="manifest" href="manifest.json" id="manifest">
     
     <!-- Icons -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🦁</text></svg>">
-    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🦁</text></svg>">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏴‍☠️</text></svg>">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏴‍☠️</text></svg>">
     
     <!-- Scripts -->
+    <script src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     
     <!-- Styles -->
+    <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
     
     <style>
@@ -35,7 +37,7 @@
         }
 
         body {
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
+            background: radial-gradient(circle at center, #1a0f0f 0%, #050000 100%);
             color: #ffffff;
             font-family: 'Orbitron', sans-serif;
             margin: 0;
@@ -44,6 +46,16 @@
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/black-scales.png');
+            opacity: 0.5;
+            z-index: -1;
+            pointer-events: none;
         }
 
         .container {
@@ -89,13 +101,13 @@
         }
 
         .subtitle {
-            color: #00FFFF;
+            color: #ff3333;
             margin-top: 10px;
             font-size: 1em;
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 2px;
-            text-shadow: 0 0 20px rgba(0,255,255,0.5);
+            text-shadow: 0 0 20px rgba(255,51,51,0.5);
         }
 
         .install-btn {
@@ -126,15 +138,15 @@
             padding: 25px;
             border-radius: 20px;
             margin-bottom: 25px;
-            border: 2px solid #00FFFF;
-            box-shadow: 0 10px 40px rgba(0,255,255,0.1);
+            border: 2px solid #ff3333;
+            box-shadow: 0 10px 40px rgba(255,51,51,0.1);
         }
 
         .main-input {
             width: 100%;
             padding: 16px 20px;
             background: rgba(0,0,0,0.8);
-            border: 2px solid #00FFFF;
+            border: 2px solid #ff3333;
             color: #ffffff;
             border-radius: 15px;
             font-size: 16px;
@@ -147,8 +159,8 @@
 
         .main-input:focus {
             outline: none;
-            border-color: #00FFFF;
-            box-shadow: 0 0 25px rgba(0,255,255,0.3);
+            border-color: #ff3333;
+            box-shadow: 0 0 25px rgba(255,51,51,0.3);
             background: rgba(0,0,0,0.9);
         }
 
@@ -165,7 +177,7 @@
         }
 
         .btn-analyze {
-            background: linear-gradient(135deg, #00FFFF 0%, #0088FF 100%);
+            background: linear-gradient(135deg, #ff3333 0%, #0088FF 100%);
             color: #000;
             padding: 16px 25px;
             border: none;
@@ -181,7 +193,7 @@
             align-items: center;
             gap: 12px;
             justify-content: center;
-            box-shadow: 0 5px 20px rgba(0,255,255,0.3);
+            box-shadow: 0 5px 20px rgba(255,51,51,0.3);
             flex: 2;
             min-width: 200px;
             -webkit-touch-callout: none;
@@ -189,7 +201,7 @@
 
         .btn-analyze:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(0,255,255,0.5);
+            box-shadow: 0 8px 30px rgba(255,51,51,0.5);
         }
 
         .btn-analyze:disabled {
@@ -242,11 +254,11 @@
             padding: 15px;
             background: rgba(0,0,0,0.4);
             border-radius: 10px;
-            border: 1px solid #00FFFF;
+            border: 1px solid #ff3333;
         }
 
         .stat-label {
-            color: #00FFFF;
+            color: #ff3333;
             font-size: 12px;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -265,7 +277,7 @@
             padding: 20px;
             border-radius: 15px;
             margin-bottom: 25px;
-            border: 2px solid #00FFFF;
+            border: 2px solid #ff3333;
         }
 
         .favorites-stats {
@@ -286,7 +298,7 @@
         }
 
         .fav-stat-label {
-            color: #00FFFF;
+            color: #ff3333;
             font-size: 12px;
             text-transform: uppercase;
         }
@@ -357,11 +369,11 @@
             right: 20px;
             width: 400px;
             background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
-            border: 3px solid #00FFFF;
+            border: 3px solid #ff3333;
             border-radius: 20px;
             padding: 15px;
             z-index: 10000;
-            box-shadow: 0 20px 60px rgba(0,255,255,0.5);
+            box-shadow: 0 20px 60px rgba(255,51,51,0.5);
             display: none;
             backdrop-filter: blur(10px);
             cursor: move;
@@ -388,9 +400,9 @@
         }
 
         .float-btn {
-            background: rgba(0,255,255,0.2);
-            border: 2px solid #00FFFF;
-            color: #00FFFF;
+            background: rgba(255,51,51,0.2);
+            border: 2px solid #ff3333;
+            color: #ff3333;
             padding: 8px 15px;
             border-radius: 25px;
             cursor: pointer;
@@ -405,7 +417,7 @@
         }
 
         .float-btn:hover {
-            background: #00FFFF;
+            background: #ff3333;
             color: #000;
         }
 
@@ -436,7 +448,7 @@
             width: 20px;
             height: 20px;
             cursor: se-resize;
-            background: linear-gradient(135deg, transparent 50%, #00FFFF 50%);
+            background: linear-gradient(135deg, transparent 50%, #ff3333 50%);
             border-bottom-right-radius: 17px;
         }
 
@@ -458,11 +470,11 @@
             background: linear-gradient(135deg, #2a2a2a 0%, #1e1e1e 100%);
             padding: 35px;
             border-radius: 25px;
-            border: 3px solid #00FFFF;
+            border: 3px solid #ff3333;
             max-width: 450px;
             width: 90%;
             text-align: center;
-            box-shadow: 0 20px 60px rgba(0,255,255,0.4);
+            box-shadow: 0 20px 60px rgba(255,51,51,0.4);
         }
 
         .confirm-icon {
@@ -471,7 +483,7 @@
         }
 
         .confirm-title {
-            color: #00FFFF;
+            color: #ff3333;
             font-size: 1.5em;
             margin-bottom: 15px;
             font-weight: bold;
@@ -505,7 +517,7 @@
         }
 
         .confirm-btn.yes {
-            background: linear-gradient(135deg, #00FFFF 0%, #0088FF 100%);
+            background: linear-gradient(135deg, #ff3333 0%, #0088FF 100%);
             color: #000;
         }
 
@@ -521,7 +533,7 @@
 
         .confirm-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0,255,255,0.4);
+            box-shadow: 0 8px 25px rgba(255,51,51,0.4);
         }
 
         .mini-player {
@@ -530,11 +542,11 @@
             right: 20px;
             width: 350px;
             background: linear-gradient(135deg, #2a2a2a 0%, #1e1e1e 100%);
-            border: 3px solid #00FFFF;
+            border: 3px solid #ff3333;
             border-radius: 20px;
             padding: 15px;
             z-index: 2000;
-            box-shadow: 0 15px 45px rgba(0,255,255,0.4);
+            box-shadow: 0 15px 45px rgba(255,51,51,0.4);
             display: none;
             backdrop-filter: blur(10px);
         }
@@ -555,9 +567,9 @@
         }
 
         .mini-player .mini-btn {
-            background: rgba(0,255,255,0.15);
-            border: 2px solid #00FFFF;
-            color: #00FFFF;
+            background: rgba(255,51,51,0.15);
+            border: 2px solid #ff3333;
+            color: #ff3333;
             padding: 10px 15px;
             border-radius: 25px;
             cursor: pointer;
@@ -570,7 +582,7 @@
         }
 
         .mini-player .mini-btn:hover {
-            background: #00FFFF;
+            background: #ff3333;
             color: #000;
         }
 
@@ -590,13 +602,13 @@
             bottom: 30px;
             left: 50%;
             transform: translateX(-50%) translateY(100px);
-            background: linear-gradient(135deg, #00FFFF 0%, #0088FF 100%);
+            background: linear-gradient(135deg, #ff3333 0%, #0088FF 100%);
             color: #000;
             padding: 18px 30px;
             border-radius: 50px;
             font-weight: bold;
             z-index: 4000;
-            box-shadow: 0 10px 40px rgba(0,255,255,0.5);
+            box-shadow: 0 10px 40px rgba(255,51,51,0.5);
             border: 3px solid #FFD700;
             transition: transform 0.5s ease, opacity 0.5s ease;
             text-align: center;
@@ -623,12 +635,12 @@
             background: rgba(0,0,0,0.95);
             border-radius: 20px;
             margin: 20px 0;
-            border: 3px solid #00FFFF;
+            border: 3px solid #ff3333;
         }
 
         .spinner {
             border: 5px solid #333;
-            border-top: 5px solid #00FFFF;
+            border-top: 5px solid #ff3333;
             border-radius: 50%;
             width: 60px;
             height: 60px;
@@ -646,8 +658,8 @@
             padding: 25px;
             border-radius: 20px;
             margin-bottom: 30px;
-            border: 3px solid #00FFFF;
-            box-shadow: 0 10px 30px rgba(0,255,255,0.2);
+            border: 3px solid #ff3333;
+            box-shadow: 0 10px 30px rgba(255,51,51,0.2);
         }
 
         .info-grid {
@@ -661,11 +673,11 @@
             padding: 15px;
             background: rgba(0,0,0,0.5);
             border-radius: 15px;
-            border: 1px solid #00FFFF;
+            border: 1px solid #ff3333;
         }
 
         .info-label {
-            color: #00FFFF;
+            color: #ff3333;
             font-size: 11px;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -711,16 +723,16 @@
         }
 
         .tab-btn.active {
-            background: linear-gradient(135deg, #00FFFF 0%, #0088FF 100%);
+            background: linear-gradient(135deg, #ff3333 0%, #0088FF 100%);
             color: #000;
-            border-color: #00FFFF;
-            box-shadow: 0 0 25px rgba(0,255,255,0.4);
+            border-color: #ff3333;
+            box-shadow: 0 0 25px rgba(255,51,51,0.4);
             transform: translateY(-2px);
         }
 
         .tab-btn:hover:not(.active) {
-            color: #00FFFF;
-            border-color: #00FFFF;
+            color: #ff3333;
+            border-color: #ff3333;
             transform: translateY(-1px);
         }
 
@@ -753,7 +765,7 @@
 
         .category-card {
             background: linear-gradient(135deg, #2a2a2a 0%, #1e1e1e 100%);
-            border: 2px solid #00FFFF;
+            border: 2px solid #ff3333;
             border-radius: 20px;
             padding: 20px;
             cursor: pointer;
@@ -762,7 +774,7 @@
 
         .category-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0,255,255,0.25);
+            box-shadow: 0 15px 40px rgba(255,51,51,0.25);
             border-color: #FFD700;
         }
 
@@ -803,7 +815,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 12px;
-            background: rgba(0,255,255,0.1);
+            background: rgba(255,51,51,0.1);
             border-radius: 12px;
             margin-bottom: 8px;
             transition: all 0.3s ease;
@@ -811,8 +823,8 @@
         }
 
         .channel-item:hover {
-            background: rgba(0,255,255,0.2);
-            border-color: #00FFFF;
+            background: rgba(255,51,51,0.2);
+            border-color: #ff3333;
         }
 
         .channel-info {
@@ -899,8 +911,8 @@
             max-width: 95%;
             max-height: 95%;
             position: relative;
-            border: 3px solid #00FFFF;
-            box-shadow: 0 20px 60px rgba(0,255,255,0.4);
+            border: 3px solid #ff3333;
+            box-shadow: 0 20px 60px rgba(255,51,51,0.4);
         }
 
         .video-container {
@@ -972,8 +984,8 @@
             padding: 15px;
             background: rgba(0,0,0,0.8);
             border-radius: 15px;
-            border: 1px solid #00FFFF;
-            color: #00FFFF;
+            border: 1px solid #ff3333;
+            color: #ff3333;
             font-size: 13px;
         }
 
@@ -990,7 +1002,7 @@
         }
 
         .empty-state h3 {
-            color: #00FFFF;
+            color: #ff3333;
             font-size: 1.8em;
             margin-bottom: 15px;
         }
@@ -1145,20 +1157,115 @@
         }
 
         .channels-list::-webkit-scrollbar-thumb {
-            background: #00FFFF;
+            background: #ff3333;
             border-radius: 4px;
         }
+    
+        /* Buscador */
+        .search-container {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .search-input {
+            width: 100%;
+            max-width: 600px;
+            padding: 12px 20px;
+            background: rgba(0,0,0,0.8);
+            border: 2px solid #ff3333;
+            color: #fff;
+            border-radius: 25px;
+            font-size: 16px;
+            font-family: 'Orbitron', sans-serif;
+            outline: none;
+            box-shadow: 0 5px 15px rgba(255,51,51,0.2);
+            transition: all 0.3s ease;
+        }
+        .search-input:focus {
+            box-shadow: 0 5px 25px rgba(255,51,51,0.4);
+        }
+
+        /* Modal de Series */
+        .series-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 3000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .series-content {
+            background: linear-gradient(135deg, #1a0f0f 0%, #0a0000 100%);
+            border: 2px solid #ff3333;
+            border-radius: 15px;
+            width: 100%;
+            max-width: 800px;
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: 20px;
+            position: relative;
+            box-shadow: 0 10px 40px rgba(255,51,51,0.3);
+        }
+        .close-series {
+            position: absolute;
+            top: 15px; right: 15px;
+            background: #ff3333;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 35px; height: 35px;
+            font-weight: bold;
+            font-size: 18px;
+            cursor: pointer;
+            z-index: 10;
+        }
+        .season-block { margin-bottom: 15px; }
+        .season-title {
+            background: #ff3333;
+            color: #fff;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+        .episode-list {
+            display: none;
+            flex-direction: column;
+            gap: 8px;
+            padding: 0 10px;
+        }
+        .episode-list.active { display: flex; }
+        .episode-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background: rgba(255,51,51,0.1);
+            border: 1px solid rgba(255,51,51,0.3);
+            border-radius: 8px;
+        }
+
+        .plyr--video {
+            border-radius: 15px;
+            overflow: hidden;
+            border: 2px solid #ff3333;
+            box-shadow: 0 10px 30px rgba(255,51,51,0.4);
+        }
+
     </style>
 </head>
 <body>
     <!-- Splash Screen -->
     <div class="splash-screen" id="splashScreen">
         <div class="splash-content">
-            <div style="font-size: 5em; margin-bottom: 20px;">🦁</div>
+            <div style="font-size: 5em; margin-bottom: 20px;">🏴‍☠️</div>
             <h1 style="background: linear-gradient(45deg, #FFD700, #FFA500, #FFD700); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 2.5em; margin-bottom: 15px;">
-                ᑕᕼEKEᖇ IᑭTᐯ
+                LA PERLA NEGRA
             </h1>
-            <p style="color: #00FFFF; font-weight: bold; font-size: 1.2em;">ᐯEᖇᔕIOᑎ ᑭᖇO - Tᐯ ᒪIOᑎ 2.0</p>
+            <p style="color: #ff3333; font-weight: bold; font-size: 1.2em;">VERSIÓN PIRATA - THE BLACK PEARL</p>
             <div class="spinner" style="margin-top: 40px;"></div>
         </div>
     </div>
@@ -1171,62 +1278,34 @@
     <!-- Toast Message -->
     <div class="toast-message" id="toastMessage"></div>
 
+    
+    <!-- Series Modal -->
+    <div class="series-modal" id="seriesModal">
+        <div class="series-content">
+            <button class="close-series" onclick="closeSeriesModal()">×</button>
+            <h2 id="seriesModalTitle" style="color: #FFD700; margin-top: 0;">Cargando Serie...</h2>
+            <div id="seriesModalBody">
+                <div class="spinner"></div>
+            </div>
+        </div>
+    </div>
+
     <!-- Confirm Dialog -->
     <div class="confirm-dialog" id="confirmDialog">
         <div class="confirm-content">
-            <div class="confirm-icon">🦁</div>
+            <div class="confirm-icon">🏴‍☠️</div>
             <div class="confirm-title" id="confirmTitle">Confirmar acción</div>
             <div class="confirm-message" id="confirmMessage"></div>
             <div class="confirm-buttons" id="confirmButtons"></div>
         </div>
     </div>
 
-    <!-- Mini Player -->
-    <div class="mini-player" id="miniPlayer">
-        <video 
-            id="miniVideoPlayer" 
-            controls 
-            playsinline 
-            preload="auto"
-            x-webkit-airplay="allow"
-            x5-playsinline
-            webkit-playsinline
-        ></video>
-        <div class="mini-controls">
-            <button class="mini-btn" id="miniExpandBtn">🔍 Expandir</button>
-            <button class="mini-btn" id="miniCloseBtn">✖ Cerrar</button>
-        </div>
-        <div class="mini-title" id="miniPlayerTitle">ꪶⅈꪮꪀ𝕥ꪜ 🦁</div>
-    </div>
-
-    <!-- Reproductor Flotante -->
-    <div class="floating-player" id="floatingPlayer">
-        <video 
-            id="floatingVideo" 
-            controls 
-            playsinline 
-            preload="auto"
-            x-webkit-airplay="allow"
-            x5-playsinline
-            x5-video-player-type="h5"
-            x5-video-player-fullscreen="true"
-            webkit-playsinline
-        ></video>
-        <div class="float-title" id="floatingTitle">ꪶⅈꪮꪀ𝕥ꪜ 🦁</div>
-        <div class="floating-controls">
-            <button class="float-btn" id="floatCloseBtn">✖ Cerrar</button>
-            <button class="float-btn" id="floatExpandBtn">🔍 Expandir</button>
-            <button class="float-btn" id="floatPipBtn">📺 PiP</button>
-        </div>
-        <div class="resize-handle" id="resizeHandle"></div>
-    </div>
-
     <div class="container">
         <header>
-            <div class="lion-emoji">🦁</div>
-            <h1>ᑕᕼEKEᖇ IᑭTᐯ ᑭᖇO ᘻ3SSᗩ10 & ꪶⅈꪮꪀ𝕥ꪜ</h1>
-            <div class="lion-emoji">🦁</div>
-            <div class="subtitle">ᐯEᖇᔕIOᑎ ᑭᖇO - Tᐯ ᒪIOᑎ 2.0</div>
+            <div class="lion-emoji">🏴‍☠️</div>
+            <h1>🏴‍☠️ LA PERLA NEGRA IPTV 🏴‍☠️</h1>
+            <div class="lion-emoji">🏴‍☠️</div>
+            <div class="subtitle">VERSIÓN PIRATA - THE BLACK PEARL</div>
             
             <button class="install-btn" id="installBtn" style="display: none;">
                 📲 Instalar App
@@ -1234,14 +1313,27 @@
         </header>
 
         <div class="input-section">
-            <input type="text" class="main-input" id="url" placeholder="🦁 Ingresa URL M3U o enlace Xtream..." required>
-                
+            <div style="display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap;">
+                <select id="savedListsDropdown" style="flex: 1; padding: 12px; background: rgba(0,0,0,0.8); border: 2px solid #FFD700; color: #FFD700; border-radius: 15px; font-family: 'Orbitron', sans-serif; outline: none; min-width: 200px;">
+                    <option value="">Cargar lista guardada...</option>
+                </select>
+                <button type="button" id="deleteListBtn" style="background: rgba(255,51,51,0.2); border: 1px solid #ff3333; color: #ff3333; border-radius: 15px; padding: 10px 15px; cursor: pointer; font-weight: bold; display: none;">✖ Borrar</button>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; background: rgba(0,0,0,0.4); padding: 15px; border-radius: 15px; border: 1px dashed #FFD700;">
+                <input type="text" id="listName" class="main-input" placeholder="🏴‍☠️ Nombre de la lista (Ej: VIP Deportes)..." style="margin-bottom: 0; padding: 12px; font-size: 14px;">
+                <div style="display: flex; gap: 10px;">
+                    <input type="text" class="main-input" id="url" placeholder="🏴‍☠️ Ingresa URL M3U o enlace Xtream..." required style="margin-bottom: 0;">
+                    <button type="button" id="saveListBtn" style="background: rgba(255,215,0,0.2); border: 2px solid #FFD700; color: #FFD700; border-radius: 15px; padding: 0 20px; cursor: pointer; font-size: 20px;" title="Guardar Lista en el navío">💾</button>
+                </div>
+            </div>
+
             <div class="button-row">
                 <button type="button" class="btn-analyze" id="analyzeBtn">
-                    <span>🦁</span> ANALIZAR AHORA
+                    <span>🏴‍☠️</span> ANALIZAR AHORA
                 </button>
                 <button type="button" class="btn-clear" id="clearBtn">
-                    <span>🗑️</span> LIMPIAR LISTA
+                    <span>🗑️</span> LIMPIAR PANTALLA
                 </button>
             </div>
         </div>
@@ -1288,27 +1380,25 @@
             </div>
             
             <div class="favorite-actions">
-                <button class="favorite-btn" id="exportFavoritesBtn">
-                    <span>📤</span> Exportar Favoritos
-                </button>
-                <button class="favorite-btn" id="importFavoritesBtn">
-                    <span>📥</span> Importar Favoritos
-                </button>
+                
+                
                 <button class="favorite-btn danger" id="clearFavoritesBtn">
                     <span>🗑️</span> Limpiar Todo
                 </button>
-                <button class="favorite-btn success" id="mergeFavoritesBtn">
-                    <span>🔄</span> Unificar Listas
-                </button>
-                <button class="favorite-btn" id="exportM3UBtn" style="background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); color: #000;">
-                    <span>📼</span> Exportar M3U
-                </button>
+                
+                
             </div>
         </div>
 
-        <div class="loading" id="loading">
-            <div class="spinner"></div>
-            <p>🦁 Analizando contenido... Esto puede tomar unos momentos</p>
+        <div class="loading" id="loading" style="display: none; text-align: center; padding: 40px; background: rgba(0,0,0,0.95); border-radius: 20px; margin: 20px 0; border: 3px solid #ff3333;">
+            <div style="font-size: 3em; margin-bottom: 10px;">🏴‍☠️</div>
+            <h3 style="color: #ff3333; margin-bottom: 15px;" id="loadingText">Abordando servidor...</h3>
+            <div style="width: 100%; background: #222; border-radius: 10px; overflow: hidden; border: 1px solid #FFD700; height: 20px;">
+                <div id="loadingBar" style="width: 0%; height: 100%; background: linear-gradient(90deg, #ff3333, #FFD700); transition: width 0.3s ease;"></div>
+            </div>
+            <p id="loadingPercent" style="color: #FFD700; font-weight: bold; margin-top: 10px;">0%</p>
+        </div>
+            <p>🏴‍☠️ Analizando contenido... Esto puede tomar unos momentos</p>
         </div>
 
         <div id="vpnWarning" class="vpn-warning" style="display: none;">
@@ -1329,6 +1419,11 @@
             <button class="tab-btn favorites-tab" data-tab="favorites">
                 <span>⭐</span> FAVORITOS <span id="favoritesCount" class="status-indicator"></span>
             </button>
+        </div>
+
+        
+        <div class="search-container" id="searchContainer" style="display: none;">
+            <input type="text" id="searchInput" class="search-input" placeholder="🏴‍☠️ Buscar canal, película o serie...">
         </div>
 
         <!-- CONTENIDO DE LAS PESTAÑAS -->
@@ -1353,7 +1448,7 @@
             <div class="info-panel" id="accountInfo">
                 <div class="info-grid">
                     <div class="info-item">
-                        <div class="info-label">🦁 USUARIO</div>
+                        <div class="info-label">🏴‍☠️ USUARIO</div>
                         <div class="info-value" id="userInfo">-</div>
                     </div>
                     <div class="info-item">
@@ -1388,7 +1483,8 @@
         <div class="player-modal" id="playerModal">
             <div class="player-container">
                 <button class="close-player" onclick="closePlayer()">×</button>
-                <button class="minimize-player-btn" onclick="minimizePlayer()">📺</button>
+            <div id="playerTitle" style="color:#FFD700; font-size:15px; font-weight:bold; text-align:center; margin:10px 0; font-family:'Orbitron',sans-serif;">Reproduciendo...</div>
+                <button class="minimize-player-btn" >📺</button>
                 <div class="video-container">
                     <video 
                         id="videoPlayer" 
@@ -1401,7 +1497,7 @@
                     >
                         Tu navegador no soporta el elemento video.
                     </video>
-                    <div class="video-watermark">ꪶⅈꪮꪀ𝕥ꪜ 🦁</div>
+                    <div class="video-watermark">PERLA NEGRA 🏴‍☠️</div>
                 </div>
                 <div class="player-status" id="playerStatus"></div>
             </div>
@@ -1442,9 +1538,9 @@
             makeDraggable(floatPlayer);
             makeResizable(floatPlayer);
             
-            document.getElementById('floatCloseBtn').addEventListener('click', hideFloatingPlayer);
-            document.getElementById('floatExpandBtn').addEventListener('click', expandToFullPlayer);
-            document.getElementById('floatPipBtn').addEventListener('click', togglePictureInPicture);
+            const _btn_floatCloseBtn = document.getElementById('floatCloseBtn'); if(_btn_floatCloseBtn) _btn_floatCloseBtn.addEventListener('click', hideFloatingPlayer);
+            const _btn_floatExpandBtn = document.getElementById('floatExpandBtn'); if(_btn_floatExpandBtn) _btn_floatExpandBtn.addEventListener('click', expandToFullPlayer);
+            const _btn_floatPipBtn = document.getElementById('floatPipBtn'); if(_btn_floatPipBtn) _btn_floatPipBtn.addEventListener('click', togglePictureInPicture);
         }
         
         function makeDraggable(element) {
@@ -1533,249 +1629,73 @@
             }
         }
         
-        function showFloatingPlayer(url, title = "Reproduciendo", type = "unknown") {
-            if (!url || url === '#' || url.trim() === '') {
-                showToast("❌ URL inválida para reproducir", false);
-                return;
-            }
+        
+        let plyrInstance = null;
+        let activeHls = null;
 
-            console.log(`Intentando reproducir → ${type.toUpperCase()}: ${url}`);
-
-            const floatPlayer = document.getElementById('floatingPlayer');
-            const video = document.getElementById('floatingVideo');
-            const titleEl = document.getElementById('floatingTitle');
-
-            // Limpiar estado anterior
-            if (floatingHls) {
-                floatingHls.destroy();
-                floatingHls = null;
-            }
-            video.pause();
-            video.removeAttribute('src');
-            video.load();
-
-            titleEl.textContent = title;
-            floatPlayer.style.display = 'block';
-            isFloatingVisible = true;
-            currentStream = { url, title, type };
-
-            // Asignamos eventos cada vez que se muestra
-            setTimeout(() => {
-                const closeBtn = document.getElementById('floatCloseBtn');
-                const expandBtn = document.getElementById('floatExpandBtn');
-                const pipBtn = document.getElementById('floatPipBtn');
-
-                if (!closeBtn || !expandBtn || !pipBtn) {
-                    console.warn("No se encontraron los botones del reproductor flotante");
-                    return;
-                }
-
-                // Limpiamos listeners previos
-                const newClose = closeBtn.cloneNode(true);
-                const newExpand = expandBtn.cloneNode(true);
-                const newPip = pipBtn.cloneNode(true);
-
-                closeBtn.parentNode.replaceChild(newClose, closeBtn);
-                expandBtn.parentNode.replaceChild(newExpand, expandBtn);
-                pipBtn.parentNode.replaceChild(newPip, pipBtn);
-
-                // Asignamos eventos
-                document.getElementById('floatCloseBtn').addEventListener('click', hideFloatingPlayer);
-                document.getElementById('floatCloseBtn').addEventListener('touchend', (e) => {
-                    e.preventDefault();
-                    hideFloatingPlayer();
-                }, { passive: false });
-
-                document.getElementById('floatExpandBtn').addEventListener('click', expandToFullPlayer);
-                document.getElementById('floatExpandBtn').addEventListener('touchend', (e) => {
-                    e.preventDefault();
-                    expandToFullPlayer();
-                }, { passive: false });
-
-                document.getElementById('floatPipBtn').addEventListener('click', togglePictureInPicture);
-                document.getElementById('floatPipBtn').addEventListener('touchend', (e) => {
-                    e.preventDefault();
-                    togglePictureInPicture();
-                }, { passive: false });
-
-                console.log("Eventos de botones flotantes asignados correctamente");
-            }, 100);
-
-            const lowerUrl = url.toLowerCase();
-
-            if (lowerUrl.includes('.m3u8') || lowerUrl.includes('/hls/') || lowerUrl.includes('.m3u8?')) {
-                if (Hls.isSupported()) {
-                    floatingHls = new Hls({
-                        enableWorker: true,
-                        lowLatencyMode: true,
-                        backBufferLength: 90,
-                        maxMaxBufferLength: 120,
-                        maxBufferSize: 60 * 1000 * 1000,
-                        maxBufferHole: 0.5,
-                        liveSyncDurationCount: 3
-                    });
-
-                    floatingHls.loadSource(url);
-                    floatingHls.attachMedia(video);
-
-                    floatingHls.on(Hls.Events.MANIFEST_PARSED, () => {
-                        video.play().catch(e => {
-                            console.warn("Autoplay bloqueado (HLS)", e);
-                            showToast("ℹ️ Toca la pantalla para reproducir", true);
-                        });
-                    });
-
-                    floatingHls.on(Hls.Events.ERROR, (event, data) => {
-                        if (data.fatal) {
-                            console.error("HLS error fatal:", data);
-                            if (data.type === Hls.ErrorTypes.NETWORK_ERROR) {
-                                floatingHls.startLoad();
-                            } else if (data.type === Hls.ErrorTypes.MEDIA_ERROR) {
-                                floatingHls.recoverMediaError();
-                            } else {
-                                floatingHls.destroy();
-                                floatingHls = null;
-                                fallbackToNativePlayer(video, url, title);
-                            }
-                        }
-                    });
-                } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-                    video.src = url;
-                    video.addEventListener('loadedmetadata', () => {
-                        video.play().catch(e => console.warn("Safari HLS autoplay error", e));
-                    });
-                } else {
-                    fallbackToNativePlayer(video, url, title);
-                }
-            } else {
-                fallbackToNativePlayer(video, url, title);
-            }
-
-            document.getElementById('playerModal').style.display = 'none';
-            document.getElementById('miniPlayer').style.display = 'none';
-        }
+        
 
         function fallbackToNativePlayer(video, url, title) {
-            const lowerUrl = url.toLowerCase();
-            const badExts = ['.mkv', '.avi', '.mkv?', '.avi?', '.ts', '.ts?'];
-            const isBadFormat = badExts.some(ext => lowerUrl.includes(ext));
-
             video.src = url;
-            video.load();
-
-            video.oncanplay = () => {
-                video.play().catch(e => {
-                    console.warn("Autoplay bloqueado (native)", e);
-                });
-            };
-
-            video.onerror = () => {
-                console.error("Error nativo:", video.error);
-                console.log("URL fallida:", url);
-                console.log("Código error:", video.error?.code);
-
-                const toast = document.getElementById('toastMessage');
-                if (!toast) {
-                    console.error("Elemento toast no encontrado");
-                    return;
-                }
-
-                toast.className = 'toast-message show error';
-                toast.style.minHeight = '180px';
-                toast.style.padding = '25px';
-                toast.style.lineHeight = '1.6';
-                toast.style.whiteSpace = 'pre-wrap';
-                toast.style.textAlign = 'center';
-                toast.style.display = 'block';
-
-                if (isBadFormat) {
-                    toast.innerHTML = `
-                        ⚠️ Formato NO SOPORTADO en navegador<br><br>
-                        <strong>${title || 'Película/Serie'}</strong><br>
-                        Archivo .mkv / .avi detectado<br><br>
-                        El navegador no reproduce este formato directamente.<br><br>
-                        <button onclick="openInExternalPlayer('${url.replace(/'/g, "\\'")}')" 
-                                style="margin:20px 0; padding:16px 32px; background:#00FFFF; color:#000; font-weight:bold; font-size:20px; border:none; border-radius:12px; cursor:pointer; box-shadow:0 4px 10px rgba(0,0,0,0.3);">
-                            Abrir en VLC / MX Player / IPTV
-                        </button><br><br>
-                        <small style="color:#ddd;">El mensaje desaparecerá en 8 segundos</small>
-                    `;
-                } else {
-                    let msg = "❌ Error al reproducir<br><br>";
-                    switch(video.error?.code) {
-                        case 4: msg += "Formato no soportado o enlace inválido"; break;
-                        default: msg += "Error desconocido - revisa consola";
-                    }
-                    toast.innerHTML = msg;
-                }
-
-                // Desaparece automáticamente
-                setTimeout(() => {
-                    toast.classList.remove('show');
-                    toast.style.transform = 'translateX(-50%) translateY(100px)';
-                }, 8000);
-            };
+            video.play().catch(e => {
+                showToast("⚠️ Toca para reproducir (o formato no soportado en web)", true);
+            });
         }
 
-        function hideFloatingPlayer() {
-            console.log('Cerrando reproductor flotante');
-            
-            const floatPlayer = document.getElementById('floatingPlayer');
-            const video = document.getElementById('floatingVideo');
-            
-            if (floatingHls) {
-                floatingHls.destroy();
-                floatingHls = null;
-            }
-            
-            video.pause();
-            video.removeAttribute('src');
-            video.load();
-            floatPlayer.style.display = 'none';
-            isFloatingVisible = false;
-            isPlaying = false;
-        }
-        
-        function expandToFullPlayer() {
-            console.log('Expandiendo a reproductor modal');
-            
-            const video = document.getElementById('floatingVideo');
-            if (!video.src) return;
-            
-            const modalVideo = document.getElementById('videoPlayer');
+        function playStream(url, title, type) {
+            if (!url || url === '#') { showToast('❌ URL inválida', false); return; }
+
+            // Pasar URLs HTTP por el proxy para evitar Mixed Content
+            const proxyUrl = typeof PROXY_URL !== 'undefined' ? PROXY_URL : '';
+            const finalUrl = (proxyUrl && url.startsWith('http://')) ? proxyUrl + encodeURIComponent(url) : url;
+
             const modal = document.getElementById('playerModal');
-            
-            if (floatingHls) {
-                floatingHls.destroy();
-                floatingHls = null;
-            }
-            
-            modalVideo.src = video.src;
-            modalVideo.currentTime = video.currentTime;
-            modalVideo.play().catch(console.warn);
-            
+            const video = document.getElementById('videoPlayer');
+            const titleEl = document.getElementById('playerTitle');
+
+            if (!modal || !video) { showToast('❌ No se encontró el reproductor', false); return; }
+
+            if (titleEl) titleEl.textContent = title || 'Reproduciendo...';
+            modal.style.display = 'flex';
+
+            if (activeHls) { activeHls.destroy(); activeHls = null; }
             video.pause();
             video.removeAttribute('src');
-            
-            modal.style.display = 'flex';
-            document.getElementById('floatingPlayer').style.display = 'none';
-            isFloatingVisible = false;
-            isPlaying = true;
-        }
-        
-        async function togglePictureInPicture() {
-            const video = document.getElementById('floatingVideo');
-            try {
-                if (document.pictureInPictureElement) {
-                    await document.exitPictureInPicture();
-                } else if (video && document.pictureInPictureEnabled) {
-                    await video.requestPictureInPicture();
-                }
-            } catch (error) {
-                console.log('PiP error:', error);
-                showToast('❌ PiP no soportado', false);
+            video.load();
+
+            if (!plyrInstance) {
+                plyrInstance = new Plyr(video, {
+                    controls: ['play-large','play','progress','current-time','mute','volume','captions','settings','pip','fullscreen'],
+                    settings: ['captions','quality','speed']
+                });
+            }
+
+            const lowerUrl = (finalUrl || '').toLowerCase();
+            if (lowerUrl.includes('.m3u8') && Hls.isSupported()) {
+                activeHls = new Hls();
+                activeHls.loadSource(finalUrl);
+                activeHls.attachMedia(video);
+                activeHls.on(Hls.Events.MANIFEST_PARSED, () => video.play().catch(() => {}));
+                activeHls.on(Hls.Events.ERROR, (e, data) => {
+                    if (data.fatal) { activeHls.destroy(); video.src = finalUrl; video.play().catch(() => {}); }
+                });
+            } else if (video.canPlayType('application/vnd.apple.mpegurl') && lowerUrl.includes('.m3u8')) {
+                video.src = finalUrl;
+                video.play().catch(() => {});
+            } else {
+                video.src = finalUrl;
+                video.play().catch(() => {});
             }
         }
+
+        function closePlayer() {
+            if (activeHls) { activeHls.destroy(); activeHls = null; }
+            const video = document.getElementById('videoPlayer');
+            if (video) { video.pause(); video.src = ''; }
+            const modal = document.getElementById('playerModal');
+            if (modal) modal.style.display = 'none';
+        }
+
 
         function exportFavoritesAsM3U() {
             if (favorites.live.length === 0 && favorites.movies.length === 0 && favorites.series.length === 0) {
@@ -1953,7 +1873,7 @@
                                 <div class="channel-server">${item.server}</div>
                             </div>
                             <div class="channel-actions">
-                                <button class="play-btn" onclick="showFloatingPlayer('${item.url}', '${item.name.replace(/'/g, "\\'")}')">▶️</button>
+                                <button class="play-btn" onclick="playStream('${item.url}', '${item.name.replace(/'/g, "\\'")}')">▶️</button>
                                 <button class="fav-channel-btn active" onclick="removeFavoriteByIndex('live', ${index})">⭐</button>
                             </div>
                         </div>
@@ -1981,7 +1901,7 @@
                                 <div class="channel-server">${item.server}</div>
                             </div>
                             <div class="channel-actions">
-                                <button class="play-btn" onclick="showFloatingPlayer('${item.url}', '${item.name.replace(/'/g, "\\'")}')">▶️</button>
+                                <button class="play-btn" onclick="playStream('${item.url}', '${item.name.replace(/'/g, "\\'")}')">▶️</button>
                                 <button class="fav-channel-btn active" onclick="removeFavoriteByIndex('movies', ${index})">⭐</button>
                             </div>
                         </div>
@@ -2009,7 +1929,7 @@
                                 <div class="channel-server">${item.server}</div>
                             </div>
                             <div class="channel-actions">
-                                <button class="play-btn" onclick="showFloatingPlayer('${item.url}', '${item.name.replace(/'/g, "\\'")}')">▶️</button>
+                                <button class="play-btn" onclick="playStream('${item.url}', '${item.name.replace(/'/g, "\\'")}')">▶️</button>
                                 <button class="fav-channel-btn active" onclick="removeFavoriteByIndex('series', ${index})">⭐</button>
                             </div>
                         </div>
@@ -2288,30 +2208,60 @@
             isMinimized = false;
         }
         
-        function playStream(url, title, type = 'live') {
-            showFloatingPlayer(url, title, type);
-        }
         
-        function closePlayer() {
+        
+        function playStream(url, title, type) {
+            if (!url || url === '#') { showToast('❌ URL inválida', false); return; }
+
+            // Pasar URLs HTTP por el proxy para evitar Mixed Content
+            const proxyUrl = typeof PROXY_URL !== 'undefined' ? PROXY_URL : '';
+            const finalUrl = (proxyUrl && url.startsWith('http://')) ? proxyUrl + encodeURIComponent(url) : url;
+
             const modal = document.getElementById('playerModal');
             const video = document.getElementById('videoPlayer');
-            
-            if (hls) {
-                hls.destroy();
-                hls = null;
+            const titleEl = document.getElementById('playerTitle');
+
+            if (!modal || !video) { showToast('❌ No se encontró el reproductor', false); return; }
+
+            if (titleEl) titleEl.textContent = title || 'Reproduciendo...';
+            modal.style.display = 'flex';
+
+            if (activeHls) { activeHls.destroy(); activeHls = null; }
+            video.pause();
+            video.removeAttribute('src');
+            video.load();
+
+            if (!plyrInstance) {
+                plyrInstance = new Plyr(video, {
+                    controls: ['play-large','play','progress','current-time','mute','volume','captions','settings','pip','fullscreen'],
+                    settings: ['captions','quality','speed']
+                });
             }
-            
-            if (video) {
-                video.pause();
-                video.removeAttribute('src');
-                video.load();
+
+            const lowerUrl = (finalUrl || '').toLowerCase();
+            if (lowerUrl.includes('.m3u8') && Hls.isSupported()) {
+                activeHls = new Hls();
+                activeHls.loadSource(finalUrl);
+                activeHls.attachMedia(video);
+                activeHls.on(Hls.Events.MANIFEST_PARSED, () => video.play().catch(() => {}));
+                activeHls.on(Hls.Events.ERROR, (e, data) => {
+                    if (data.fatal) { activeHls.destroy(); video.src = finalUrl; video.play().catch(() => {}); }
+                });
+            } else if (video.canPlayType('application/vnd.apple.mpegurl') && lowerUrl.includes('.m3u8')) {
+                video.src = finalUrl;
+                video.play().catch(() => {});
+            } else {
+                video.src = finalUrl;
+                video.play().catch(() => {});
             }
-            
+        }
+
+        function closePlayer() {
+            if (activeHls) { activeHls.destroy(); activeHls = null; }
+            const video = document.getElementById('videoPlayer');
+            if (video) { video.pause(); video.src = ''; }
+            const modal = document.getElementById('playerModal');
             if (modal) modal.style.display = 'none';
-            
-            isPlaying = false;
-            currentStream = null;
-            closeMiniPlayer();
         }
 
         function showToast(message, isSuccess = true) {
@@ -2378,6 +2328,15 @@
         
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
+
+            setTimeout(() => {
+                const splash = document.getElementById('splashScreen');
+                if(splash) {
+                    splash.style.opacity = '0';
+                    setTimeout(() => splash.style.display = 'none', 500);
+                }
+            }, 1500);
+
                 navigator.serviceWorker.register('service-worker.js').catch(() => {});
             });
         }
@@ -2482,47 +2441,74 @@
             const panel = new URL(url).hostname;
             const serverIp = await getHostIP(panel);
             document.getElementById('serverIpInfo').textContent = serverIp;
-            
+
             const apiUrl = url.replace('get.php', 'player_api.php');
-            const userInfo = await axios.get(apiUrl, { timeout: 10000 });
+
+            const updateProgress = (text, percent) => {
+                const textEl = document.getElementById('loadingText');
+                const barEl = document.getElementById('loadingBar');
+                const pctEl = document.getElementById('loadingPercent');
+                if (textEl) textEl.textContent = text;
+                if (barEl) barEl.style.width = percent + '%';
+                if (pctEl) pctEl.textContent = percent + '%';
+            };
+
+            updateProgress("Verificando credenciales...", 10);
+            const userInfo = await axios.get(apiUrl, { timeout: 15000 });
             const data = userInfo.data;
-            
+
             if (data.user_info) {
                 document.getElementById('userInfo').textContent = data.user_info.username || 'N/A';
                 document.getElementById('passInfo').textContent = data.user_info.password || 'N/A';
                 document.getElementById('statusInfo').textContent = data.user_info.status === 'Active' ? 'ACTIVA' : 'INACTIVA';
                 document.getElementById('statusInfo').style.color = data.user_info.status === 'Active' ? '#00FF00' : '#FF4444';
                 document.getElementById('serverInfo').textContent = data.server_info?.url || 'N/A';
-                
+
                 if (!data.user_info.exp_date || data.user_info.exp_date === "0") {
                     document.getElementById('expiryInfo').textContent = 'Ilimitada';
                 } else {
                     document.getElementById('expiryInfo').textContent = new Date(data.user_info.exp_date * 1000).toLocaleDateString('es-ES');
                 }
-                
+
                 document.getElementById('connectionsInfo').textContent = 
                     `${data.user_info.active_cons || 0}/${data.user_info.max_connections || 'N/A'}`;
 
-                const [live, vod, series, liveCat, vodCat, seriesCat] = await Promise.all([
-                    axios.get(`${apiUrl}&action=get_live_streams`).catch(() => ({ data: [] })),
-                    axios.get(`${apiUrl}&action=get_vod_streams`).catch(() => ({ data: [] })),
-                    axios.get(`${apiUrl}&action=get_series`).catch(() => ({ data: [] })),
-                    axios.get(`${apiUrl}&action=get_live_categories`).catch(() => ({ data: [] })),
-                    axios.get(`${apiUrl}&action=get_vod_categories`).catch(() => ({ data: [] })),
-                    axios.get(`${apiUrl}&action=get_series_categories`).catch(() => ({ data: [] }))
-                ]);
+                // Fetch step by step to show progress
+                updateProgress("Descargando canales TV...", 25);
+                const live = await axios.get(`${apiUrl}&action=get_live_streams`).catch(() => ({ data: [] }));
+
+                updateProgress("Descargando películas (VOD)...", 45);
+                const vod = await axios.get(`${apiUrl}&action=get_vod_streams`).catch(() => ({ data: [] }));
+
+                updateProgress("Descargando series...", 65);
+                const series = await axios.get(`${apiUrl}&action=get_series`).catch(() => ({ data: [] }));
+
+                updateProgress("Cargando categorías TV...", 80);
+                const liveCat = await axios.get(`${apiUrl}&action=get_live_categories`).catch(() => ({ data: [] }));
+
+                updateProgress("Cargando categorías Películas...", 90);
+                const vodCat = await axios.get(`${apiUrl}&action=get_vod_categories`).catch(() => ({ data: [] }));
+
+                updateProgress("Cargando categorías Series...", 95);
+                const seriesCat = await axios.get(`${apiUrl}&action=get_series_categories`).catch(() => ({ data: [] }));
+
+                updateProgress("Procesando interfaz...", 100);
 
                 document.getElementById('liveCountInfo').textContent = live.data.length || 0;
                 document.getElementById('vodCountInfo').textContent = vod.data.length || 0;
                 document.getElementById('seriesCountInfo').textContent = series.data.length || 0;
                 document.getElementById('liveCount').textContent = live.data.length || 0;
                 document.getElementById('moviesCount').textContent = vod.data.length || 0;
+
+                document.getElementById('moviesCount').textContent = vod.data.length || 0;
+                document.getElementById('searchContainer').style.display = 'flex';
+
                 document.getElementById('seriesCount').textContent = series.data.length || 0;
-                
+
                 displayLiveContent(liveCat.data, live.data, url);
                 displayMovieContent(vodCat.data, vod.data, url);
                 displaySeriesContent(seriesCat.data, series.data, url);
-                
+
                 currentUserData = data;
                 currentContentData = {
                     liveStreams: live.data,
@@ -2530,10 +2516,18 @@
                     series: series.data
                 };
                 currentOriginalUrl = originalUrl;
+
+                setTimeout(() => {
+                    document.getElementById('loading').style.display = 'none';
+                    document.getElementById('result').style.display = 'block';
+                    updateProgress("Abordando servidor...", 0); // reset for next time
+                }, 500);
+            } else {
+                showToast('❌ Error: Credenciales inválidas', false);
+                document.getElementById('loading').style.display = 'none';
             }
         }
-
-        async function analyzeDomainOnly(url) {
+async function analyzeDomainOnly(url) {
             let hostname;
             try {
                 hostname = new URL(url).hostname;
@@ -2547,54 +2541,9 @@
             document.getElementById('statusInfo').textContent = ip ? 'IP DETECTADA' : 'IP NO DETECTADA';
         }
 
-        function displayLiveContent(categories, streams, baseUrl) {
-            const container = document.getElementById('liveContent');
-            if (!streams?.length) {
-                container.innerHTML = '<p style="text-align: center; color: #888; padding: 20px;">No hay canales</p>';
-                return;
-            }
-            
-            const streamsByCountry = {};
-            streams.forEach(stream => {
-                const country = getCountryFromName(stream.name);
-                if (!streamsByCountry[country]) streamsByCountry[country] = [];
-                streamsByCountry[country].push(stream);
-            });
-            
-            let html = '<div class="categories-grid">';
-            Object.entries(streamsByCountry).forEach(([country, countryStreams]) => {
-                const categoryId = `live_${country.replace(/\s+/g, '_').toLowerCase()}`;
-                html += `
-                    <div class="category-card" onclick="toggleCategory('${categoryId}')">
-                        <div class="category-header">
-                            <div class="category-title">📺 ${country}</div>
-                            <div class="category-count">${countryStreams.length}</div>
-                        </div>
-                        <div class="channels-list" id="${categoryId}">
-                `;
-                
-                countryStreams.forEach(stream => {
-                    const streamUrl = buildStreamUrl(baseUrl, stream.stream_id, 'live');
-                    const isFav = favorites.live.some(fav => fav.url === streamUrl);
-                    html += `
-                        <div class="channel-item">
-                            <div class="channel-info">
-                                <div class="channel-name">${stream.name || 'Sin nombre'}</div>
-                            </div>
-                            <div class="channel-actions">
-                                <button class="play-btn" onclick="showFloatingPlayer('${streamUrl}', '${stream.name.replace(/'/g, "\\'")}', 'live')">▶️</button>
-                                <button class="fav-channel-btn ${isFav ? 'active' : ''}" data-favurl="${streamUrl}" onclick="toggleFavorite('live', {stream_id: ${stream.stream_id}, name: '${stream.name.replace(/'/g, "\\'")}'}, '${baseUrl}', '${new URL(baseUrl).hostname}')">${isFav ? '⭐' : '☆'}</button>
-                            </div>
-                        </div>
-                    `;
-                });
-                
-                html += '</div></div>';
-            });
-            html += '</div>';
-            container.innerHTML = html;
+        function displayLiveContent(categories, live, baseUrl) {
+            displayCategoryContent('liveContent', categories, live, baseUrl, 'live', 'live');
         }
-
         function displayMovieContent(categories, streams, baseUrl) {
             displayCategoryContent('moviesContent', categories, streams, baseUrl, 'movie', 'movies');
         }
@@ -2609,69 +2558,59 @@
                 container.innerHTML = '<p style="text-align: center; color: #888; padding: 20px;">No hay contenido</p>';
                 return;
             }
-            
+
             const categoryMap = {};
             categories?.forEach(cat => {
                 if (cat.category_id) categoryMap[cat.category_id] = cat.category_name;
             });
-            
+
             const itemsByCategory = {};
             items.forEach(item => {
                 const catName = categoryMap[item.category_id] || 'Sin categoría';
                 if (!itemsByCategory[catName]) itemsByCategory[catName] = [];
                 itemsByCategory[catName].push(item);
             });
-            
+
             let html = '<div class="categories-grid">';
             Object.entries(itemsByCategory).forEach(([categoryName, categoryItems]) => {
                 const categoryId = `${type}_${categoryName.replace(/\s+/g, '_').toLowerCase()}`;
                 html += `
                     <div class="category-card" onclick="toggleCategory('${categoryId}')">
                         <div class="category-header">
-                            <div class="category-title">${type === 'movie' ? '🎬' : '📚'} ${categoryName}</div>
+                            <div class="category-title">${type === 'movie' ? '🎬' : (type === 'series' ? '📚' : '📺')} ${categoryName}</div>
                             <div class="category-count">${categoryItems.length}</div>
                         </div>
                         <div class="channels-list" id="${categoryId}">
                 `;
-                
+
                 categoryItems.forEach(item => {
                     const streamUrl = buildStreamUrl(baseUrl, item.stream_id || item.series_id, type);
                     const itemId = item.stream_id || item.series_id;
                     const isFav = favorites[favType].some(fav => fav.url === streamUrl);
-                    
+
+                    const isSeries = type === 'series';
+                    const safeName = (item.name || 'Sin nombre').replace(/'/g, "\\'");
+                    const playAction = isSeries ? 
+                        `openSeriesModal('${itemId}', '${safeName}', '${baseUrl}')` : 
+                        `playStream('${streamUrl}', '${safeName}', '${type}')`;
+
                     html += `
                         <div class="channel-item">
                             <div class="channel-info">
                                 <div class="channel-name">${item.name || 'Sin nombre'}</div>
                             </div>
                             <div class="channel-actions">
-                                <button class="play-btn" onclick="showFloatingPlayer('${streamUrl}', '${item.name.replace(/'/g, "\\'")}', '${type}')">▶️</button>
-                                <button class="fav-channel-btn ${isFav ? 'active' : ''}" data-favurl="${streamUrl}" onclick="toggleFavorite('${favType}', {${type === 'series' ? 'series_id' : 'stream_id'}: ${itemId}, name: '${item.name.replace(/'/g, "\\'")}'}, '${baseUrl}', '${new URL(baseUrl).hostname}')">${isFav ? '⭐' : '☆'}</button>
+                                <button class="play-btn" onclick="${playAction}; event.stopPropagation();">▶️</button>
+                                <button class="fav-channel-btn ${isFav ? 'active' : ''}" data-favurl="${streamUrl}" onclick="toggleFavorite('${favType}', {${type === 'series' ? 'series_id' : 'stream_id'}: ${itemId}, name: '${safeName}'}, '${baseUrl}', '${new URL(baseUrl).hostname}')">${isFav ? '⭐' : '☆'}</button>
                             </div>
                         </div>
                     `;
                 });
-                
+
                 html += '</div></div>';
             });
             html += '</div>';
             container.innerHTML = html;
-        }
-
-        function getCountryFromName(name) {
-            if (!name) return 'Internacional';
-            const countries = {
-                'spain|españa|es|esp': '🇪🇸 España',
-                'mexico|mx|mex': '🇲🇽 México',
-                'argentina|ar|arg': '🇦🇷 Argentina',
-                'colombia|co|col': '🇨🇴 Colombia',
-                'chile|cl|chi': '🇨🇱 Chile'
-            };
-            
-            for (const [pattern, country] of Object.entries(countries)) {
-                if (new RegExp(pattern, 'i').test(name)) return country;
-            }
-            return '🌍 Internacional';
         }
 
         function buildStreamUrl(baseUrl, id, type) {
@@ -2756,22 +2695,22 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            initFloatingPlayer();
             
-            document.getElementById('analyzeBtn').addEventListener('click', analyzeUrl);
-            document.getElementById('clearBtn').addEventListener('click', clearForm);
             
-            document.getElementById('exportFavoritesBtn').addEventListener('click', exportFavorites);
-            document.getElementById('importFavoritesBtn').addEventListener('click', importFavorites);
-            document.getElementById('clearFavoritesBtn').addEventListener('click', clearAllFavorites);
-            document.getElementById('mergeFavoritesBtn').addEventListener('click', mergeFavoritesFromCurrentList);
-            document.getElementById('exportM3UBtn').addEventListener('click', exportFavoritesAsM3U);
-            document.getElementById('importFile').addEventListener('change', handleFileImport);
+            const _btn_analyzeBtn = document.getElementById('analyzeBtn'); if(_btn_analyzeBtn) _btn_analyzeBtn.addEventListener('click', analyzeUrl);
+            const _btn_clearBtn = document.getElementById('clearBtn'); if(_btn_clearBtn) _btn_clearBtn.addEventListener('click', clearForm);
             
-            document.getElementById('miniExpandBtn').addEventListener('click', expandPlayer);
-            document.getElementById('miniCloseBtn').addEventListener('click', closeMiniPlayer);
             
-            document.getElementById('url').addEventListener('keypress', (e) => {
+            
+            
+            
+            
+            const _btn_importFile = document.getElementById('importFile'); if(_btn_importFile) _btn_importFile.addEventListener('change', handleFileImport);
+            
+            const _btn_miniExpandBtn = document.getElementById('miniExpandBtn'); if(_btn_miniExpandBtn) _btn_miniExpandBtn.addEventListener('click', expandPlayer);
+            const _btn_miniCloseBtn = document.getElementById('miniCloseBtn'); if(_btn_miniCloseBtn) _btn_miniCloseBtn.addEventListener('click', closeMiniPlayer);
+            
+            const _btn_url = document.getElementById('url'); if(_btn_url) _btn_url.addEventListener('keypress', (e) => {
                 if (e.key === 'Enter') analyzeUrl();
             });
             
