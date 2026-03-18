@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>🏴‍☠️ LA PERLA NEGRA - IPTV PROXY</title>
+    <title>🏴‍☠️ LA PERLA NEGRA - IPTV</title>
     <style>
         * {
             margin: 0;
@@ -15,6 +15,9 @@
         body {
             background: #0a0a0a;
             color: white;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
         /* HEADER */
@@ -25,15 +28,6 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
         }
 
         .logo h1 {
@@ -50,19 +44,13 @@
             background: #1a1a1a;
             border: 1px solid #D4AF37;
             border-radius: 40px;
-            padding: 10px 18px;
+            padding: 8px 15px;
             color: #D4AF37;
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 5px;
             font-size: 0.9em;
-            transition: 0.2s;
-        }
-
-        .icon-btn:hover {
-            background: #D4AF37;
-            color: #000;
         }
 
         .icon-btn.active {
@@ -71,196 +59,171 @@
             border-color: #00ff00;
         }
 
-        .icon-btn.active span:first-child {
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.5; }
-            100% { opacity: 1; }
-        }
-
-        /* CONTENEDOR PRINCIPAL */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
+        /* CONTENEDOR PRINCIPAL - 2 COLUMNAS */
+        .main-content {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
             padding: 15px;
+            gap: 15px;
         }
 
-        /* INPUT M3U */
-        .url-section {
-            margin: 20px 0;
+        /* COLUMNA IZQUIERDA - LISTA DE CANALES */
+        .channels-column {
+            flex: 1;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            min-width: 300px;
+        }
+
+        .input-area {
+            padding: 15px;
+            border-bottom: 1px solid #333;
         }
 
         .url-box {
             display: flex;
             gap: 10px;
-            background: #1a1a1a;
-            border: 2px solid #D4AF37;
-            border-radius: 60px;
-            padding: 5px;
-            overflow: hidden;
         }
 
         .url-box input {
             flex: 1;
-            background: transparent;
-            border: none;
-            padding: 18px 25px;
+            background: #000;
+            border: 1px solid #D4AF37;
+            border-radius: 8px;
+            padding: 12px;
             color: white;
-            font-size: 1em;
-            outline: none;
-        }
-
-        .url-box input::placeholder {
-            color: #666;
         }
 
         .url-box button {
             background: #D4AF37;
             border: none;
-            border-radius: 50px;
-            padding: 0 35px;
+            border-radius: 8px;
+            padding: 0 20px;
             font-weight: bold;
-            font-size: 1.1em;
             cursor: pointer;
-            transition: 0.2s;
-            white-space: nowrap;
         }
 
-        .url-box button:hover {
-            background: #FFD700;
-        }
-
-        /* ESTADÍSTICAS */
-        .stats {
+        .stats-row {
             display: flex;
-            gap: 15px;
-            margin: 25px 0;
-            justify-content: space-around;
-            flex-wrap: wrap;
-        }
-
-        .stat-item {
-            background: #1a1a1a;
-            border: 1px solid #333;
-            border-radius: 30px;
-            padding: 12px 25px;
-            display: flex;
-            align-items: center;
             gap: 10px;
-            font-size: 1.1em;
+            margin-top: 10px;
+            font-size: 0.8em;
+            color: #666;
         }
 
-        .stat-number {
-            color: #D4AF37;
-            font-weight: bold;
-            font-size: 1.3em;
-        }
-
-        /* PESTAÑAS */
         .tabs {
             display: flex;
-            gap: 5px;
-            margin: 25px 0 15px;
             border-bottom: 1px solid #333;
         }
 
         .tab {
-            padding: 12px 25px;
-            background: transparent;
-            border: none;
-            color: #666;
-            font-weight: bold;
+            flex: 1;
+            padding: 12px;
+            text-align: center;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            border-bottom: 3px solid transparent;
+            background: #000;
+            color: #666;
         }
 
         .tab.active {
-            color: #D4AF37;
-            border-bottom-color: #D4AF37;
+            background: #D4AF37;
+            color: #000;
+            font-weight: bold;
         }
 
-        .tab-count {
-            background: #333;
-            color: white;
-            padding: 2px 8px;
-            border-radius: 20px;
-            font-size: 0.8em;
-        }
-
-        /* GRID DE CONTENIDO */
-        .content-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 15px;
-            max-height: 70vh;
+        .channels-list {
+            flex: 1;
             overflow-y: auto;
-            padding: 10px 5px;
+            padding: 10px;
         }
 
-        .content-card {
-            background: #1a1a1a;
-            border: 1px solid #333;
-            border-radius: 12px;
-            padding: 15px;
+        .channel-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            border-bottom: 1px solid #333;
             cursor: pointer;
             transition: 0.2s;
-            position: relative;
         }
 
-        .content-card:hover {
+        .channel-item:hover {
+            background: #2a2a2a;
             border-color: #D4AF37;
-            transform: translateY(-3px);
         }
 
-        .content-card.blocked {
+        .channel-item.blocked {
             opacity: 0.4;
-            filter: blur(1px);
             pointer-events: none;
         }
 
-        .content-card.blocked::after {
-            content: '🔒';
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            font-size: 1.2em;
+        .channel-name {
+            flex: 1;
         }
 
-        .card-title {
-            font-weight: bold;
-            margin-bottom: 8px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .card-category {
+        .channel-category {
             color: #D4AF37;
             font-size: 0.8em;
+            margin-right: 10px;
+        }
+
+        /* COLUMNA DERECHA - REPRODUCTOR */
+        .player-column {
+            width: 500px;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .player-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .player-header {
+            padding: 15px;
+            background: #000;
+            border-bottom: 1px solid #333;
+        }
+
+        .player-header h3 {
+            color: #D4AF37;
+            font-size: 1em;
+        }
+
+        .video-wrapper {
+            flex: 1;
+            background: #000;
             display: flex;
             align-items: center;
-            gap: 5px;
+            justify-content: center;
+            min-height: 300px;
         }
 
-        .card-type {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background: #D4AF37;
-            color: #000;
-            padding: 2px 8px;
-            border-radius: 20px;
-            font-size: 0.7em;
-            font-weight: bold;
+        video {
+            width: 100%;
+            height: 100%;
+            max-height: 400px;
+            background: #000;
         }
 
-        /* MODAL PARENTAL */
+        .player-info {
+            padding: 15px;
+            background: #000;
+            border-top: 1px solid #333;
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        /* MODALES (igual que antes) */
         .modal {
             display: none;
             position: fixed;
@@ -282,183 +245,11 @@
             background: #1a1a1a;
             border: 2px solid #D4AF37;
             border-radius: 20px;
-            width: 90%;
-            max-width: 450px;
-            max-height: 80vh;
-            overflow: hidden;
-        }
-
-        .modal-header {
-            background: #000;
-            padding: 20px;
-            border-bottom: 1px solid #333;
-        }
-
-        .modal-header h3 {
-            color: #D4AF37;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .modal-body {
-            padding: 20px;
-            max-height: 50vh;
-            overflow-y: auto;
-        }
-
-        .category-row {
-            display: flex;
-            align-items: center;
-            padding: 12px;
-            border-bottom: 1px solid #333;
-            cursor: pointer;
-        }
-
-        .category-row:hover {
-            background: #000;
-        }
-
-        .category-name {
-            flex: 1;
-        }
-
-        .category-check {
-            width: 24px;
-            height: 24px;
-            border: 2px solid #D4AF37;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #D4AF37;
-            font-weight: bold;
-        }
-
-        .category-row.selected .category-check {
-            background: #D4AF37;
-            color: #000;
-        }
-
-        .modal-footer {
-            padding: 20px;
-            border-top: 1px solid #333;
-            display: flex;
-            gap: 10px;
-        }
-
-        .modal-btn {
-            flex: 1;
-            background: #D4AF37;
-            border: none;
-            border-radius: 10px;
-            padding: 15px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .modal-btn.dark {
-            background: #333;
-            color: #D4AF37;
-        }
-
-        /* PIN MODAL */
-        .pin-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.95);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .pin-modal.active {
-            display: flex;
-        }
-
-        .pin-content {
-            background: #1a1a1a;
-            border: 2px solid #D4AF37;
-            border-radius: 20px;
             padding: 30px;
-            width: 300px;
-            text-align: center;
+            width: 90%;
+            max-width: 400px;
         }
 
-        .pin-display {
-            font-size: 2.5em;
-            letter-spacing: 10px;
-            margin: 20px 0;
-            color: #D4AF37;
-        }
-
-        .pin-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin: 20px 0;
-        }
-
-        .pin-key {
-            background: #000;
-            border: 1px solid #333;
-            border-radius: 10px;
-            padding: 15px;
-            cursor: pointer;
-        }
-
-        .pin-key:hover {
-            border-color: #D4AF37;
-        }
-
-        /* REPRODUCTOR */
-        .player-section {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: #000;
-            border-top: 2px solid #D4AF37;
-            display: none;
-            z-index: 500;
-        }
-
-        .player-section.active {
-            display: block;
-        }
-
-        .player-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 10px 20px;
-            background: #1a1a1a;
-        }
-
-        .player-title {
-            color: #D4AF37;
-            font-size: 0.9em;
-        }
-
-        .close-player {
-            background: none;
-            border: none;
-            color: #D4AF37;
-            font-size: 1.5em;
-            cursor: pointer;
-        }
-
-        video {
-            width: 100%;
-            max-height: 300px;
-            background: #000;
-        }
-
-        /* TOAST */
         .toast {
             position: fixed;
             bottom: 20px;
@@ -477,29 +268,13 @@
             transform: translateX(-50%) translateY(0);
         }
 
-        .toast.error {
-            border-color: #ff4444;
-            background: #330000;
-        }
-
-        @media (max-width: 768px) {
-            .url-box {
+        @media (max-width: 900px) {
+            .main-content {
                 flex-direction: column;
-                border-radius: 20px;
             }
             
-            .url-box button {
-                padding: 15px;
+            .player-column {
                 width: 100%;
-            }
-            
-            .tabs {
-                flex-wrap: wrap;
-            }
-            
-            .tab {
-                flex: 1;
-                justify-content: center;
             }
         }
     </style>
@@ -510,508 +285,268 @@
             <h1>🏴‍☠️ LA PERLA NEGRA</h1>
         </div>
         <div class="header-buttons">
-            <div class="icon-btn" id="warpBtn" onclick="perla.toggleWorker()">
-                <span>🌐</span> WARP
+            <div class="icon-btn" id="warpBtn">🌐 WARP</div>
+            <div class="icon-btn" id="parentalBtn">🔒 CONTROL</div>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <!-- COLUMNA IZQUIERDA: LISTA -->
+        <div class="channels-column">
+            <div class="input-area">
+                <div class="url-box">
+                    <input type="text" id="m3uUrl" placeholder="URL de lista M3U...">
+                    <button id="loadBtn">CARGAR</button>
+                </div>
+                <div class="stats-row">
+                    <span>📺 <span id="liveCount">0</span></span>
+                    <span>🎬 <span id="movieCount">0</span></span>
+                    <span>📚 <span id="seriesCount">0</span></span>
+                </div>
             </div>
-            <div class="icon-btn" id="parentalBtn" onclick="perla.openParentalModal()">
-                <span>🔒</span> CONTROL
+
+            <div class="tabs">
+                <div class="tab active" data-tab="live">TV</div>
+                <div class="tab" data-tab="movies">PELÍCULAS</div>
+                <div class="tab" data-tab="series">SERIES</div>
+            </div>
+
+            <div class="channels-list" id="channelsList">
+                <div style="text-align: center; padding: 30px; color: #666;">
+                    Cargá una lista M3U para empezar
+                </div>
+            </div>
+        </div>
+
+        <!-- COLUMNA DERECHA: REPRODUCTOR -->
+        <div class="player-column">
+            <div class="player-container">
+                <div class="player-header">
+                    <h3 id="nowPlaying">⚓ Seleccioná un canal</h3>
+                </div>
+                <div class="video-wrapper">
+                    <video id="videoPlayer" controls playsinline></video>
+                </div>
+                <div class="player-info" id="playerStatus">
+                    <span>🌐 WARP: <span id="warpStatus">OFF</span></span>
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="container">
-        <!-- INPUT M3U -->
-        <div class="url-section">
-            <div class="url-box">
-                <input type="text" id="m3uUrl" placeholder="Pega tu lista M3U aquí... (ej: http://ejemplo.com/list.m3u)">
-                <button id="loadM3UBtn" onclick="perla.loadM3U()">⚓ CARGAR</button>
-            </div>
-        </div>
-
-        <!-- Estadísticas -->
-        <div class="stats">
-            <div class="stat-item">
-                <span>📺 TV</span>
-                <span class="stat-number" id="liveCount">0</span>
-            </div>
-            <div class="stat-item">
-                <span>🎬 PELIS</span>
-                <span class="stat-number" id="movieCount">0</span>
-            </div>
-            <div class="stat-item">
-                <span>📚 SERIES</span>
-                <span class="stat-number" id="seriesCount">0</span>
-            </div>
-        </div>
-
-        <!-- Pestañas -->
-        <div class="tabs">
-            <div class="tab active" data-tab="live" onclick="perla.switchTab('live')">📺 TV <span class="tab-count" id="liveTabCount">0</span></div>
-            <div class="tab" data-tab="movies" onclick="perla.switchTab('movies')">🎬 PELÍCULAS <span class="tab-count" id="moviesTabCount">0</span></div>
-            <div class="tab" data-tab="series" onclick="perla.switchTab('series')">📚 SERIES <span class="tab-count" id="seriesTabCount">0</span></div>
-        </div>
-
-        <!-- Contenido -->
-        <div id="liveContent" class="content-grid"></div>
-        <div id="moviesContent" class="content-grid" style="display: none;"></div>
-        <div id="seriesContent" class="content-grid" style="display: none;"></div>
-    </div>
-
-    <!-- MODAL PARENTAL -->
+    <!-- MODAL PARENTAL (simplificado) -->
     <div class="modal" id="parentalModal">
         <div class="modal-content">
-            <div class="modal-header">
-                <h3>⚓ CONTROL PARENTAL</h3>
-                <p style="color: #666; font-size: 0.9em; margin-top: 5px;">Selecciona categorías a bloquear</p>
-            </div>
-            <div class="modal-body" id="categoriesList"></div>
-            <div class="modal-footer">
-                <button class="modal-btn dark" onclick="document.getElementById('parentalModal').classList.remove('active')">CANCELAR</button>
-                <button class="modal-btn" onclick="perla.saveParentalSettings()">GUARDAR</button>
+            <h3 style="color: #D4AF37; margin-bottom: 20px;">🔒 CONTROL PARENTAL</h3>
+            <div id="categoriesList" style="margin-bottom: 20px;"></div>
+            <div style="display: flex; gap: 10px;">
+                <button class="icon-btn" style="flex:1; justify-content: center;" id="saveParentalBtn">GUARDAR</button>
+                <button class="icon-btn" style="flex:1; justify-content: center;" id="closeParentalBtn">CERRAR</button>
             </div>
         </div>
-    </div>
-
-    <!-- MODAL PIN -->
-    <div class="pin-modal" id="pinModal">
-        <div class="pin-content">
-            <h3 style="color: #D4AF37;">🔒 INTRODUCE PIN</h3>
-            <div class="pin-display" id="pinDisplay">****</div>
-            <div class="pin-grid" id="pinGrid"></div>
-            <button class="modal-btn dark" onclick="document.getElementById('pinModal').classList.remove('active')">CANCELAR</button>
-        </div>
-    </div>
-
-    <!-- REPRODUCTOR -->
-    <div class="player-section" id="playerSection">
-        <div class="player-header">
-            <span class="player-title" id="playerTitle">⚓ Navegando...</span>
-            <button class="close-player" onclick="perla.closePlayer()">✖</button>
-        </div>
-        <video id="videoPlayer" controls playsinline></video>
     </div>
 
     <!-- TOAST -->
     <div class="toast" id="toast"></div>
 
     <script>
-        // ==================== LA PERLA NEGRA CON WORKER CLOUDFLARE ====================
-        const USER_AGENT = 'okhttp/4.11.0';
-
+        // ==================== CÓDIGO SIMPLIFICADO ====================
+        const WORKER_URL = 'https://quiet-lake-ca31perlanegraproxy.rickgar600.workers.dev';
+        
         class PerlaNegra {
             constructor() {
-                // Configuración del Worker (¡CAMBIÁ ESTO POR TU URL!)
-                this.WORKER_URL = 'https://quiet-lake-ca31perlanegraproxy.rickgar600.workers.dev';
-                this.useWorker = localStorage.getItem('perlaWorker') !== 'false'; // Activado por defecto
-                
-                // Estado
-                this.pin = localStorage.getItem('perlaPin') || null;
-                this.blockedCategories = JSON.parse(localStorage.getItem('perlaBlocked')) || [];
-                
-                // Datos M3U
-                this.liveChannels = [];
+                this.useWarp = true;
+                this.channels = [];
                 this.movies = [];
                 this.series = [];
-                this.allCategories = [];
+                this.blockedCategories = JSON.parse(localStorage.getItem('blocked')) || [];
                 
                 this.init();
             }
 
             init() {
+                // Eventos
+                document.getElementById('warpBtn').onclick = () => this.toggleWarp();
+                document.getElementById('parentalBtn').onclick = () => this.openParental();
+                document.getElementById('loadBtn').onclick = () => this.loadM3U();
+                document.getElementById('closeParentalBtn').onclick = () => this.closeParental();
+                document.getElementById('saveParentalBtn').onclick = () => this.saveParental();
+                
+                // Pestañas
+                document.querySelectorAll('.tab').forEach(tab => {
+                    tab.onclick = () => this.switchTab(tab.dataset.tab);
+                });
+                
                 this.updateWarpUI();
-                this.loadSampleData(); // Para probar
             }
 
-            // ==================== WORKER CLOUDFLARE ====================
-            toggleWorker() {
-                this.useWorker = !this.useWorker;
-                localStorage.setItem('perlaWorker', this.useWorker);
+            toggleWarp() {
+                this.useWarp = !this.useWarp;
+                localStorage.setItem('warp', this.useWarp);
                 this.updateWarpUI();
-                this.toast(this.useWorker ? '🌐 WARP activado (vía Cloudflare)' : '🌐 WARP desactivado');
+                this.toast(this.useWarp ? '🌐 WARP activado' : '🌐 WARP desactivado');
             }
 
             updateWarpUI() {
                 const btn = document.getElementById('warpBtn');
-                if (btn) {
-                    btn.innerHTML = this.useWorker ? 
-                        '<span>🌐</span> WARP ON' : 
-                        '<span>🌐</span> WARP';
-                    btn.classList.toggle('active', this.useWorker);
-                }
+                btn.classList.toggle('active', this.useWarp);
+                document.getElementById('warpStatus').textContent = this.useWarp ? 'ON' : 'OFF';
             }
 
-            // ==================== REPRODUCCIÓN CON WORKER ====================
-            async playItem(url, name) {
-                if (!url || url === '#') {
-                    this.toast('❌ URL inválida', 'error');
-                    return;
-                }
+            async playChannel(url, name) {
+                if (!url) return;
                 
                 let streamUrl = url;
-                
-                // Si el worker está activado, pasar por proxy
-                if (this.useWorker && this.WORKER_URL) {
-                    streamUrl = `${this.WORKER_URL}/?url=${encodeURIComponent(url)}`;
-                    console.log('🌐 Usando worker:', streamUrl);
+                if (this.useWarp && WORKER_URL) {
+                    streamUrl = `${WORKER_URL}/?url=${encodeURIComponent(url)}`;
                 }
                 
                 const video = document.getElementById('videoPlayer');
-                const player = document.getElementById('playerSection');
-                const title = document.getElementById('playerTitle');
-                
-                // Detener reproducción anterior
-                video.pause();
-                video.removeAttribute('src');
-                video.load();
-                
-                // Cargar nueva URL
                 video.src = streamUrl;
                 video.load();
                 
-                // Mostrar reproductor
-                player.classList.add('active');
-                title.textContent = `⚓ ${name || 'Reproduciendo'} (${this.useWorker ? 'WARP' : 'directo'})`;
+                document.getElementById('nowPlaying').textContent = `⚓ ${name || 'Reproduciendo'}`;
                 
                 try {
                     await video.play();
-                    this.toast(`✅ Reproduciendo: ${name}`);
+                    this.toast(`▶️ ${name}`);
                 } catch (error) {
-                    console.error('Error reproduciendo:', error);
+                    console.error('Error:', error);
+                    this.toast('❌ Error al reproducir', 'error');
                     
-                    // Si falla con worker, intentar sin él automáticamente
-                    if (this.useWorker) {
-                        this.toast('⚠️ Falló con WARP, intentando directo...', 'error');
-                        this.useWorker = false;
+                    // Si falla con WARP, intentar sin él
+                    if (this.useWarp) {
+                        this.useWarp = false;
                         this.updateWarpUI();
-                        setTimeout(() => this.playItem(url, name), 1000);
-                    } else {
-                        this.toast('❌ Error al reproducir. Probá activando WARP.', 'error');
+                        this.playChannel(url, name);
                     }
                 }
             }
 
-            closePlayer() {
-                const player = document.getElementById('playerSection');
-                const video = document.getElementById('videoPlayer');
-                
-                player.classList.remove('active');
-                video.pause();
-                video.removeAttribute('src');
-                video.load();
-            }
-
-            // ==================== M3U PARSER ====================
             async loadM3U() {
                 const url = document.getElementById('m3uUrl').value.trim();
                 if (!url) {
-                    this.toast('❌ Pega una URL M3U');
+                    this.toast('❌ Ingresá una URL', 'error');
                     return;
                 }
 
-                this.toast('⚓ Cargando lista...');
+                this.toast('⚓ Cargando...');
                 
                 try {
                     const response = await fetch(url, {
-                        headers: { 'User-Agent': USER_AGENT }
+                        headers: { 'User-Agent': 'okhttp/4.11.0' }
                     });
-                    const m3uText = await response.text();
-                    
-                    this.parseM3U(m3uText);
-                    this.extractCategories();
-                    this.renderContent();
-                    this.updateCounts();
-                    this.toast('✅ Lista cargada correctamente');
-                    
+                    const text = await response.text();
+                    this.parseM3U(text);
                 } catch (error) {
-                    console.error(error);
-                    this.toast('❌ Error al cargar la lista', 'error');
+                    this.toast('❌ Error al cargar', 'error');
                 }
             }
 
             parseM3U(text) {
-                // Reset
-                this.liveChannels = [];
+                this.channels = [];
                 this.movies = [];
                 this.series = [];
                 
                 const lines = text.split('\n');
-                let currentInfo = null;
+                let current = null;
                 
-                for (let i = 0; i < lines.length; i++) {
-                    const line = lines[i].trim();
-                    
+                lines.forEach(line => {
                     if (line.startsWith('#EXTINF:')) {
-                        // Extraer información
-                        const match = line.match(/#EXTINF:-?1.*?tvg-id="(.*?)".*?tvg-name="(.*?)".*?tvg-logo="(.*?)".*?group-title="(.*?)".*?,(.*)/);
+                        const match = line.match(/group-title="([^"]+)"/);
+                        const category = match ? match[1] : 'General';
                         
-                        if (match) {
-                            currentInfo = {
-                                id: match[1],
-                                name: match[5] || 'Sin nombre',
-                                logo: match[3] || '',
-                                category: match[4] || 'General',
-                                tvgName: match[2] || ''
-                            };
+                        const nameMatch = line.match(/,(.+)$/);
+                        const name = nameMatch ? nameMatch[1] : 'Canal';
+                        
+                        current = { name, category };
+                    } else if (line && !line.startsWith('#') && current) {
+                        current.url = line;
+                        
+                        // Clasificar
+                        if (line.includes('.mp4') || line.includes('.mkv') || 
+                            current.name.toLowerCase().includes('película')) {
+                            this.movies.push(current);
                         } else {
-                            // Formato simple
-                            const simpleMatch = line.match(/#EXTINF:-?\d*.*?,(.*)/);
-                            if (simpleMatch) {
-                                currentInfo = {
-                                    name: simpleMatch[1] || 'Canal',
-                                    category: 'General',
-                                    logo: ''
-                                };
-                            }
+                            this.channels.push(current);
                         }
-                    } else if (line && !line.startsWith('#') && currentInfo) {
-                        // Es la URL
-                        currentInfo.url = line;
-                        
-                        // Clasificar por extensión o nombre
-                        const urlLower = line.toLowerCase();
-                        const nameLower = currentInfo.name.toLowerCase();
-                        
-                        if (urlLower.includes('.mp4') || urlLower.includes('.mkv') || 
-                            nameLower.includes('película') || nameLower.includes('movie') ||
-                            nameLower.includes('film')) {
-                            this.movies.push({...currentInfo, type: 'movie'});
-                        } 
-                        else if (nameLower.includes('capítulo') || nameLower.includes('episodio') || 
-                                 nameLower.includes('serie') || nameLower.includes('temporada')) {
-                            this.series.push({...currentInfo, type: 'series'});
-                        }
-                        else {
-                            this.liveChannels.push({...currentInfo, type: 'live'});
-                        }
-                        
-                        currentInfo = null;
+                        current = null;
                     }
-                }
-                
-                console.log(`Cargados: ${this.liveChannels.length} canales, ${this.movies.length} pelis, ${this.series.length} series`);
-            }
-
-            extractCategories() {
-                const cats = new Set();
-                
-                [...this.liveChannels, ...this.movies, ...this.series].forEach(item => {
-                    if (item.category) cats.add(item.category);
                 });
                 
-                this.allCategories = Array.from(cats).sort();
+                this.updateCounts();
+                this.renderChannels();
+                this.toast(`✅ ${this.channels.length} canales, ${this.movies.length} películas`);
             }
 
-            // ==================== RENDERIZADO ====================
-            renderContent() {
-                this.renderLive();
-                this.renderMovies();
-                this.renderSeries();
-            }
-
-            renderLive() {
-                const container = document.getElementById('liveContent');
-                container.innerHTML = this.liveChannels.map(ch => {
-                    const blocked = this.isBlocked(ch.category);
-                    return `
-                        <div class="content-card ${blocked ? 'blocked' : ''}" onclick="perla.playItem('${ch.url}', '${ch.name.replace(/'/g, "\\'")}')">
-                            <div class="card-type">TV</div>
-                            <div class="card-title">${ch.name}</div>
-                            <div class="card-category">
-                                <span>📺</span> ${ch.category || 'General'}
-                            </div>
-                        </div>
-                    `;
-                }).join('');
-            }
-
-            renderMovies() {
-                const container = document.getElementById('moviesContent');
-                container.innerHTML = this.movies.map(movie => {
-                    const blocked = this.isBlocked(movie.category);
-                    return `
-                        <div class="content-card ${blocked ? 'blocked' : ''}" onclick="perla.playItem('${movie.url}', '${movie.name.replace(/'/g, "\\'")}')">
-                            <div class="card-type">🎬</div>
-                            <div class="card-title">${movie.name}</div>
-                            <div class="card-category">
-                                <span>🎬</span> ${movie.category || 'General'}
-                            </div>
-                        </div>
-                    `;
-                }).join('');
-            }
-
-            renderSeries() {
-                const container = document.getElementById('seriesContent');
-                container.innerHTML = this.series.map(serie => {
-                    const blocked = this.isBlocked(serie.category);
-                    return `
-                        <div class="content-card ${blocked ? 'blocked' : ''}" onclick="perla.playItem('${serie.url}', '${serie.name.replace(/'/g, "\\'")}')">
-                            <div class="card-type">📚</div>
-                            <div class="card-title">${serie.name}</div>
-                            <div class="card-category">
-                                <span>📚</span> ${serie.category || 'General'}
-                            </div>
-                        </div>
-                    `;
-                }).join('');
-            }
-
-            isBlocked(category) {
-                if (!category) return false;
-                return this.blockedCategories.some(cat => 
-                    category.toLowerCase().includes(cat.toLowerCase())
-                );
-            }
-
-            updateCounts() {
-                document.getElementById('liveCount').textContent = this.liveChannels.length;
-                document.getElementById('movieCount').textContent = this.movies.length;
-                document.getElementById('seriesCount').textContent = this.series.length;
+            renderChannels() {
+                const container = document.getElementById('channelsList');
+                const activeTab = document.querySelector('.tab.active').dataset.tab;
                 
-                document.getElementById('liveTabCount').textContent = this.liveChannels.length;
-                document.getElementById('moviesTabCount').textContent = this.movies.length;
-                document.getElementById('seriesTabCount').textContent = this.series.length;
+                let items = [];
+                if (activeTab === 'live') items = this.channels;
+                else if (activeTab === 'movies') items = this.movies;
+                else items = this.series;
+                
+                if (items.length === 0) {
+                    container.innerHTML = '<div style="text-align: center; padding: 30px; color: #666;">No hay contenido</div>';
+                    return;
+                }
+                
+                container.innerHTML = items.map(item => {
+                    const blocked = this.blockedCategories.some(c => 
+                        item.category?.toLowerCase().includes(c.toLowerCase())
+                    );
+                    
+                    return `
+                        <div class="channel-item ${blocked ? 'blocked' : ''}" 
+                             onclick="${!blocked ? `perla.playChannel('${item.url}', '${item.name.replace(/'/g, "\\'")}')` : ''}">
+                            <span class="channel-name">${item.name}</span>
+                            <span class="channel-category">${item.category || 'General'}</span>
+                        </div>
+                    `;
+                }).join('');
             }
 
             switchTab(tab) {
                 document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-                document.querySelectorAll('.content-grid').forEach(c => c.style.display = 'none');
-                
                 document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
-                document.getElementById(`${tab}Content`).style.display = 'grid';
+                this.renderChannels();
             }
 
-            // ==================== CONTROL PARENTAL ====================
-            openParentalModal() {
-                // Si hay PIN, pedirlo primero
-                if (this.pin) {
-                    this.showPinModal(() => this.showCategoriesModal());
-                } else {
-                    this.showCategoriesModal();
-                }
+            updateCounts() {
+                document.getElementById('liveCount').textContent = this.channels.length;
+                document.getElementById('movieCount').textContent = this.movies.length;
+                document.getElementById('seriesCount').textContent = this.series.length;
             }
 
-            showCategoriesModal() {
-                const modal = document.getElementById('parentalModal');
+            openParental() {
                 const list = document.getElementById('categoriesList');
+                const categories = ['+18', 'Adultos', 'XXX', 'Violencia', 'Terror'];
                 
-                // Mostrar categorías
-                list.innerHTML = this.allCategories.map(cat => `
-                    <div class="category-row ${this.blockedCategories.includes(cat) ? 'selected' : ''}" data-category="${cat}">
-                        <span class="category-name">${cat}</span>
-                        <span class="category-check">${this.blockedCategories.includes(cat) ? '✓' : ''}</span>
+                list.innerHTML = categories.map(cat => `
+                    <div style="display: flex; align-items: center; margin: 10px 0;">
+                        <input type="checkbox" value="${cat}" ${this.blockedCategories.includes(cat) ? 'checked' : ''}>
+                        <span style="margin-left: 10px;">${cat}</span>
                     </div>
                 `).join('');
                 
-                // Añadir eventos
-                document.querySelectorAll('.category-row').forEach(row => {
-                    row.addEventListener('click', () => {
-                        row.classList.toggle('selected');
-                        const check = row.querySelector('.category-check');
-                        check.textContent = row.classList.contains('selected') ? '✓' : '';
-                    });
-                });
-                
-                modal.classList.add('active');
+                document.getElementById('parentalModal').classList.add('active');
             }
 
-            saveParentalSettings() {
-                const modal = document.getElementById('parentalModal');
-                const rows = document.querySelectorAll('.category-row');
-                
-                this.blockedCategories = [];
-                rows.forEach(row => {
-                    if (row.classList.contains('selected')) {
-                        this.blockedCategories.push(row.dataset.category);
-                    }
-                });
-                
-                localStorage.setItem('perlaBlocked', JSON.stringify(this.blockedCategories));
-                this.renderContent();
-                modal.classList.remove('active');
-                this.toast('✅ Configuración guardada');
+            saveParental() {
+                const checkboxes = document.querySelectorAll('#categoriesList input:checked');
+                this.blockedCategories = Array.from(checkboxes).map(cb => cb.value);
+                localStorage.setItem('blocked', JSON.stringify(this.blockedCategories));
+                this.renderChannels();
+                this.closeParental();
+                this.toast('✅ Guardado');
             }
 
-            // ==================== PIN MODAL ====================
-            showPinModal(onSuccess) {
-                const modal = document.getElementById('pinModal');
-                const display = document.getElementById('pinDisplay');
-                const grid = document.getElementById('pinGrid');
-                let pin = '';
-                
-                modal.classList.add('active');
-                display.textContent = '****';
-                
-                grid.innerHTML = '';
-                for (let i = 1; i <= 9; i++) {
-                    const btn = document.createElement('div');
-                    btn.className = 'pin-key';
-                    btn.textContent = i;
-                    btn.onclick = () => {
-                        if (pin.length < 4) {
-                            pin += i;
-                            display.textContent = '•'.repeat(pin.length) + '*'.repeat(4 - pin.length);
-                        }
-                    };
-                    grid.appendChild(btn);
-                }
-                
-                const zeroBtn = document.createElement('div');
-                zeroBtn.className = 'pin-key';
-                zeroBtn.textContent = '0';
-                zeroBtn.onclick = () => {
-                    if (pin.length < 4) {
-                        pin += '0';
-                        display.textContent = '•'.repeat(pin.length) + '*'.repeat(4 - pin.length);
-                    }
-                };
-                grid.appendChild(zeroBtn);
-                
-                const delBtn = document.createElement('div');
-                delBtn.className = 'pin-key';
-                delBtn.innerHTML = '⌫';
-                delBtn.onclick = () => {
-                    pin = pin.slice(0, -1);
-                    display.textContent = '•'.repeat(pin.length) + '*'.repeat(4 - pin.length);
-                };
-                grid.appendChild(delBtn);
-                
-                const okBtn = document.createElement('div');
-                okBtn.className = 'pin-key';
-                okBtn.innerHTML = '✓';
-                okBtn.onclick = () => {
-                    if (pin === this.pin) {
-                        modal.classList.remove('active');
-                        onSuccess();
-                    } else {
-                        this.toast('❌ PIN incorrecto', 'error');
-                        pin = '';
-                        display.textContent = '****';
-                    }
-                };
-                grid.appendChild(okBtn);
+            closeParental() {
+                document.getElementById('parentalModal').classList.remove('active');
             }
 
-            setPin() {
-                const newPin = prompt('🔐 Introduce nuevo PIN de 4 dígitos:');
-                if (newPin && newPin.length === 4 && /^\d+$/.test(newPin)) {
-                    this.pin = newPin;
-                    localStorage.setItem('perlaPin', newPin);
-                    this.toast('✅ PIN guardado');
-                } else {
-                    this.toast('❌ Debe tener 4 números', 'error');
-                }
-            }
-
-            clearPin() {
-                if (confirm('¿Eliminar PIN?')) {
-                    this.pin = null;
-                    localStorage.removeItem('perlaPin');
-                    this.toast('🔓 PIN eliminado');
-                }
-            }
-
-            // ==================== UTILIDADES ====================
             toast(msg, type = 'success') {
                 const toast = document.getElementById('toast');
                 toast.textContent = msg;
@@ -1019,42 +554,10 @@
                 if (type === 'error') toast.style.borderColor = '#ff4444';
                 setTimeout(() => toast.classList.remove('show'), 2000);
             }
-
-            loadSampleData() {
-                // Datos de ejemplo para probar
-                this.liveChannels = [
-                    { name: 'Canal 24h', url: 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8', category: 'Noticias' },
-                    { name: 'Deportes TV', url: 'https://test-streams.mux.dev/bbb_sunflower_1080p_30fps_normal.mp4', category: 'Deportes' },
-                    { name: 'Cine Español', url: '#', category: 'Cine' },
-                    { name: 'Canal +18', url: '#', category: '+18' },
-                    { name: 'Infantil', url: '#', category: 'Infantil' }
-                ];
-                
-                this.movies = [
-                    { name: 'El Padrino', url: '#', category: 'Cine' },
-                    { name: 'Pelicula +18', url: '#', category: '+18' },
-                    { name: 'Comedia', url: '#', category: 'Comedia' }
-                ];
-                
-                this.series = [
-                    { name: 'Serie Infantil', url: '#', category: 'Infantil' },
-                    { name: 'Serie Adultos', url: '#', category: '+18' }
-                ];
-                
-                this.allCategories = ['Noticias', 'Deportes', 'Cine', '+18', 'Infantil', 'Comedia'];
-                this.renderContent();
-                this.updateCounts();
-            }
         }
 
-        // Inicializar
         const perla = new PerlaNegra();
         window.perla = perla;
-
-        // Evento para el input (Enter)
-        document.getElementById('m3uUrl').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') perla.loadM3U();
-        });
     </script>
 </body>
 </html>
