@@ -1483,7 +1483,8 @@
         <div class="player-modal" id="playerModal">
             <div class="player-container">
                 <button class="close-player" onclick="closePlayer()">×</button>
-                <button class="minimize-player-btn" onclick="minimizePlayer()">📺</button>
+            <div id="playerTitle" style="color:#FFD700; font-size:15px; font-weight:bold; text-align:center; margin:10px 0; font-family:'Orbitron',sans-serif;">Reproduciendo...</div>
+                <button class="minimize-player-btn" >📺</button>
                 <div class="video-container">
                     <video 
                         id="videoPlayer" 
@@ -1632,66 +1633,7 @@
         let plyrInstance = null;
         let activeHls = null;
 
-        function playStream(url, title, type = 'live') {
-            const modal = document.getElementById('playerModal');
-            const video = document.getElementById('videoPlayer');
-
-            if(!modal || !video) {
-                console.error("No se encontró el reproductor en el HTML");
-                return;
-            }
-
-            document.getElementById('playerTitle').textContent = title;
-            modal.style.display = 'flex';
-
-            // Limpiar reproductor anterior
-            if (activeHls) {
-                activeHls.destroy();
-                activeHls = null;
-            }
-            video.pause();
-            video.removeAttribute('src');
-            video.load();
-
-            if (!plyrInstance) {
-                plyrInstance = new Plyr(video, {
-                    controls: ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'captions', 'settings', 'pip', 'airplay', 'fullscreen'],
-                    settings: ['captions', 'quality', 'speed'],
-                    i18n: { speed: 'Velocidad', quality: 'Calidad', captions: 'Subtítulos', normal: 'Normal' }
-                });
-            }
-
-            const lowerUrl = url.toLowerCase();
-
-            if (lowerUrl.includes('.m3u8') || lowerUrl.includes('.ts')) {
-                if (Hls.isSupported()) {
-                    activeHls = new Hls({ maxMaxBufferLength: 60 });
-                    activeHls.loadSource(url);
-                    activeHls.attachMedia(video);
-                    activeHls.on(Hls.Events.MANIFEST_PARSED, function() {
-                        video.play().catch(e => console.log("Auto-play prevenido", e));
-                    });
-                    activeHls.on(Hls.Events.ERROR, function(event, data) {
-                        if (data.fatal) {
-                            if(data.type === Hls.ErrorTypes.NETWORK_ERROR) {
-                                activeHls.startLoad();
-                            } else {
-                                fallbackToNativePlayer(video, url, title);
-                            }
-                        }
-                    });
-                } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-                    video.src = url;
-                    video.addEventListener('loadedmetadata', () => {
-                        video.play().catch(e => console.log("Auto-play prevenido", e));
-                    });
-                } else {
-                    fallbackToNativePlayer(video, url, title);
-                }
-            } else {
-                fallbackToNativePlayer(video, url, title);
-            }
-        }
+        
 
         function fallbackToNativePlayer(video, url, title) {
             video.src = url;
@@ -1700,18 +1642,54 @@
             });
         }
 
-        function closePlayer() {
-            if (activeHls) {
-                activeHls.destroy();
-                activeHls = null;
-            }
-            const video = document.getElementById('videoPlayer');
-            if(video) {
-                video.pause();
-                video.src = '';
-            }
+        function playStream(url, title, type) {
+            if (!url || url === '#') { showToast('❌ URL inválida', false); return; }
+
             const modal = document.getElementById('playerModal');
-            if(modal) modal.style.display = 'none';
+            const video = document.getElementById('videoPlayer');
+            const titleEl = document.getElementById('playerTitle');
+
+            if (!modal || !video) { showToast('❌ No se encontró el reproductor', false); return; }
+
+            if (titleEl) titleEl.textContent = title || 'Reproduciendo...';
+            modal.style.display = 'flex';
+
+            if (activeHls) { activeHls.destroy(); activeHls = null; }
+            video.pause();
+            video.removeAttribute('src');
+            video.load();
+
+            if (!plyrInstance) {
+                plyrInstance = new Plyr(video, {
+                    controls: ['play-large','play','progress','current-time','mute','volume','captions','settings','pip','fullscreen'],
+                    settings: ['captions','quality','speed']
+                });
+            }
+
+            const lowerUrl = (url || '').toLowerCase();
+            if (lowerUrl.includes('.m3u8') && Hls.isSupported()) {
+                activeHls = new Hls();
+                activeHls.loadSource(url);
+                activeHls.attachMedia(video);
+                activeHls.on(Hls.Events.MANIFEST_PARSED, () => video.play().catch(() => {}));
+                activeHls.on(Hls.Events.ERROR, (e, data) => {
+                    if (data.fatal) { activeHls.destroy(); video.src = url; video.play().catch(() => {}); }
+                });
+            } else if (video.canPlayType('application/vnd.apple.mpegurl') && lowerUrl.includes('.m3u8')) {
+                video.src = url;
+                video.play().catch(() => {});
+            } else {
+                video.src = url;
+                video.play().catch(() => {});
+            }
+        }
+
+        function closePlayer() {
+            if (activeHls) { activeHls.destroy(); activeHls = null; }
+            const video = document.getElementById('videoPlayer');
+            if (video) { video.pause(); video.src = ''; }
+            const modal = document.getElementById('playerModal');
+            if (modal) modal.style.display = 'none';
         }
 
 
@@ -2228,26 +2206,54 @@
         
         
         
-        function closePlayer() {
+        function playStream(url, title, type) {
+            if (!url || url === '#') { showToast('❌ URL inválida', false); return; }
+
             const modal = document.getElementById('playerModal');
             const video = document.getElementById('videoPlayer');
-            
-            if (hls) {
-                hls.destroy();
-                hls = null;
+            const titleEl = document.getElementById('playerTitle');
+
+            if (!modal || !video) { showToast('❌ No se encontró el reproductor', false); return; }
+
+            if (titleEl) titleEl.textContent = title || 'Reproduciendo...';
+            modal.style.display = 'flex';
+
+            if (activeHls) { activeHls.destroy(); activeHls = null; }
+            video.pause();
+            video.removeAttribute('src');
+            video.load();
+
+            if (!plyrInstance) {
+                plyrInstance = new Plyr(video, {
+                    controls: ['play-large','play','progress','current-time','mute','volume','captions','settings','pip','fullscreen'],
+                    settings: ['captions','quality','speed']
+                });
             }
-            
-            if (video) {
-                video.pause();
-                video.removeAttribute('src');
-                video.load();
+
+            const lowerUrl = (url || '').toLowerCase();
+            if (lowerUrl.includes('.m3u8') && Hls.isSupported()) {
+                activeHls = new Hls();
+                activeHls.loadSource(url);
+                activeHls.attachMedia(video);
+                activeHls.on(Hls.Events.MANIFEST_PARSED, () => video.play().catch(() => {}));
+                activeHls.on(Hls.Events.ERROR, (e, data) => {
+                    if (data.fatal) { activeHls.destroy(); video.src = url; video.play().catch(() => {}); }
+                });
+            } else if (video.canPlayType('application/vnd.apple.mpegurl') && lowerUrl.includes('.m3u8')) {
+                video.src = url;
+                video.play().catch(() => {});
+            } else {
+                video.src = url;
+                video.play().catch(() => {});
             }
-            
+        }
+
+        function closePlayer() {
+            if (activeHls) { activeHls.destroy(); activeHls = null; }
+            const video = document.getElementById('videoPlayer');
+            if (video) { video.pause(); video.src = ''; }
+            const modal = document.getElementById('playerModal');
             if (modal) modal.style.display = 'none';
-            
-            isPlaying = false;
-            currentStream = null;
-            closeMiniPlayer();
         }
 
         function showToast(message, isSuccess = true) {
