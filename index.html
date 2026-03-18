@@ -2370,6 +2370,7 @@
 
             try {
                 let url = parseAndBuildUrl(originalUrl) || originalUrl;
+                if (url.startsWith('http://')) url = proxify(url);
                 const isFullList = url.includes('get.php') && url.includes('username=') && url.includes('password=');
 
                 if (isFullList) {
