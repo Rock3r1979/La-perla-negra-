@@ -3,627 +3,293 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#8B4513">
-    <title>🏴‍☠️ LA PERLA NEGRA - IPTV Pirata</title>
-    
-    <!-- Fonts y estilos -->
-    <link href="https://fonts.googleapis.com/css2?family=Pirata+One&family=Cinzel:wght@400;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
+    <title>🏴‍☠️ LA PERLA NEGRA - IPTV Simple</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
         }
 
         body {
             background: #1a0f0a;
-            background-image: 
-                linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100"><path d="M20,20 L80,20 L80,80 L20,80 Z" fill="none" stroke="%238B4513" stroke-width="0.5" opacity="0.3"/><circle cx="50" cy="50" r="5" fill="%23D4AF37" opacity="0.2"/></svg>');
-            color: #fff;
             min-height: 100vh;
-            font-family: 'Cinzel', serif;
-            position: relative;
+            color: white;
         }
 
-        /* Efecto pergamino antiguo */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100"><path d="M10,10 Q30,5 50,10 Q70,15 90,10 L90,90 Q70,85 50,90 Q30,95 10,90 Z" fill="none" stroke="%23D4AF37" stroke-width="0.3" opacity="0.1"/></svg>');
-            pointer-events: none;
-            z-index: 0;
+        /* Header simple */
+        .header {
+            background: #2c1810;
+            border-bottom: 3px solid #D4AF37;
+            padding: 20px;
+            text-align: center;
         }
 
+        .header h1 {
+            font-size: 2.5em;
+            color: #D4AF37;
+            text-shadow: 2px 2px 0 #000;
+            letter-spacing: 2px;
+        }
+
+        .header p {
+            color: #cdb38c;
+            margin-top: 5px;
+            font-size: 0.9em;
+        }
+
+        /* Contenedor principal */
         .container {
-            position: relative;
-            z-index: 1;
-            max-width: 1400px;
+            max-width: 800px;
             margin: 0 auto;
             padding: 20px;
         }
 
-        /* Header estilo mapa del tesoro */
-        .header {
+        /* Input simple */
+        .input-group {
             background: #2c1810;
-            border: 3px solid #8B4513;
-            border-radius: 30px 30px 10px 10px;
-            padding: 30px;
-            margin-bottom: 40px;
-            position: relative;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.8), inset 0 0 50px rgba(139,69,19,0.3);
-            background-image: linear-gradient(45deg, #3a241a 0%, #2c1810 100%);
-        }
-
-        .header::before, .header::after {
-            content: '⚓';
-            position: absolute;
-            font-size: 2em;
-            color: #D4AF37;
-            opacity: 0.3;
-        }
-
-        .header::before {
-            top: 10px;
-            left: 20px;
-            transform: rotate(-15deg);
-        }
-
-        .header::after {
-            bottom: 10px;
-            right: 20px;
-            transform: rotate(15deg);
-        }
-
-        .logo {
-            font-family: 'Pirata One', cursive;
-            font-size: 4em;
-            text-align: center;
-            color: #D4AF37;
-            text-shadow: 
-                3px 3px 0 #8B4513,
-                6px 6px 0 #000,
-                0 0 20px #FFD700;
-            letter-spacing: 4px;
-            transform: skew(-5deg);
-            margin-bottom: 20px;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 20px;
-        }
-
-        .logo i {
-            font-size: 1.5em;
-            filter: drop-shadow(0 0 10px gold);
-        }
-
-        .subtitle {
-            text-align: center;
-            color: #cdb38c;
-            font-size: 1.2em;
-            letter-spacing: 4px;
-            border-top: 2px solid #8B4513;
-            border-bottom: 2px solid #8B4513;
-            padding: 15px;
-            margin-top: 20px;
-            font-family: 'Cinzel', serif;
-            text-transform: uppercase;
-            background: rgba(0,0,0,0.3);
-        }
-
-        /* Panel de control pirata */
-        .pirate-panel {
-            background: #2c1810;
-            border: 3px solid #8B4513;
-            border-radius: 20px;
-            padding: 30px;
-            margin-bottom: 30px;
-            position: relative;
-            box-shadow: inset 0 0 30px rgba(0,0,0,0.8);
-        }
-
-        .panel-title {
-            font-family: 'Pirata One', cursive;
-            font-size: 2.5em;
-            color: #D4AF37;
-            margin-bottom: 25px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            border-bottom: 2px solid #8B4513;
-            padding-bottom: 15px;
-        }
-
-        .panel-title i {
-            font-size: 1.5em;
-            color: #cdb38c;
-        }
-
-        /* Candado parental */
-        .parental-lock {
-            background: #1a0f0a;
-            border: 2px solid #D4AF37;
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 25px;
-        }
-
-        .lock-header {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            color: #D4AF37;
-            font-size: 1.3em;
-            margin-bottom: 20px;
-        }
-
-        .lock-header i {
-            font-size: 2em;
-        }
-
-        .pin-container {
-            display: flex;
-            gap: 15px;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .pin-input {
-            background: #2c1810;
-            border: 2px solid #8B4513;
-            border-radius: 10px;
-            padding: 15px 20px;
-            color: #D4AF37;
-            font-size: 1.5em;
-            letter-spacing: 8px;
-            text-align: center;
-            width: 200px;
-            font-weight: bold;
-            font-family: 'Cinzel', serif;
-        }
-
-        .pirate-btn {
-            background: linear-gradient(135deg, #8B4513, #5d3a1a);
-            border: 2px solid #D4AF37;
-            border-radius: 30px;
-            padding: 15px 30px;
-            color: #D4AF37;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-family: 'Cinzel', serif;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            text-shadow: 0 0 5px gold;
-        }
-
-        .pirate-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
-            border-color: #FFD700;
-        }
-
-        .pirate-btn.danger {
-            background: linear-gradient(135deg, #6b0f0f, #8b0000);
-        }
-
-        .pirate-btn.success {
-            background: linear-gradient(135deg, #2d5a27, #1e3b1a);
-        }
-
-        /* Categorías con estilo cofre */
-        .categories-chest {
-            background: #1a0f0a;
-            border: 2px solid #8B4513;
-            border-radius: 15px;
-            padding: 20px;
-            margin: 20px 0;
-        }
-
-        .chest-title {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: #D4AF37;
-            font-size: 1.5em;
-            margin-bottom: 20px;
-            font-family: 'Pirata One', cursive;
-        }
-
-        .category-map {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin: 20px 0;
-        }
-
-        .category-tag {
-            background: #2c1810;
-            border: 1px solid #8B4513;
-            border-radius: 30px;
-            padding: 12px 25px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            cursor: pointer;
-            transition: all 0.3s;
-            color: #cdb38c;
-            font-size: 1em;
-            position: relative;
-        }
-
-        .category-tag:hover {
-            border-color: #D4AF37;
-            transform: scale(1.05);
-            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.2);
-        }
-
-        .category-tag.locked {
-            background: #4a2c1f;
-            border-color: #8b0000;
-            color: #ff6b6b;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .category-tag.locked::before {
-            content: '⚓';
-            position: absolute;
-            left: -10px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 1.5em;
-            opacity: 0.2;
-        }
-
-        .category-tag i {
-            font-size: 1.2em;
-        }
-
-        .lock-indicator {
-            margin-left: 10px;
-            color: #D4AF37;
-        }
-
-        /* Brújula de actividad */
-        .compass-log {
-            background: #2c1810;
-            border: 3px solid #8B4513;
-            border-radius: 50% 50% 20px 20px;
-            padding: 25px;
-            margin-top: 30px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .compass-log::before {
-            content: '🧭';
-            position: absolute;
-            top: 10px;
-            right: 20px;
-            font-size: 3em;
-            opacity: 0.1;
-            transform: rotate(15deg);
-        }
-
-        .log-entry {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            padding: 12px;
-            border-bottom: 1px solid #8B4513;
-            font-size: 0.95em;
-        }
-
-        .log-time {
-            color: #D4AF37;
-            font-weight: bold;
-            min-width: 80px;
-            font-family: 'Cinzel', serif;
-        }
-
-        .log-action {
-            background: rgba(139, 69, 19, 0.3);
-            padding: 5px 15px;
-            border-radius: 20px;
-            border: 1px solid #8B4513;
-        }
-
-        .log-action.failed {
-            background: rgba(139, 0, 0, 0.3);
-            border-color: #8b0000;
-            color: #ff6b6b;
-        }
-
-        /* Barco de búsqueda */
-        .ship-search {
-            background: #2c1810;
-            border: 3px solid #8B4513;
-            border-radius: 20px;
-            padding: 30px;
-            margin: 30px 0;
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-            align-items: center;
-        }
-
-        .ship-search input {
-            flex: 1;
-            min-width: 250px;
-            background: #1a0f0a;
             border: 2px solid #8B4513;
             border-radius: 50px;
-            padding: 18px 25px;
-            color: #D4AF37;
-            font-size: 1.1em;
-            font-family: 'Cinzel', serif;
+            padding: 5px;
+            display: flex;
+            margin: 20px 0;
+            overflow: hidden;
         }
 
-        .ship-search input::placeholder {
+        .input-group input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            padding: 15px 20px;
+            color: white;
+            font-size: 1em;
+            outline: none;
+        }
+
+        .input-group input::placeholder {
             color: #6b4f3a;
-            font-style: italic;
         }
 
-        /* Tesoro (grid de contenido) */
-        .treasure-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 30px;
-            margin: 40px 0;
+        .input-group button {
+            background: #D4AF37;
+            border: none;
+            padding: 15px 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            white-space: nowrap;
         }
 
-        .treasure-card {
+        .input-group button:hover {
+            background: #FFD700;
+        }
+
+        /* Panel parental simple */
+        .parental-panel {
             background: #2c1810;
             border: 2px solid #8B4513;
-            border-radius: 20px;
-            padding: 25px;
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
-            cursor: pointer;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
         }
 
-        .treasure-card::before {
-            content: '⚓';
-            position: absolute;
-            bottom: -20px;
-            right: -20px;
-            font-size: 5em;
-            opacity: 0.1;
-            transform: rotate(15deg);
-        }
-
-        .treasure-card:hover {
-            transform: translateY(-10px) rotate(1deg);
-            border-color: #D4AF37;
-            box-shadow: 0 20px 40px rgba(212, 175, 55, 0.2);
-        }
-
-        .treasure-card.looted {
-            opacity: 0.7;
-            filter: blur(3px);
-            pointer-events: none;
-            position: relative;
-        }
-
-        .treasure-card.looted::after {
-            content: '🔒 BOTÍN BLOQUEADO';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: #8b0000;
-            color: #D4AF37;
-            padding: 10px 20px;
-            border-radius: 30px;
-            font-weight: bold;
-            z-index: 10;
-            white-space: nowrap;
-            border: 2px solid #D4AF37;
-            font-size: 0.9em;
-        }
-
-        .card-badge {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: #8B4513;
-            color: #D4AF37;
-            padding: 8px 15px;
-            border-radius: 30px;
-            font-size: 0.8em;
-            font-weight: bold;
-            border: 1px solid #D4AF37;
-            z-index: 2;
-        }
-
-        .treasure-icon {
-            font-size: 3em;
-            color: #D4AF37;
-            margin-bottom: 20px;
-            text-align: center;
-            filter: drop-shadow(0 0 10px rgba(212,175,55,0.3));
-        }
-
-        .treasure-name {
-            font-family: 'Pirata One', cursive;
-            font-size: 1.5em;
-            color: #cdb38c;
-            margin-bottom: 10px;
-            text-align: center;
-        }
-
-        .treasure-category {
-            color: #8B4513;
-            font-size: 0.9em;
-            text-align: center;
-            margin-bottom: 20px;
+        .parental-header {
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 5px;
-        }
-
-        .treasure-category i {
-            color: #D4AF37;
-        }
-
-        .treasure-btn {
-            background: linear-gradient(135deg, #8B4513, #5d3a1a);
-            border: 2px solid #D4AF37;
-            border-radius: 30px;
-            padding: 12px;
+            gap: 10px;
             color: #D4AF37;
             font-weight: bold;
-            width: 100%;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-family: 'Cinzel', serif;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            margin-bottom: 15px;
         }
 
-        .treasure-btn:hover:not(:disabled) {
+        .pin-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .pin-row input {
+            background: #1a0f0a;
+            border: 2px solid #8B4513;
+            border-radius: 10px;
+            padding: 12px 15px;
+            color: #D4AF37;
+            font-size: 1.2em;
+            letter-spacing: 4px;
+            text-align: center;
+            width: 120px;
+        }
+
+        .btn {
+            background: #8B4513;
+            border: 2px solid #D4AF37;
+            border-radius: 10px;
+            padding: 12px 20px;
+            color: #D4AF37;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn:hover {
             background: #D4AF37;
             color: #2c1810;
         }
 
-        .treasure-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
+        .btn.danger {
+            border-color: #ff4444;
+            color: #ff4444;
         }
 
-        /* Modal del capitán */
-        .captain-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.95);
-            z-index: 10000;
-            justify-content: center;
-            align-items: center;
-            backdrop-filter: blur(5px);
+        .btn.danger:hover {
+            background: #ff4444;
+            color: white;
         }
 
-        .captain-modal.active {
+        .btn.small {
+            padding: 8px 15px;
+            font-size: 0.9em;
+        }
+
+        /* Selector de categorías simple */
+        .category-selector {
             display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 15px 0;
         }
 
-        .modal-content {
-            background: #2c1810;
-            border: 4px solid #D4AF37;
+        .category-option {
+            background: #1a0f0a;
+            border: 1px solid #8B4513;
             border-radius: 30px;
-            padding: 50px;
-            max-width: 450px;
-            width: 90%;
-            text-align: center;
-            position: relative;
-            box-shadow: 0 0 100px rgba(212, 175, 55, 0.3);
-            animation: shipRock 0.3s ease;
-        }
-
-        @keyframes shipRock {
-            0% { transform: rotate(-2deg) scale(0.8); opacity: 0; }
-            50% { transform: rotate(2deg) scale(1.02); }
-            100% { transform: rotate(0) scale(1); opacity: 1; }
-        }
-
-        .modal-content::before {
-            content: '🏴‍☠️';
-            position: absolute;
-            top: -30px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 4em;
-            filter: drop-shadow(0 10px 10px black);
-        }
-
-        .modal-title {
-            font-family: 'Pirata One', cursive;
-            font-size: 2.5em;
-            color: #D4AF37;
-            margin: 30px 0 20px;
-        }
-
-        .pin-wheel {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            margin: 30px 0;
-        }
-
-        .pin-number {
-            background: #1a0f0a;
-            border: 2px solid #8B4513;
-            border-radius: 20px;
-            padding: 20px;
-            font-size: 2em;
-            color: #D4AF37;
+            padding: 8px 16px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
             cursor: pointer;
-            transition: all 0.2s;
-            font-family: 'Cinzel', serif;
-            font-weight: bold;
+            font-size: 0.9em;
         }
 
-        .pin-number:hover {
-            background: #8B4513;
-            border-color: #D4AF37;
-            transform: scale(1.1);
+        .category-option.locked {
+            border-color: #ff4444;
+            color: #ff6b6b;
         }
 
-        .pin-number:active {
-            transform: scale(0.9);
+        .category-option i {
+            font-size: 0.8em;
         }
 
-        .pin-display {
-            background: #1a0f0a;
-            border: 2px solid #D4AF37;
-            border-radius: 20px;
-            padding: 20px;
-            font-size: 2.5em;
-            letter-spacing: 15px;
+        /* Reproductor de video */
+        .player-section {
+            background: #000;
+            border-radius: 15px;
+            overflow: hidden;
             margin: 20px 0;
-            color: #D4AF37;
-            font-weight: bold;
-        }
-
-        /* Brújula de carga */
-        .compass-loading {
             display: none;
-            text-align: center;
-            padding: 50px;
         }
 
-        .compass-spinner {
-            width: 80px;
-            height: 80px;
-            border: 5px solid #8B4513;
-            border-top: 5px solid #D4AF37;
+        .player-section.active {
+            display: block;
+        }
+
+        video {
+            width: 100%;
+            height: auto;
+            display: block;
+            background: #000;
+        }
+
+        .player-controls {
+            background: #2c1810;
+            padding: 15px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .now-playing {
+            flex: 1;
+            color: #D4AF37;
+            font-size: 0.9em;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Lista de canales simple */
+        .channels-list {
+            background: #2c1810;
+            border: 2px solid #8B4513;
+            border-radius: 15px;
+            padding: 15px;
+            margin: 20px 0;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .channel-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            border-bottom: 1px solid #8B4513;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .channel-item:hover {
+            background: #8B4513;
+        }
+
+        .channel-item:last-child {
+            border-bottom: none;
+        }
+
+        .channel-icon {
+            width: 30px;
+            text-align: center;
+            margin-right: 15px;
+            font-size: 1.2em;
+        }
+
+        .channel-name {
+            flex: 1;
+        }
+
+        .channel-lock {
+            color: #ff4444;
+            margin-left: 10px;
+        }
+
+        .channel-play {
+            color: #D4AF37;
+            margin-left: 10px;
+            opacity: 0.5;
+        }
+
+        .channel-item:hover .channel-play {
+            opacity: 1;
+        }
+
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 40px;
+            display: none;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #8B4513;
+            border-top: 4px solid #D4AF37;
             border-radius: 50%;
             animation: spin 1s linear infinite;
-            margin: 20px auto;
-        }
-
-        .compass-spinner::after {
-            content: '🧭';
-            position: absolute;
-            font-size: 2em;
-            transform: translate(-50%, -50%);
+            margin: 0 auto 15px;
         }
 
         @keyframes spin {
@@ -631,401 +297,432 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* Mensajes del capitán */
-        .captain-toast {
+        /* Modal PIN simple */
+        .pin-modal {
+            display: none;
             position: fixed;
-            bottom: 30px;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .pin-modal.active {
+            display: flex;
+        }
+
+        .pin-modal-content {
+            background: #2c1810;
+            border: 3px solid #D4AF37;
+            border-radius: 20px;
+            padding: 30px;
+            width: 90%;
+            max-width: 350px;
+            text-align: center;
+        }
+
+        .pin-display {
+            font-size: 2.5em;
+            letter-spacing: 10px;
+            margin: 20px 0;
+            color: #D4AF37;
+        }
+
+        .pin-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .pin-key {
+            background: #1a0f0a;
+            border: 1px solid #8B4513;
+            border-radius: 10px;
+            padding: 15px;
+            font-size: 1.5em;
+            cursor: pointer;
+        }
+
+        .pin-key:hover {
+            background: #8B4513;
+        }
+
+        /* Mensajes */
+        .toast {
+            position: fixed;
+            bottom: 20px;
             left: 50%;
             transform: translateX(-50%) translateY(100px);
             background: #2c1810;
-            border: 3px solid #D4AF37;
+            border: 2px solid #D4AF37;
             border-radius: 50px;
-            padding: 20px 40px;
+            padding: 12px 25px;
             color: #D4AF37;
-            font-weight: bold;
-            z-index: 10001;
-            transition: transform 0.3s ease;
-            text-align: center;
-            min-width: 300px;
-            font-size: 1.1em;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            transition: 0.3s;
+            z-index: 1001;
         }
 
-        .captain-toast.show {
+        .toast.show {
             transform: translateX(-50%) translateY(0);
         }
 
-        .captain-toast.error {
-            border-color: #8b0000;
+        .toast.error {
+            border-color: #ff4444;
             background: #4a1f1f;
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .logo {
-                font-size: 2.5em;
+        @media (max-width: 600px) {
+            .pin-row {
                 flex-direction: column;
-                gap: 10px;
             }
             
-            .pin-container {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            
-            .pin-input {
+            .pin-row input {
                 width: 100%;
             }
             
-            .ship-search {
+            .input-group {
                 flex-direction: column;
+                border-radius: 15px;
             }
             
-            .ship-search input {
+            .input-group button {
                 width: 100%;
-            }
-            
-            .category-map {
-                justify-content: center;
-            }
-            
-            .treasure-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .modal-content {
-                padding: 30px 20px;
-            }
-            
-            .pin-number {
-                padding: 15px;
-                font-size: 1.5em;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Header con nombre del barco -->
-        <div class="header">
-            <div class="logo">
-                <i class="fas fa-skull"></i>
-                <span>LA PERLA NEGRA</span>
-                <i class="fas fa-anchor"></i>
-            </div>
-            <div class="subtitle">
-                <i class="fas fa-map"></i> EL TESORO IPTV MÁS BUSCADO DE LOS SIETE MARES <i class="fas fa-map"></i>
-            </div>
-        </div>
+    <div class="header">
+        <h1>🏴‍☠️ LA PERLA NEGRA</h1>
+        <p>EL TESORO IPTV MÁS BUSCADO</p>
+    </div>
 
-        <!-- Panel del capitán (control parental) -->
-        <div class="pirate-panel">
-            <div class="panel-title">
-                <i class="fas fa-crown"></i>
-                CAMAROTE DEL CAPITÁN
-                <i class="fas fa-crown"></i>
+    <div class="container">
+        <!-- Panel parental SIMPLE -->
+        <div class="parental-panel">
+            <div class="parental-header">
+                <span>⚓ CAMAROTE DEL CAPITÁN</span>
             </div>
             
-            <!-- Candado parental -->
-            <div class="parental-lock">
-                <div class="lock-header">
-                    <i class="fas fa-lock"></i>
-                    <span>BAÚL DEL TESORO (CONTROL PARENTAL)</span>
-                    <i class="fas fa-key"></i>
-                </div>
-                
-                <div class="pin-container">
-                    <input type="password" class="pin-input" id="pinInput" placeholder="****" maxlength="4" pattern="\d*">
-                    <button class="pirate-btn" id="setPinBtn">
-                        <i class="fas fa-save"></i> GRABAR PIN
-                    </button>
-                    <button class="pirate-btn danger" id="disablePinBtn">
-                        <i class="fas fa-unlock"></i> ABRIR BAÚL
-                    </button>
-                </div>
+            <div class="pin-row">
+                <input type="password" id="pinInput" placeholder="****" maxlength="4" pattern="\d*">
+                <button class="btn" id="setPinBtn">🔐 GUARDAR PIN</button>
+                <button class="btn danger" id="disablePinBtn">🔓 QUITAR PIN</button>
             </div>
 
-            <!-- Cofre de categorías -->
-            <div class="categories-chest">
-                <div class="chest-title">
-                    <i class="fas fa-treasure-chest"></i>
-                    CATEGORÍAS DEL BOTÍN
+            <!-- Categorías bloqueadas SIMPLE -->
+            <div style="margin-top: 20px;">
+                <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 10px;">
+                    <span>🚫 BLOQUEAR:</span>
+                    <button class="btn small" id="addCategoryBtn">+ AÑADIR</button>
+                    <button class="btn small danger" id="unlockAllBtn">✖ QUITAR TODO</button>
                 </div>
-                
-                <div class="category-map" id="categoryMap">
-                    <!-- Se llena con JS -->
-                </div>
-                
-                <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-top: 25px;">
-                    <button class="pirate-btn" id="addCategoryBtn">
-                        <i class="fas fa-plus"></i> AÑADIR CATEGORÍA
-                    </button>
-                    <button class="pirate-btn success" id="unlockAllBtn">
-                        <i class="fas fa-key"></i> ABRIR TODO
-                    </button>
-                </div>
-            </div>
-
-            <!-- Brújula de actividad -->
-            <div class="compass-log">
-                <h3 style="color: #D4AF37; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
-                    <i class="fas fa-compass"></i> BITÁCORA DE ABORDAJES
-                </h3>
-                <div id="activityLog">
-                    <!-- Log entries -->
-                </div>
+                <div class="category-selector" id="categoryList"></div>
             </div>
         </div>
 
-        <!-- Barco de búsqueda -->
-        <div class="ship-search">
-            <input type="text" id="urlInput" placeholder="🏴‍☠️ Introduce el mapa del tesoro (URL M3U o Xtream)...">
-            <button class="pirate-btn" id="analyzeBtn">
-                <i class="fas fa-ship"></i> ¡AL ABORDAJE!
-            </button>
-            <button class="pirate-btn danger" id="clearBtn">
-                <i class="fas fa-trash"></i> LIMPIAR
-            </button>
+        <!-- Reproductor SIMPLE -->
+        <div class="player-section" id="playerSection">
+            <video id="videoPlayer" controls playsinline></video>
+            <div class="player-controls">
+                <span class="now-playing" id="nowPlaying">⚓ Navegando...</span>
+                <button class="btn small" id="closePlayerBtn">✖ CERRAR</button>
+            </div>
         </div>
 
-        <!-- Tesoro (grid de contenido) -->
-        <div class="treasure-grid" id="treasureGrid">
-            <!-- Aquí va el contenido -->
+        <!-- Input URL SIMPLE -->
+        <div class="input-group">
+            <input type="text" id="urlInput" placeholder="🌊 Pega tu lista M3U o enlace Xtream...">
+            <button id="loadBtn">⚓ CARGAR TESORO</button>
         </div>
 
-        <!-- Modal del capitán -->
-        <div class="captain-modal" id="captainModal">
-            <div class="modal-content">
-                <div class="modal-title">¡ALTO O TE HAGO CAMINAR POR LA PLANCHA!</div>
+        <!-- Loading -->
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Navegando hacia el tesoro...</p>
+        </div>
+
+        <!-- Lista de canales SIMPLE -->
+        <div class="channels-list" id="channelsList">
+            <div style="text-align: center; padding: 30px; color: #6b4f3a;">
+                <div style="font-size: 3em; margin-bottom: 10px;">🏴‍☠️</div>
+                <p>Carga una lista para empezar</p>
+            </div>
+        </div>
+
+        <!-- Modal PIN SIMPLE -->
+        <div class="pin-modal" id="pinModal">
+            <div class="pin-modal-content">
+                <h3 style="color: #D4AF37;">🔒 INTRODUCE PIN</h3>
                 <div class="pin-display" id="modalPinDisplay">****</div>
-                <div class="pin-wheel" id="pinWheel"></div>
-                <button class="pirate-btn danger" id="cancelModalBtn" style="width: 100%;">
-                    <i class="fas fa-times"></i> RENDIRSE
-                </button>
+                <div class="pin-grid" id="pinGrid"></div>
+                <button class="btn danger" id="cancelPinBtn" style="width: 100%;">CANCELAR</button>
             </div>
         </div>
 
-        <!-- Toast del capitán -->
-        <div class="captain-toast" id="captainToast"></div>
+        <!-- Toast -->
+        <div class="toast" id="toast"></div>
     </div>
 
     <script>
-        // ============================================
-        // CLASE DEL CAPITÁN (CONTROL PARENTAL)
-        // ============================================
-        
-        class CaptainHook {
+        // ==================== CONTROL PARENTAL SIMPLE ====================
+        class ParentalSimple {
             constructor() {
-                this.pin = localStorage.getItem('perlaNegraPin') || null;
-                this.blockedCategories = JSON.parse(localStorage.getItem('perlaNegraBloqueadas')) || ['+18', 'Adultos', 'XXX', 'Solo adultos'];
-                this.attempts = 0;
-                this.maxAttempts = 3;
-                this.lockedUntil = null;
-                this.activityLog = JSON.parse(localStorage.getItem('perlaNegraBitacora')) || [];
+                this.pin = localStorage.getItem('perlaPin') || null;
+                this.blocked = JSON.parse(localStorage.getItem('perlaBlocked')) || ['+18', 'Adultos'];
+                this.categories = ['+18', 'Adultos', 'Terror', 'Violencia'];
+                this.channels = [];
                 
                 this.init();
             }
 
             init() {
                 this.renderCategories();
-                this.renderActivityLog();
-                this.setupEventListeners();
+                this.setupListeners();
             }
 
-            setupEventListeners() {
-                document.getElementById('setPinBtn').addEventListener('click', () => this.handleSetPin());
-                document.getElementById('disablePinBtn').addEventListener('click', () => this.handleDisablePin());
-                document.getElementById('addCategoryBtn').addEventListener('click', () => this.addCategory());
-                document.getElementById('unlockAllBtn').addEventListener('click', () => this.unlockAll());
-                document.getElementById('analyzeBtn').addEventListener('click', () => this.analyzeTreasure());
-                document.getElementById('clearBtn').addEventListener('click', () => this.clearTreasure());
-                document.getElementById('cancelModalBtn').addEventListener('click', () => this.closeModal());
-            }
-
-            // Verificar PIN
-            verifyPin(inputPin) {
-                const now = Date.now();
-                
-                if (this.lockedUntil && now < this.lockedUntil) {
-                    const waitTime = Math.ceil((this.lockedUntil - now) / 1000);
-                    this.addToLog('¡TIMBRE!', `Esperar ${waitTime}s`, true);
-                    this.showToast(`⏳ Espera ${waitTime} segundos, grumete`, 'error');
-                    return false;
-                }
-
-                const isValid = this.pin && inputPin === this.pin;
-                
-                if (!isValid) {
-                    this.attempts++;
-                    this.addToLog('¡PIN ERRÓNEO!', `Intento ${this.attempts}/${this.maxAttempts}`, true);
-                    
-                    if (this.attempts >= this.maxAttempts) {
-                        this.lockedUntil = now + (5 * 60 * 1000); // 5 minutos
-                        this.addToLog('¡BLOQUEADO!', '5 minutos en el calabozo', true);
-                        this.showToast('🔒 5 MINUTOS EN EL CALABOZO', 'error');
-                        this.attempts = 0;
+            setupListeners() {
+                document.getElementById('setPinBtn').onclick = () => {
+                    const pin = document.getElementById('pinInput').value;
+                    if (pin && pin.length === 4 && /^\d+$/.test(pin)) {
+                        this.pin = pin;
+                        localStorage.setItem('perlaPin', pin);
+                        this.toast('✅ PIN guardado');
+                        document.getElementById('pinInput').value = '';
+                    } else {
+                        this.toast('❌ 4 números', 'error');
                     }
-                } else {
-                    this.attempts = 0;
-                    this.lockedUntil = null;
-                    this.addToLog('¡PIN CORRECTO!', 'Acceso concedido', false);
-                }
-                
-                return isValid;
+                };
+
+                document.getElementById('disablePinBtn').onclick = () => {
+                    if (this.pin) {
+                        this.showPinModal('DESBLOQUEAR', () => {
+                            this.pin = null;
+                            localStorage.removeItem('perlaPin');
+                            this.toast('🔓 PIN eliminado');
+                        });
+                    } else {
+                        this.pin = null;
+                        localStorage.removeItem('perlaPin');
+                        this.toast('🔓 Sin PIN');
+                    }
+                };
+
+                document.getElementById('addCategoryBtn').onclick = () => {
+                    const cat = prompt('Categoría a bloquear:');
+                    if (cat && cat.trim() && !this.blocked.includes(cat.trim())) {
+                        this.blocked.push(cat.trim());
+                        localStorage.setItem('perlaBlocked', JSON.stringify(this.blocked));
+                        this.renderCategories();
+                        this.renderChannels();
+                    }
+                };
+
+                document.getElementById('unlockAllBtn').onclick = () => {
+                    if (this.pin) {
+                        this.showPinModal('DESBLOQUEAR TODO', () => {
+                            this.blocked = [];
+                            localStorage.setItem('perlaBlocked', '[]');
+                            this.renderCategories();
+                            this.renderChannels();
+                            this.toast('🔓 Todo desbloqueado');
+                        });
+                    } else {
+                        this.blocked = [];
+                        localStorage.setItem('perlaBlocked', '[]');
+                        this.renderCategories();
+                        this.renderChannels();
+                        this.toast('🔓 Todo desbloqueado');
+                    }
+                };
+
+                document.getElementById('closePlayerBtn').onclick = () => {
+                    this.closePlayer();
+                };
+
+                document.getElementById('loadBtn').onclick = () => this.loadList();
             }
 
-            // Establecer PIN
-            setPin(newPin) {
-                if (newPin && newPin.length === 4 && /^\d+$/.test(newPin)) {
-                    this.pin = newPin;
-                    localStorage.setItem('perlaNegraPin', newPin);
-                    this.addToLog('¡NUEVO PIN!', 'Candado colocado', false);
-                    this.showToast('✅ PIN guardado en el cofre', 'success');
-                    return true;
-                }
-                this.showToast('❌ El PIN debe tener 4 números', 'error');
-                return false;
+            renderCategories() {
+                const list = document.getElementById('categoryList');
+                list.innerHTML = this.categories.map(cat => `
+                    <div class="category-option ${this.blocked.includes(cat) ? 'locked' : ''}" onclick="parental.toggleCategory('${cat}')">
+                        <span>${cat}</span>
+                        <span>${this.blocked.includes(cat) ? '🔒' : '🔓'}</span>
+                    </div>
+                `).join('');
             }
 
-            // Desactivar PIN
-            disablePin() {
-                this.pin = null;
-                localStorage.removeItem('perlaNegraPin');
-                this.addToLog('¡PIN ELIMINADO!', 'Cofre abierto', false);
-                this.showToast('🔓 Cofre abierto - Sin candado', 'success');
-            }
-
-            // Toggle categoría bloqueada
-            toggleCategory(category) {
-                const index = this.blockedCategories.indexOf(category);
+            toggleCategory(cat) {
+                const index = this.blocked.indexOf(cat);
                 if (index === -1) {
-                    this.blockedCategories.push(category);
-                    this.addToLog('⚓ CATEGORÍA BLOQUEADA', category, true);
+                    this.blocked.push(cat);
                 } else {
-                    this.blockedCategories.splice(index, 1);
-                    this.addToLog('🏴‍☠️ CATEGORÍA LIBERADA', category, false);
+                    this.blocked.splice(index, 1);
                 }
-                localStorage.setItem('perlaNegraBloqueadas', JSON.stringify(this.blockedCategories));
+                localStorage.setItem('perlaBlocked', JSON.stringify(this.blocked));
                 this.renderCategories();
-                this.updateContentBlocks();
+                this.renderChannels();
             }
 
-            // Verificar si está bloqueado
-            isBlocked(item) {
-                if (!item || !item.category) return false;
-                return this.blockedCategories.some(cat => 
-                    item.category.toLowerCase().includes(cat.toLowerCase())
+            isBlocked(channel) {
+                if (!channel || !channel.category) return false;
+                return this.blocked.some(b => 
+                    channel.category.toLowerCase().includes(b.toLowerCase())
                 );
             }
 
-            // Añadir categoría personalizada
-            addCategory() {
-                const category = prompt('🏴‍☠️ ¿Qué categoría quieres bloquear?');
-                if (category && category.trim()) {
-                    if (!this.blockedCategories.includes(category.trim())) {
-                        this.blockedCategories.push(category.trim());
-                        localStorage.setItem('perlaNegraBloqueadas', JSON.stringify(this.blockedCategories));
-                        this.renderCategories();
-                        this.addToLog('➕ NUEVA CATEGORÍA', category.trim(), true);
-                        this.showToast(`🔒 "${category}" bloqueada`, 'success');
-                    }
-                }
-            }
-
-            // Desbloquear todo
-            unlockAll() {
-                if (this.pin) {
-                    this.showPinModal('DESBLOQUEAR TODO', () => {
-                        this.blockedCategories = [];
-                        localStorage.setItem('perlaNegraBloqueadas', '[]');
-                        this.renderCategories();
-                        this.updateContentBlocks();
-                        this.addToLog('🔓 ¡TODO DESBLOQUEADO!', 'El capitán lo ordenó', false);
-                        this.showToast('🏴‍☠️ ¡Todo el botín está disponible!', 'success');
-                    });
-                } else {
-                    this.blockedCategories = [];
-                    localStorage.setItem('perlaNegraBloqueadas', '[]');
-                    this.renderCategories();
-                    this.updateContentBlocks();
-                    this.addToLog('🔓 ¡TODO DESBLOQUEADO!', 'Sin candado', false);
-                    this.showToast('🏴‍☠️ ¡Todo el botín está disponible!', 'success');
-                }
-            }
-
-            // Renderizar categorías
-            renderCategories() {
-                const map = document.getElementById('categoryMap');
-                const allCategories = [
-                    '+18', 'Adultos', 'XXX', 'Solo adultos', 'Violencia',
-                    'Terror', 'Nocturno', 'Infantil', 'Deportes', 'Cine'
-                ];
-                
-                map.innerHTML = allCategories.map(cat => {
-                    const isLocked = this.blockedCategories.includes(cat);
-                    return `
-                        <div class="category-tag ${isLocked ? 'locked' : ''}" onclick="captain.toggleCategory('${cat}')">
-                            <i class="fas ${isLocked ? 'fa-lock' : 'fa-unlock'}"></i>
-                            ${cat}
-                            ${isLocked ? '<span class="lock-indicator">🔒</span>' : ''}
-                        </div>
-                    `;
-                }).join('');
-            }
-
-            // Renderizar bitácora
-            renderActivityLog() {
-                const log = document.getElementById('activityLog');
-                if (this.activityLog.length === 0) {
-                    log.innerHTML = '<div style="text-align: center; color: #6b4f3a; padding: 20px;">⚓ Bitácora vacía, grumete</div>';
+            // ==================== REPRODUCCIÓN REAL ====================
+            playChannel(url, name) {
+                if (!url || url === '#') {
+                    this.toast('❌ URL inválida', 'error');
                     return;
                 }
+
+                console.log('Reproduciendo:', url);
                 
-                log.innerHTML = this.activityLog.map(entry => {
-                    const time = new Date(entry.timestamp).toLocaleTimeString();
+                const video = document.getElementById('videoPlayer');
+                const player = document.getElementById('playerSection');
+                const nowPlaying = document.getElementById('nowPlaying');
+                
+                // Detener reproducción anterior
+                video.pause();
+                video.removeAttribute('src');
+                video.load();
+                
+                // Cargar nueva URL
+                video.src = url;
+                video.load();
+                
+                // Mostrar reproductor
+                player.classList.add('active');
+                nowPlaying.textContent = `⚓ ${name || 'Reproduciendo'}`;
+                
+                // Intentar reproducir
+                const playPromise = video.play();
+                
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        this.toast(`▶️ Reproduciendo: ${name}`);
+                    }).catch(error => {
+                        console.error('Error reproducción:', error);
+                        this.toast('❌ Error al reproducir. ¿Formato soportado?', 'error');
+                        
+                        // Fallback: intentar abrir en nueva pestaña
+                        if (confirm('¿Abrir enlace directamente?')) {
+                            window.open(url, '_blank');
+                        }
+                    });
+                }
+                
+                // Eventos del video
+                video.onerror = (e) => {
+                    console.error('Video error:', video.error);
+                    this.toast(`❌ Error ${video.error?.code || 'desconocido'}`, 'error');
+                };
+                
+                video.onstalled = () => this.toast('⏳ Buffering...');
+                video.onwaiting = () => this.toast('⏳ Cargando...');
+                video.onplaying = () => this.toast('▶️ Reproduciendo');
+            }
+
+            closePlayer() {
+                const video = document.getElementById('videoPlayer');
+                const player = document.getElementById('playerSection');
+                
+                video.pause();
+                video.removeAttribute('src');
+                video.load();
+                player.classList.remove('active');
+            }
+
+            // ==================== CARGAR LISTA SIMULADA ====================
+            loadList() {
+                const url = document.getElementById('urlInput').value.trim();
+                if (!url) {
+                    this.toast('❌ Introduce una URL', 'error');
+                    return;
+                }
+
+                document.getElementById('loading').style.display = 'block';
+                document.getElementById('channelsList').innerHTML = '';
+
+                // Simular carga (aquí iría tu llamada real)
+                setTimeout(() => {
+                    // Canales de ejemplo con URLs REALES de prueba
+                    this.channels = [
+                        { 
+                            name: '📺 Canal 24h (Prueba)', 
+                            url: 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8', 
+                            category: 'Noticias',
+                            type: 'HLS'
+                        },
+                        { 
+                            name: '🎬 Big Buck Bunny', 
+                            url: 'https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/1080/Big_Buck_Bunny_1080_10s_1MB.mp4', 
+                            category: 'Películas',
+                            type: 'MP4'
+                        },
+                        { 
+                            name: '📡 Tears of Steel', 
+                            url: 'https://test-streams.mux.dev/bbb_sunflower_1080p_30fps_normal.mp4', 
+                            category: 'Cine',
+                            type: 'MP4'
+                        },
+                        { 
+                            name: '🔞 Canal +18 (Ejemplo)', 
+                            url: 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8', 
+                            category: '+18',
+                            type: 'HLS'
+                        }
+                    ];
+                    
+                    document.getElementById('loading').style.display = 'none';
+                    this.renderChannels();
+                    this.toast('✅ Lista cargada');
+                }, 1000);
+            }
+
+            renderChannels() {
+                const list = document.getElementById('channelsList');
+                
+                if (this.channels.length === 0) {
+                    list.innerHTML = '<div style="text-align: center; padding: 30px;">No hay canales</div>';
+                    return;
+                }
+
+                list.innerHTML = this.channels.map(ch => {
+                    const blocked = this.isBlocked(ch);
                     return `
-                        <div class="log-entry">
-                            <span class="log-time">${time}</span>
-                            <span class="log-action ${entry.isFailed ? 'failed' : ''}">
-                                ${entry.isFailed ? '💀' : '🏴‍☠️'} ${entry.action}
-                            </span>
-                            <span style="color: #cdb38c;">${entry.details}</span>
+                        <div class="channel-item" ${!blocked ? `onclick="parental.playChannel('${ch.url}', '${ch.name}')"` : ''}>
+                            <span class="channel-icon">${blocked ? '🔒' : '📺'}</span>
+                            <span class="channel-name">${ch.name}</span>
+                            <span style="color: #8B4513; font-size: 0.8em;">${ch.type || ''}</span>
+                            ${blocked ? '<span class="channel-lock">🔒</span>' : '<span class="channel-play">▶️</span>'}
                         </div>
                     `;
                 }).join('');
             }
 
-            // Añadir a bitácora
-            addToLog(action, details, isFailed = false) {
-                const entry = {
-                    timestamp: new Date().toISOString(),
-                    action,
-                    details,
-                    isFailed
-                };
-                
-                this.activityLog.unshift(entry);
-                if (this.activityLog.length > 15) this.activityLog.pop();
-                
-                localStorage.setItem('perlaNegraBitacora', JSON.stringify(this.activityLog));
-                this.renderActivityLog();
-            }
-
-            // Mostrar modal de PIN
+            // ==================== MODAL PIN ====================
             showPinModal(reason, onSuccess) {
-                const modal = document.getElementById('captainModal');
+                const modal = document.getElementById('pinModal');
                 const display = document.getElementById('modalPinDisplay');
-                const wheel = document.getElementById('pinWheel');
+                const grid = document.getElementById('pinGrid');
                 let pin = '';
                 
                 modal.classList.add('active');
                 display.textContent = '****';
                 
-                // Generar rueda de números
-                wheel.innerHTML = '';
+                grid.innerHTML = '';
                 for (let i = 1; i <= 9; i++) {
                     const btn = document.createElement('div');
-                    btn.className = 'pin-number';
+                    btn.className = 'pin-key';
                     btn.textContent = i;
                     btn.onclick = () => {
                         if (pin.length < 4) {
@@ -1033,12 +730,11 @@
                             display.textContent = '•'.repeat(pin.length) + '*'.repeat(4 - pin.length);
                         }
                     };
-                    wheel.appendChild(btn);
+                    grid.appendChild(btn);
                 }
                 
-                // Botón 0
                 const zeroBtn = document.createElement('div');
-                zeroBtn.className = 'pin-number';
+                zeroBtn.className = 'pin-key';
                 zeroBtn.textContent = '0';
                 zeroBtn.onclick = () => {
                     if (pin.length < 4) {
@@ -1046,158 +742,49 @@
                         display.textContent = '•'.repeat(pin.length) + '*'.repeat(4 - pin.length);
                     }
                 };
-                wheel.appendChild(zeroBtn);
+                grid.appendChild(zeroBtn);
                 
-                // Botón borrar
                 const delBtn = document.createElement('div');
-                delBtn.className = 'pin-number';
+                delBtn.className = 'pin-key';
                 delBtn.innerHTML = '⌫';
                 delBtn.onclick = () => {
                     pin = pin.slice(0, -1);
                     display.textContent = '•'.repeat(pin.length) + '*'.repeat(4 - pin.length);
                 };
-                wheel.appendChild(delBtn);
+                grid.appendChild(delBtn);
                 
-                // Botón OK
                 const okBtn = document.createElement('div');
-                okBtn.className = 'pin-number';
+                okBtn.className = 'pin-key';
                 okBtn.innerHTML = '✓';
-                okBtn.style.background = '#2d5a27';
                 okBtn.onclick = () => {
-                    if (this.verifyPin(pin)) {
+                    if (pin === this.pin) {
                         modal.classList.remove('active');
                         onSuccess();
                     } else {
-                        this.showToast('❌ ¡PIN INCORRECTO, GRUMETE!', 'error');
+                        this.toast('❌ PIN incorrecto', 'error');
                         pin = '';
                         display.textContent = '****';
                     }
                 };
-                wheel.appendChild(okBtn);
+                grid.appendChild(okBtn);
+
+                document.getElementById('cancelPinBtn').onclick = () => {
+                    modal.classList.remove('active');
+                };
             }
 
-            closeModal() {
-                document.getElementById('captainModal').classList.remove('active');
-            }
-
-            // Manejar set PIN
-            handleSetPin() {
-                const pin = document.getElementById('pinInput').value;
-                this.setPin(pin);
-                document.getElementById('pinInput').value = '';
-            }
-
-            // Manejar disable PIN
-            handleDisablePin() {
-                if (this.pin) {
-                    this.showPinModal('DESACTIVAR PIN', () => this.disablePin());
-                } else {
-                    this.disablePin();
-                }
-            }
-
-            // Analizar tesoro (simulado)
-            analyzeTreasure() {
-                const url = document.getElementById('urlInput').value;
-                if (!url) {
-                    this.showToast('❌ ¡Necesitas un mapa del tesoro!', 'error');
-                    return;
-                }
-                
-                this.showToast('⚓ ¡Zarpamos! Analizando...', 'success');
-                
-                // Simular carga
-                setTimeout(() => {
-                    this.generateMockTreasure();
-                    this.showToast('🏴‍☠️ ¡Tesoro encontrado!', 'success');
-                }, 1500);
-            }
-
-            // Generar contenido de prueba
-            generateMockTreasure() {
-                const treasures = [
-                    { name: 'Canal Discovery', category: 'Infantil', type: 'TV', icon: 'fa-tv' },
-                    { name: 'Cine +18', category: '+18', type: 'Película', icon: 'fa-film' },
-                    { name: 'Partido Champions', category: 'Deportes', type: 'Deportes', icon: 'fa-futbol' },
-                    { name: 'Series Adultos', category: 'Adultos', type: 'Serie', icon: 'fa-mask' },
-                    { name: 'Dibujos Animados', category: 'Infantil', type: 'Infantil', icon: 'fa-child' },
-                    { name: 'Pelicula Terror', category: 'Terror', type: 'Película', icon: 'fa-ghost' },
-                    { name: 'Canal XXX', category: 'XXX', type: '+18', icon: 'fa-ban' },
-                    { name: 'Noticias', category: 'Información', type: 'TV', icon: 'fa-newspaper' }
-                ];
-                
-                this.renderTreasures(treasures);
-            }
-
-            // Renderizar tesoros
-            renderTreasures(treasures) {
-                const grid = document.getElementById('treasureGrid');
-                
-                grid.innerHTML = treasures.map(item => {
-                    const isBlocked = this.isBlocked(item);
-                    return `
-                        <div class="treasure-card ${isBlocked ? 'looted' : ''}">
-                            <div class="card-badge">${item.type}</div>
-                            <div class="treasure-icon">
-                                <i class="fas ${item.icon}"></i>
-                            </div>
-                            <div class="treasure-name">${item.name}</div>
-                            <div class="treasure-category">
-                                <i class="fas fa-tag"></i> ${item.category}
-                            </div>
-                            ${!isBlocked ? `
-                                <button class="treasure-btn" onclick="captain.showToast('🎬 Reproduciendo...', 'success')">
-                                    <i class="fas fa-play"></i> VER TESORO
-                                </button>
-                            ` : `
-                                <button class="treasure-btn" disabled>
-                                    <i class="fas fa-lock"></i> BLOQUEADO
-                                </button>
-                            `}
-                        </div>
-                    `;
-                }).join('');
-            }
-
-            // Actualizar bloques de contenido
-            updateContentBlocks() {
-                // Re-renderizar con los datos actuales
-                if (window.currentTreasures) {
-                    this.renderTreasures(window.currentTreasures);
-                }
-            }
-
-            // Limpiar todo
-            clearTreasure() {
-                document.getElementById('urlInput').value = '';
-                document.getElementById('treasureGrid').innerHTML = '';
-                window.currentTreasures = null;
-                this.showToast('🧹 ¡Mapa limpiado, capitán!', 'success');
-            }
-
-            // Mostrar toast
-            showToast(message, type = 'success') {
-                const toast = document.getElementById('captainToast');
-                toast.textContent = message;
-                toast.className = 'captain-toast show' + (type === 'error' ? ' error' : '');
-                
-                setTimeout(() => {
-                    toast.classList.remove('show');
-                }, 3000);
+            // ==================== TOAST ====================
+            toast(msg, type = 'success') {
+                const toast = document.getElementById('toast');
+                toast.textContent = msg;
+                toast.className = 'toast show' + (type === 'error' ? ' error' : '');
+                setTimeout(() => toast.classList.remove('show'), 2000);
             }
         }
 
-        // ============================================
-        // INICIALIZACIÓN
-        // ============================================
-        
-        const captain = new CaptainHook();
-        window.captain = captain; // Hacer global
-
-        // Generar contenido inicial de prueba
-        setTimeout(() => {
-            captain.generateMockTreasure();
-        }, 1000);
+        // Inicializar
+        const parental = new ParentalSimple();
+        window.parental = parental;
     </script>
 </body>
 </html>
