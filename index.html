@@ -1320,9 +1320,12 @@
                 <button type="button" id="deleteListBtn" style="background: rgba(255,51,51,0.2); border: 1px solid #ff3333; color: #ff3333; border-radius: 15px; padding: 10px 15px; cursor: pointer; font-weight: bold; display: none;">✖ Borrar</button>
             </div>
 
-            <div style="display: flex; gap: 10px; margin-bottom: 20px;">
-                <input type="text" class="main-input" id="url" placeholder="🏴‍☠️ Ingresa URL M3U o enlace Xtream..." required style="margin-bottom: 0;">
-                <button type="button" id="saveListBtn" style="background: rgba(255,215,0,0.2); border: 2px solid #FFD700; color: #FFD700; border-radius: 15px; padding: 0 20px; cursor: pointer; font-size: 20px;" title="Guardar Lista en el navio">💾</button>
+            <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; background: rgba(0,0,0,0.4); padding: 15px; border-radius: 15px; border: 1px dashed #FFD700;">
+                <input type="text" id="listName" class="main-input" placeholder="🏴‍☠️ Nombre de la lista (Ej: VIP Deportes)..." style="margin-bottom: 0; padding: 12px; font-size: 14px;">
+                <div style="display: flex; gap: 10px;">
+                    <input type="text" class="main-input" id="url" placeholder="🏴‍☠️ Ingresa URL M3U o enlace Xtream..." required style="margin-bottom: 0;">
+                    <button type="button" id="saveListBtn" style="background: rgba(255,215,0,0.2); border: 2px solid #FFD700; color: #FFD700; border-radius: 15px; padding: 0 20px; cursor: pointer; font-size: 20px;" title="Guardar Lista en el navío">💾</button>
+                </div>
             </div>
 
             <div class="button-row">
@@ -1625,108 +1628,54 @@
             }
         }
         
-        function showFloatingPlayer(url, title = "Reproduciendo", type = "unknown") {
-            if (!url || url === '#' || url.trim() === '') {
-                showToast("❌ URL inválida para reproducir", false);
+        
+        let plyrInstance = null;
+        let activeHls = null;
+
+        function playStream(url, title, type = 'live') {
+            const modal = document.getElementById('playerModal');
+            const video = document.getElementById('videoPlayer');
+
+            if(!modal || !video) {
+                console.error("No se encontró el reproductor en el HTML");
                 return;
             }
 
-            console.log(`Intentando reproducir → ${type.toUpperCase()}: ${url}`);
+            document.getElementById('playerTitle').textContent = title;
+            modal.style.display = 'flex';
 
-            const floatPlayer = document.getElementById('floatingPlayer');
-            const video = document.getElementById('floatingVideo');
-            const titleEl = document.getElementById('floatingTitle');
-
-            // Limpiar estado anterior
-            if (floatingHls) {
-                floatingHls.destroy();
-                floatingHls = null;
+            // Limpiar reproductor anterior
+            if (activeHls) {
+                activeHls.destroy();
+                activeHls = null;
             }
             video.pause();
             video.removeAttribute('src');
             video.load();
 
-            titleEl.textContent = title;
-            floatPlayer.style.display = 'block';
-            isFloatingVisible = true;
-            currentStream = { url, title, type };
-
-            // Asignamos eventos cada vez que se muestra
-            setTimeout(() => {
-                const closeBtn = document.getElementById('floatCloseBtn');
-                const expandBtn = document.getElementById('floatExpandBtn');
-                const pipBtn = document.getElementById('floatPipBtn');
-
-                if (!closeBtn || !expandBtn || !pipBtn) {
-                    console.warn("No se encontraron los botones del reproductor flotante");
-                    return;
-                }
-
-                // Limpiamos listeners previos
-                const newClose = closeBtn.cloneNode(true);
-                const newExpand = expandBtn.cloneNode(true);
-                const newPip = pipBtn.cloneNode(true);
-
-                closeBtn.parentNode.replaceChild(newClose, closeBtn);
-                expandBtn.parentNode.replaceChild(newExpand, expandBtn);
-                pipBtn.parentNode.replaceChild(newPip, pipBtn);
-
-                // Asignamos eventos
-                document.getElementById('floatCloseBtn').addEventListener('click', hideFloatingPlayer);
-                document.getElementById('floatCloseBtn').addEventListener('touchend', (e) => {
-                    e.preventDefault();
-                    hideFloatingPlayer();
-                }, { passive: false });
-
-                document.getElementById('floatExpandBtn').addEventListener('click', expandToFullPlayer);
-                document.getElementById('floatExpandBtn').addEventListener('touchend', (e) => {
-                    e.preventDefault();
-                    expandToFullPlayer();
-                }, { passive: false });
-
-                document.getElementById('floatPipBtn').addEventListener('click', togglePictureInPicture);
-                document.getElementById('floatPipBtn').addEventListener('touchend', (e) => {
-                    e.preventDefault();
-                    togglePictureInPicture();
-                }, { passive: false });
-
-                console.log("Eventos de botones flotantes asignados correctamente");
-            }, 100);
+            if (!plyrInstance) {
+                plyrInstance = new Plyr(video, {
+                    controls: ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'captions', 'settings', 'pip', 'airplay', 'fullscreen'],
+                    settings: ['captions', 'quality', 'speed'],
+                    i18n: { speed: 'Velocidad', quality: 'Calidad', captions: 'Subtítulos', normal: 'Normal' }
+                });
+            }
 
             const lowerUrl = url.toLowerCase();
 
-            if (lowerUrl.includes('.m3u8') || lowerUrl.includes('/hls/') || lowerUrl.includes('.m3u8?')) {
+            if (lowerUrl.includes('.m3u8') || lowerUrl.includes('.ts')) {
                 if (Hls.isSupported()) {
-                    floatingHls = new Hls({
-                        enableWorker: true,
-                        lowLatencyMode: true,
-                        backBufferLength: 90,
-                        maxMaxBufferLength: 120,
-                        maxBufferSize: 60 * 1000 * 1000,
-                        maxBufferHole: 0.5,
-                        liveSyncDurationCount: 3
+                    activeHls = new Hls({ maxMaxBufferLength: 60 });
+                    activeHls.loadSource(url);
+                    activeHls.attachMedia(video);
+                    activeHls.on(Hls.Events.MANIFEST_PARSED, function() {
+                        video.play().catch(e => console.log("Auto-play prevenido", e));
                     });
-
-                    floatingHls.loadSource(url);
-                    floatingHls.attachMedia(video);
-
-                    floatingHls.on(Hls.Events.MANIFEST_PARSED, () => {
-                        video.play().catch(e => {
-                            console.warn("Autoplay bloqueado (HLS)", e);
-                            showToast("ℹ️ Toca la pantalla para reproducir", true);
-                        });
-                    });
-
-                    floatingHls.on(Hls.Events.ERROR, (event, data) => {
+                    activeHls.on(Hls.Events.ERROR, function(event, data) {
                         if (data.fatal) {
-                            console.error("HLS error fatal:", data);
-                            if (data.type === Hls.ErrorTypes.NETWORK_ERROR) {
-                                floatingHls.startLoad();
-                            } else if (data.type === Hls.ErrorTypes.MEDIA_ERROR) {
-                                floatingHls.recoverMediaError();
+                            if(data.type === Hls.ErrorTypes.NETWORK_ERROR) {
+                                activeHls.startLoad();
                             } else {
-                                floatingHls.destroy();
-                                floatingHls = null;
                                 fallbackToNativePlayer(video, url, title);
                             }
                         }
@@ -1734,7 +1683,7 @@
                 } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
                     video.src = url;
                     video.addEventListener('loadedmetadata', () => {
-                        video.play().catch(e => console.warn("Safari HLS autoplay error", e));
+                        video.play().catch(e => console.log("Auto-play prevenido", e));
                     });
                 } else {
                     fallbackToNativePlayer(video, url, title);
@@ -1742,132 +1691,29 @@
             } else {
                 fallbackToNativePlayer(video, url, title);
             }
-
-            document.getElementById('playerModal').style.display = 'none';
-            document.getElementById('miniPlayer').style.display = 'none';
         }
 
         function fallbackToNativePlayer(video, url, title) {
-            const lowerUrl = url.toLowerCase();
-            const badExts = ['.mkv', '.avi', '.mkv?', '.avi?', '.ts', '.ts?'];
-            const isBadFormat = badExts.some(ext => lowerUrl.includes(ext));
-
             video.src = url;
-            video.load();
-
-            video.oncanplay = () => {
-                video.play().catch(e => {
-                    console.warn("Autoplay bloqueado (native)", e);
-                });
-            };
-
-            video.onerror = () => {
-                console.error("Error nativo:", video.error);
-                console.log("URL fallida:", url);
-                console.log("Código error:", video.error?.code);
-
-                const toast = document.getElementById('toastMessage');
-                if (!toast) {
-                    console.error("Elemento toast no encontrado");
-                    return;
-                }
-
-                toast.className = 'toast-message show error';
-                toast.style.minHeight = '180px';
-                toast.style.padding = '25px';
-                toast.style.lineHeight = '1.6';
-                toast.style.whiteSpace = 'pre-wrap';
-                toast.style.textAlign = 'center';
-                toast.style.display = 'block';
-
-                if (isBadFormat) {
-                    toast.innerHTML = `
-                        ⚠️ Formato NO SOPORTADO en navegador<br><br>
-                        <strong>${title || 'Película/Serie'}</strong><br>
-                        Archivo .mkv / .avi detectado<br><br>
-                        El navegador no reproduce este formato directamente.<br><br>
-                        <button onclick="openInExternalPlayer('${url.replace(/'/g, "\\'")}')" 
-                                style="margin:20px 0; padding:16px 32px; background:#ff3333; color:#000; font-weight:bold; font-size:20px; border:none; border-radius:12px; cursor:pointer; box-shadow:0 4px 10px rgba(0,0,0,0.3);">
-                            Abrir en VLC / MX Player / IPTV
-                        </button><br><br>
-                        <small style="color:#ddd;">El mensaje desaparecerá en 8 segundos</small>
-                    `;
-                } else {
-                    let msg = "❌ Error al reproducir<br><br>";
-                    switch(video.error?.code) {
-                        case 4: msg += "Formato no soportado o enlace inválido"; break;
-                        default: msg += "Error desconocido - revisa consola";
-                    }
-                    toast.innerHTML = msg;
-                }
-
-                // Desaparece automáticamente
-                setTimeout(() => {
-                    toast.classList.remove('show');
-                    toast.style.transform = 'translateX(-50%) translateY(100px)';
-                }, 8000);
-            };
+            video.play().catch(e => {
+                showToast("⚠️ Toca para reproducir (o formato no soportado en web)", true);
+            });
         }
 
-        function hideFloatingPlayer() {
-            console.log('Cerrando reproductor flotante');
-            
-            const floatPlayer = document.getElementById('floatingPlayer');
-            const video = document.getElementById('floatingVideo');
-            
-            if (floatingHls) {
-                floatingHls.destroy();
-                floatingHls = null;
+        function closePlayer() {
+            if (activeHls) {
+                activeHls.destroy();
+                activeHls = null;
             }
-            
-            video.pause();
-            video.removeAttribute('src');
-            video.load();
-            floatPlayer.style.display = 'none';
-            isFloatingVisible = false;
-            isPlaying = false;
-        }
-        
-        function expandToFullPlayer() {
-            console.log('Expandiendo a reproductor modal');
-            
-            const video = document.getElementById('floatingVideo');
-            if (!video.src) return;
-            
-            const modalVideo = document.getElementById('videoPlayer');
+            const video = document.getElementById('videoPlayer');
+            if(video) {
+                video.pause();
+                video.src = '';
+            }
             const modal = document.getElementById('playerModal');
-            
-            if (floatingHls) {
-                floatingHls.destroy();
-                floatingHls = null;
-            }
-            
-            modalVideo.src = video.src;
-            modalVideo.currentTime = video.currentTime;
-            modalVideo.play().catch(console.warn);
-            
-            video.pause();
-            video.removeAttribute('src');
-            
-            modal.style.display = 'flex';
-            document.getElementById('floatingPlayer').style.display = 'none';
-            isFloatingVisible = false;
-            isPlaying = true;
+            if(modal) modal.style.display = 'none';
         }
-        
-        async function togglePictureInPicture() {
-            const video = document.getElementById('floatingVideo');
-            try {
-                if (document.pictureInPictureElement) {
-                    await document.exitPictureInPicture();
-                } else if (video && document.pictureInPictureEnabled) {
-                    await video.requestPictureInPicture();
-                }
-            } catch (error) {
-                console.log('PiP error:', error);
-                showToast('❌ PiP no soportado', false);
-            }
-        }
+
 
         function exportFavoritesAsM3U() {
             if (favorites.live.length === 0 && favorites.movies.length === 0 && favorites.series.length === 0) {
