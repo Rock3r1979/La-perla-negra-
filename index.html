@@ -3,36 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>LA PERLA NEGRA - IPTV</title>
+    <title>🏴‍☠️ LA PERLA NEGRA</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', system-ui, sans-serif;
+            font-family: 'Orbitron', sans-serif;
         }
 
         body {
-            background: #0a0a0a;
-            color: white;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            color: #fff;
+            min-height: 100vh;
         }
 
-        /* HEADER */
+        /* Header estilo pirata */
         .header {
-            background: #000;
-            border-bottom: 2px solid #D4AF37;
-            padding: 15px 20px;
+            background: linear-gradient(135deg, #000000, #1a0f0a);
+            border-bottom: 3px solid #D4AF37;
+            padding: 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
 
         .logo h1 {
-            color: #D4AF37;
-            font-size: 1.5em;
+            background: linear-gradient(45deg, #D4AF37, #FFD700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 2em;
+            font-weight: 900;
+            text-shadow: 2px 2px 0 #000;
         }
 
         .header-buttons {
@@ -40,190 +56,215 @@
             gap: 10px;
         }
 
-        .icon-btn {
+        .btn-header {
             background: #1a1a1a;
-            border: 1px solid #D4AF37;
-            border-radius: 40px;
-            padding: 8px 15px;
+            border: 2px solid #D4AF37;
+            border-radius: 30px;
+            padding: 10px 20px;
             color: #D4AF37;
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 5px;
-            font-size: 0.9em;
+            gap: 8px;
+            font-weight: bold;
+            transition: 0.3s;
         }
 
-        .icon-btn.active {
+        .btn-header:hover {
             background: #D4AF37;
             color: #000;
-            border-color: #00ff00;
+            transform: translateY(-2px);
         }
 
-        /* CONTENEDOR PRINCIPAL - 2 COLUMNAS */
-        .main-content {
-            display: flex;
-            flex: 1;
-            overflow: hidden;
-            padding: 15px;
-            gap: 15px;
+        /* Contenedor principal */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
         }
 
-        /* COLUMNA IZQUIERDA - LISTA */
-        .channels-column {
-            flex: 1;
+        /* Input M3U */
+        .input-section {
             background: #1a1a1a;
-            border: 1px solid #333;
-            border-radius: 15px;
+            border: 2px solid #D4AF37;
+            border-radius: 50px;
+            padding: 5px;
             display: flex;
-            flex-direction: column;
+            margin: 20px 0 30px;
             overflow: hidden;
-            min-width: 300px;
+            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.2);
         }
 
-        .input-area {
-            padding: 15px;
-            border-bottom: 1px solid #333;
-        }
-
-        .url-box {
-            display: flex;
-            gap: 10px;
-        }
-
-        .url-box input {
+        .input-section input {
             flex: 1;
-            background: #000;
-            border: 1px solid #D4AF37;
-            border-radius: 8px;
-            padding: 12px;
+            background: transparent;
+            border: none;
+            padding: 18px 25px;
             color: white;
+            font-size: 1em;
+            outline: none;
         }
 
-        .url-box button {
+        .input-section input::placeholder {
+            color: #666;
+            font-style: italic;
+        }
+
+        .input-section button {
             background: #D4AF37;
             border: none;
-            border-radius: 8px;
-            padding: 0 20px;
+            border-radius: 50px;
+            padding: 0 35px;
             font-weight: bold;
+            font-size: 1.1em;
             cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Orbitron', sans-serif;
         }
 
-        .stats-row {
+        .input-section button:hover {
+            background: #FFD700;
+            transform: scale(1.02);
+        }
+
+        /* Estadísticas */
+        .stats-container {
             display: flex;
-            gap: 15px;
-            margin-top: 10px;
-            color: #666;
-            font-size: 0.9em;
+            gap: 20px;
+            justify-content: center;
+            margin: 30px 0;
+            flex-wrap: wrap;
         }
 
+        .stat-card {
+            background: #1a1a1a;
+            border: 2px solid #D4AF37;
+            border-radius: 30px;
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 1.2em;
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.1);
+        }
+
+        .stat-number {
+            color: #D4AF37;
+            font-weight: bold;
+            font-size: 1.5em;
+        }
+
+        /* Pestañas */
         .tabs {
             display: flex;
-            border-bottom: 1px solid #333;
+            gap: 10px;
+            margin: 30px 0 20px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
         }
 
         .tab {
-            flex: 1;
-            padding: 12px;
-            text-align: center;
+            padding: 12px 30px;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 30px 30px 0 0;
             cursor: pointer;
-            background: #000;
-            color: #666;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: 0.3s;
         }
 
         .tab.active {
             background: #D4AF37;
             color: #000;
-            font-weight: bold;
-        }
-
-        .channels-list {
-            flex: 1;
-            overflow-y: auto;
-            padding: 10px;
-        }
-
-        .channel-item {
-            display: flex;
-            align-items: center;
-            padding: 12px;
-            border-bottom: 1px solid #333;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .channel-item:hover {
-            background: #2a2a2a;
             border-color: #D4AF37;
         }
 
-        .channel-item.blocked {
-            opacity: 0.4;
+        .tab-count {
+            background: #333;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-size: 0.8em;
+        }
+
+        .tab.active .tab-count {
+            background: #000;
+            color: #D4AF37;
+        }
+
+        /* Grid de contenido */
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            max-height: 60vh;
+            overflow-y: auto;
+            padding: 15px 5px;
+        }
+
+        .content-card {
+            background: #1a1a1a;
+            border: 2px solid #333;
+            border-radius: 15px;
+            padding: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+            position: relative;
+        }
+
+        .content-card:hover {
+            border-color: #D4AF37;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.2);
+        }
+
+        .content-card.blocked {
+            opacity: 0.3;
+            filter: blur(2px);
             pointer-events: none;
         }
 
-        .channel-name {
-            flex: 1;
+        .content-card.blocked::after {
+            content: '🔒';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.2em;
         }
 
-        .channel-category {
-            color: #D4AF37;
+        .card-type {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: #D4AF37;
+            color: #000;
+            padding: 4px 12px;
+            border-radius: 20px;
             font-size: 0.8em;
-            margin-right: 10px;
+            font-weight: bold;
         }
 
-        /* COLUMNA DERECHA - REPRODUCTOR */
-        .player-column {
-            width: 500px;
-            background: #1a1a1a;
-            border: 1px solid #333;
-            border-radius: 15px;
-            display: flex;
-            flex-direction: column;
+        .card-title {
+            font-size: 1.1em;
+            font-weight: bold;
+            margin: 25px 0 10px;
+            white-space: nowrap;
             overflow: hidden;
+            text-overflow: ellipsis;
         }
 
-        .player-container {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .player-header {
-            padding: 15px;
-            background: #000;
-            border-bottom: 1px solid #333;
-        }
-
-        .player-header h3 {
+        .card-category {
             color: #D4AF37;
-            font-size: 1em;
-        }
-
-        .video-wrapper {
-            flex: 1;
-            background: #000;
+            font-size: 0.9em;
             display: flex;
             align-items: center;
-            justify-content: center;
-            min-height: 300px;
+            gap: 5px;
         }
 
-        video {
-            width: 100%;
-            height: 100%;
-            max-height: 400px;
-            background: #000;
-        }
-
-        .player-info {
-            padding: 15px;
-            background: #000;
-            border-top: 1px solid #333;
-            color: #666;
-            font-size: 0.9em;
-        }
-
-        /* MODAL */
+        /* Modal parental */
         .modal {
             display: none;
             position: fixed;
@@ -235,6 +276,7 @@
             z-index: 1000;
             justify-content: center;
             align-items: center;
+            backdrop-filter: blur(5px);
         }
 
         .modal.active {
@@ -243,44 +285,80 @@
 
         .modal-content {
             background: #1a1a1a;
-            border: 2px solid #D4AF37;
-            border-radius: 20px;
-            padding: 30px;
+            border: 3px solid #D4AF37;
+            border-radius: 30px;
             width: 90%;
-            max-width: 400px;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow: hidden;
         }
 
-        .modal-content h3 {
+        .modal-header {
+            background: #000;
+            padding: 20px;
+            border-bottom: 1px solid #333;
+        }
+
+        .modal-header h2 {
             color: #D4AF37;
-            margin-bottom: 20px;
-        }
-
-        .checkbox-item {
             display: flex;
             align-items: center;
-            margin: 10px 0;
+            gap: 10px;
         }
 
-        .checkbox-item input {
-            margin-right: 10px;
-            width: 18px;
-            height: 18px;
+        .modal-body {
+            padding: 20px;
+            max-height: 50vh;
+            overflow-y: auto;
         }
 
-        .modal-buttons {
+        .category-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            border-bottom: 1px solid #333;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .category-item:hover {
+            background: #000;
+        }
+
+        .category-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin-right: 15px;
+            accent-color: #D4AF37;
+        }
+
+        .category-name {
+            flex: 1;
+            font-size: 1.1em;
+        }
+
+        .category-count {
+            color: #D4AF37;
+            font-weight: bold;
+        }
+
+        .modal-footer {
+            padding: 20px;
+            border-top: 1px solid #333;
             display: flex;
             gap: 10px;
-            margin-top: 20px;
         }
 
         .modal-btn {
             flex: 1;
             background: #D4AF37;
             border: none;
-            border-radius: 8px;
-            padding: 12px;
+            border-radius: 15px;
+            padding: 15px;
             font-weight: bold;
+            font-size: 1.1em;
             cursor: pointer;
+            transition: 0.3s;
         }
 
         .modal-btn.secondary {
@@ -288,19 +366,83 @@
             color: #D4AF37;
         }
 
-        /* TOAST */
+        .modal-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.3);
+        }
+
+        /* Reproductor */
+        .player-section {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: #000;
+            border-top: 3px solid #D4AF37;
+            display: none;
+            z-index: 500;
+        }
+
+        .player-section.active {
+            display: block;
+        }
+
+        .player-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 20px;
+            background: #1a1a1a;
+        }
+
+        .player-title {
+            color: #D4AF37;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .close-player {
+            background: none;
+            border: none;
+            color: #D4AF37;
+            font-size: 1.5em;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-player:hover {
+            background: #D4AF37;
+            color: #000;
+        }
+
+        video {
+            width: 100%;
+            max-height: 400px;
+            background: #000;
+        }
+
+        /* Toast */
         .toast {
             position: fixed;
-            bottom: 20px;
+            bottom: 30px;
             left: 50%;
             transform: translateX(-50%) translateY(100px);
             background: #1a1a1a;
             border: 2px solid #D4AF37;
-            border-radius: 30px;
-            padding: 12px 25px;
+            border-radius: 50px;
+            padding: 15px 30px;
             color: #D4AF37;
+            font-weight: bold;
             transition: 0.3s;
-            z-index: 3000;
+            z-index: 2000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
         .toast.show {
@@ -313,13 +455,46 @@
             color: #ff9999;
         }
 
-        @media (max-width: 900px) {
-            .main-content {
-                flex-direction: column;
+        /* Scroll personalizado */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #D4AF37;
+            border-radius: 4px;
+        }
+
+        @media (max-width: 768px) {
+            .logo h1 {
+                font-size: 1.5em;
             }
             
-            .player-column {
-                width: 100%;
+            .input-section {
+                flex-direction: column;
+                border-radius: 20px;
+            }
+            
+            .input-section button {
+                padding: 15px;
+            }
+            
+            .tabs {
+                flex-wrap: wrap;
+            }
+            
+            .tab {
+                flex: 1;
+                justify-content: center;
+                padding: 10px;
+            }
+            
+            .content-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -327,173 +502,163 @@
 <body>
     <div class="header">
         <div class="logo">
+            <i class="fas fa-skull" style="color: #D4AF37; font-size: 2em;"></i>
             <h1>LA PERLA NEGRA</h1>
         </div>
         <div class="header-buttons">
-            <div class="icon-btn" id="warpBtn">WARP</div>
-            <div class="icon-btn" id="parentalBtn">CONTROL</div>
-        </div>
-    </div>
-
-    <div class="main-content">
-        <!-- COLUMNA IZQUIERDA: LISTA -->
-        <div class="channels-column">
-            <div class="input-area">
-                <div class="url-box">
-                    <input type="text" id="m3uUrl" placeholder="URL de lista M3U...">
-                    <button id="loadBtn">CARGAR</button>
-                </div>
-                <div class="stats-row">
-                    <span>TV <span id="liveCount">0</span></span>
-                    <span>PELIS <span id="movieCount">0</span></span>
-                    <span>SERIES <span id="seriesCount">0</span></span>
-                </div>
-            </div>
-
-            <div class="tabs">
-                <div class="tab active" data-tab="live">TV</div>
-                <div class="tab" data-tab="movies">PELICULAS</div>
-                <div class="tab" data-tab="series">SERIES</div>
-            </div>
-
-            <div class="channels-list" id="channelsList">
-                <div style="text-align: center; padding: 30px; color: #666;">
-                    Carga una lista M3U para empezar
-                </div>
-            </div>
-        </div>
-
-        <!-- COLUMNA DERECHA: REPRODUCTOR -->
-        <div class="player-column">
-            <div class="player-container">
-                <div class="player-header">
-                    <h3 id="nowPlaying">Selecciona un canal</h3>
-                </div>
-                <div class="video-wrapper">
-                    <video id="videoPlayer" controls playsinline></video>
-                </div>
-                <div class="player-info" id="playerStatus">
-                    <span>WARP: <span id="warpStatus">OFF</span></span>
-                </div>
+            <div class="btn-header" id="parentalBtn">
+                <i class="fas fa-lock"></i> CONTROL PARENTAL
             </div>
         </div>
     </div>
 
-    <!-- MODAL PARENTAL -->
+    <div class="container">
+        <!-- Input M3U -->
+        <div class="input-section">
+            <input type="text" id="m3uUrl" placeholder="🌊 Pega tu lista M3U aquí... (ej: http://ejemplo.com/list.m3u)">
+            <button id="loadBtn">
+                <i class="fas fa-ship"></i> CARGAR TESORO
+            </button>
+        </div>
+
+        <!-- Estadísticas -->
+        <div class="stats-container">
+            <div class="stat-card">
+                <i class="fas fa-tv" style="color: #D4AF37;"></i>
+                <span>TV</span>
+                <span class="stat-number" id="liveCount">0</span>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-film" style="color: #D4AF37;"></i>
+                <span>PELÍCULAS</span>
+                <span class="stat-number" id="movieCount">0</span>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-list" style="color: #D4AF37;"></i>
+                <span>SERIES</span>
+                <span class="stat-number" id="seriesCount">0</span>
+            </div>
+        </div>
+
+        <!-- Pestañas -->
+        <div class="tabs">
+            <div class="tab active" data-tab="live">
+                <i class="fas fa-tv"></i> TV
+                <span class="tab-count" id="liveTabCount">0</span>
+            </div>
+            <div class="tab" data-tab="movies">
+                <i class="fas fa-film"></i> PELÍCULAS
+                <span class="tab-count" id="moviesTabCount">0</span>
+            </div>
+            <div class="tab" data-tab="series">
+                <i class="fas fa-list"></i> SERIES
+                <span class="tab-count" id="seriesTabCount">0</span>
+            </div>
+        </div>
+
+        <!-- Contenido -->
+        <div id="liveContent" class="content-grid"></div>
+        <div id="moviesContent" class="content-grid" style="display: none;"></div>
+        <div id="seriesContent" class="content-grid" style="display: none;"></div>
+    </div>
+
+    <!-- Modal Parental -->
     <div class="modal" id="parentalModal">
         <div class="modal-content">
-            <h3>CONTROL PARENTAL</h3>
-            <div id="categoriesList"></div>
-            <div class="modal-buttons">
+            <div class="modal-header">
+                <h2>
+                    <i class="fas fa-lock"></i>
+                    CONTROL PARENTAL
+                </h2>
+                <p style="color: #666; margin-top: 5px;">Marca las categorías que QUIERES BLOQUEAR</p>
+            </div>
+            <div class="modal-body" id="categoriesList">
+                <!-- Se llena con JS -->
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn secondary" id="cancelParentalBtn">CANCELAR</button>
                 <button class="modal-btn" id="saveParentalBtn">GUARDAR</button>
-                <button class="modal-btn secondary" id="closeParentalBtn">CERRAR</button>
             </div>
         </div>
     </div>
 
-    <!-- TOAST -->
+    <!-- Reproductor -->
+    <div class="player-section" id="playerSection">
+        <div class="player-header">
+            <div class="player-title">
+                <i class="fas fa-play"></i>
+                <span id="nowPlaying">Reproduciendo...</span>
+            </div>
+            <button class="close-player" id="closePlayerBtn">✖</button>
+        </div>
+        <video id="videoPlayer" controls playsinline></video>
+    </div>
+
+    <!-- Toast -->
     <div class="toast" id="toast"></div>
 
     <script>
-        // CONFIGURACION
-        const WORKER_URL = 'https://quiet-lake-ca31perlanegraproxy.rickgar600.workers.dev';
-        
+        const USER_AGENT = 'okhttp/4.11.0';
+
         class PerlaNegra {
             constructor() {
-                this.useWarp = localStorage.getItem('warp') === 'true' || true;
-                this.channels = [];
+                // Datos
+                this.liveChannels = [];
                 this.movies = [];
                 this.series = [];
-                this.blockedCategories = JSON.parse(localStorage.getItem('blocked')) || [];
+                this.allCategories = [];
+                this.blockedCategories = JSON.parse(localStorage.getItem('blockedCategories')) || [];
                 
+                // Inicializar
                 this.init();
             }
 
             init() {
-                document.getElementById('warpBtn').onclick = () => this.toggleWarp();
-                document.getElementById('parentalBtn').onclick = () => this.openParental();
-                document.getElementById('loadBtn').onclick = () => this.loadM3U();
-                document.getElementById('closeParentalBtn').onclick = () => this.closeParental();
-                document.getElementById('saveParentalBtn').onclick = () => this.saveParental();
+                // Event listeners
+                document.getElementById('loadBtn').addEventListener('click', () => this.loadM3U());
+                document.getElementById('parentalBtn').addEventListener('click', () => this.openParentalModal());
+                document.getElementById('cancelParentalBtn').addEventListener('click', () => this.closeParentalModal());
+                document.getElementById('saveParentalBtn').addEventListener('click', () => this.saveParentalSettings());
+                document.getElementById('closePlayerBtn').addEventListener('click', () => this.closePlayer());
                 
+                // Pestañas
                 document.querySelectorAll('.tab').forEach(tab => {
-                    tab.onclick = () => this.switchTab(tab.dataset.tab);
+                    tab.addEventListener('click', (e) => this.switchTab(e.currentTarget.dataset.tab));
                 });
                 
-                this.updateWarpUI();
-            }
-
-            toggleWarp() {
-                this.useWarp = !this.useWarp;
-                localStorage.setItem('warp', this.useWarp);
-                this.updateWarpUI();
-                this.toast(this.useWarp ? 'WARP activado' : 'WARP desactivado');
-            }
-
-            updateWarpUI() {
-                const btn = document.getElementById('warpBtn');
-                if (this.useWarp) {
-                    btn.classList.add('active');
-                    btn.innerHTML = 'WARP ON';
-                } else {
-                    btn.classList.remove('active');
-                    btn.innerHTML = 'WARP';
-                }
-                document.getElementById('warpStatus').innerHTML = this.useWarp ? 'ON' : 'OFF';
-            }
-
-            async playChannel(url, name) {
-                if (!url) return;
+                // Enter en input
+                document.getElementById('m3uUrl').addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') this.loadM3U();
+                });
                 
-                let streamUrl = url;
-                if (this.useWarp && WORKER_URL) {
-                    streamUrl = WORKER_URL + '/?url=' + encodeURIComponent(url);
-                }
-                
-                const video = document.getElementById('videoPlayer');
-                video.src = streamUrl;
-                video.load();
-                
-                document.getElementById('nowPlaying').innerHTML = name || 'Reproduciendo';
-                
-                try {
-                    await video.play();
-                    this.toast('Reproduciendo: ' + name);
-                } catch (error) {
-                    console.error('Error:', error);
-                    this.toast('Error al reproducir', 'error');
-                    
-                    if (this.useWarp) {
-                        this.useWarp = false;
-                        this.updateWarpUI();
-                        setTimeout(() => this.playChannel(url, name), 500);
-                    }
-                }
+                // Cargar datos de ejemplo
+                this.loadSampleData();
             }
 
             async loadM3U() {
                 const url = document.getElementById('m3uUrl').value.trim();
                 if (!url) {
-                    this.toast('Ingresa una URL', 'error');
+                    this.toast('❌ Ingresa una URL M3U');
                     return;
                 }
 
-                this.toast('Cargando...');
+                this.toast('⚓ Cargando lista...');
                 
                 try {
                     const response = await fetch(url, {
-                        headers: { 'User-Agent': 'okhttp/4.11.0' }
+                        headers: { 'User-Agent': USER_AGENT }
                     });
                     const text = await response.text();
                     this.parseM3U(text);
                 } catch (error) {
                     console.error(error);
-                    this.toast('Error al cargar', 'error');
+                    this.toast('❌ Error al cargar la lista', 'error');
                 }
             }
 
             parseM3U(text) {
-                this.channels = [];
+                // Reset
+                this.liveChannels = [];
                 this.movies = [];
                 this.series = [];
                 
@@ -504,125 +669,227 @@
                     const line = lines[i].trim();
                     
                     if (line.startsWith('#EXTINF:')) {
+                        // Extraer grupo (categoría)
                         const groupMatch = line.match(/group-title="([^"]+)"/);
                         const category = groupMatch ? groupMatch[1] : 'General';
                         
+                        // Extraer nombre
                         const nameMatch = line.match(/,(.+)$/);
                         const name = nameMatch ? nameMatch[1] : 'Canal';
                         
                         currentItem = { name, category };
                     } else if (line && !line.startsWith('#') && currentItem) {
+                        // Es la URL
                         currentItem.url = line;
                         
-                        if (line.includes('.mp4') || line.includes('.mkv') || 
-                            currentItem.name.toLowerCase().includes('pelicula')) {
+                        // Clasificar según la URL o el nombre
+                        const urlLower = line.toLowerCase();
+                        const nameLower = currentItem.name.toLowerCase();
+                        
+                        if (urlLower.includes('.mp4') || urlLower.includes('.mkv') || 
+                            nameLower.includes('película') || nameLower.includes('movie') ||
+                            nameLower.includes('film')) {
                             this.movies.push({...currentItem});
-                        } else {
-                            this.channels.push({...currentItem});
+                        } 
+                        else if (nameLower.includes('capítulo') || nameLower.includes('episodio') || 
+                                 nameLower.includes('serie') || nameLower.includes('temporada')) {
+                            this.series.push({...currentItem});
                         }
+                        else {
+                            this.liveChannels.push({...currentItem});
+                        }
+                        
                         currentItem = null;
                     }
                 }
                 
+                // Extraer todas las categorías
+                this.extractCategories();
+                this.renderContent();
                 this.updateCounts();
-                this.renderChannels();
-                this.toast('Cargados: ' + this.channels.length + ' canales, ' + this.movies.length + ' peliculas');
+                this.toast(`✅ Cargados: ${this.liveChannels.length} TV, ${this.movies.length} Pelis, ${this.series.length} Series`);
             }
 
-            renderChannels() {
-                const container = document.getElementById('channelsList');
-                const activeTab = document.querySelector('.tab.active').dataset.tab;
+            extractCategories() {
+                const categoriesSet = new Set();
                 
-                let items = [];
-                if (activeTab === 'live') items = this.channels;
-                else if (activeTab === 'movies') items = this.movies;
-                else items = this.series;
+                [...this.liveChannels, ...this.movies, ...this.series].forEach(item => {
+                    if (item.category) categoriesSet.add(item.category);
+                });
                 
-                if (items.length === 0) {
-                    container.innerHTML = '<div style="text-align: center; padding: 30px; color: #666;">No hay contenido</div>';
-                    return;
-                }
-                
-                let html = '';
-                for (let i = 0; i < items.length; i++) {
-                    const item = items[i];
-                    const blocked = this.isBlocked(item.category);
-                    
-                    html += '<div class="channel-item ' + (blocked ? 'blocked' : '') + '" onclick="' + (blocked ? '' : 'perla.playChannel(\'' + item.url + '\', \'' + item.name.replace(/'/g, "\\'") + '\')') + '">';
-                    html += '<span class="channel-name">' + item.name + '</span>';
-                    html += '<span class="channel-category">' + (item.category || 'General') + '</span>';
-                    html += '</div>';
-                }
-                
-                container.innerHTML = html;
+                this.allCategories = Array.from(categoriesSet).sort();
             }
 
-            isBlocked(category) {
-                if (!category) return false;
-                for (let i = 0; i < this.blockedCategories.length; i++) {
-                    if (category.toLowerCase().includes(this.blockedCategories[i].toLowerCase())) {
-                        return true;
-                    }
-                }
-                return false;
+            renderContent() {
+                this.renderLive();
+                this.renderMovies();
+                this.renderSeries();
             }
 
-            switchTab(tab) {
-                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-                document.querySelector('[data-tab="' + tab + '"]').classList.add('active');
-                this.renderChannels();
+            renderLive() {
+                const container = document.getElementById('liveContent');
+                container.innerHTML = this.liveChannels.map(item => this.renderCard(item, 'TV')).join('');
+            }
+
+            renderMovies() {
+                const container = document.getElementById('moviesContent');
+                container.innerHTML = this.movies.map(item => this.renderCard(item, 'PELÍCULA')).join('');
+            }
+
+            renderSeries() {
+                const container = document.getElementById('seriesContent');
+                container.innerHTML = this.series.map(item => this.renderCard(item, 'SERIE')).join('');
+            }
+
+            renderCard(item, type) {
+                const isBlocked = this.blockedCategories.includes(item.category);
+                const escapedName = item.name.replace(/'/g, "\\'");
+                const escapedUrl = item.url.replace(/'/g, "\\'");
+                
+                return `
+                    <div class="content-card ${isBlocked ? 'blocked' : ''}" 
+                         onclick="${!isBlocked ? `perla.playChannel('${escapedUrl}', '${escapedName}')` : ''}">
+                        <div class="card-type">${type}</div>
+                        <div class="card-title">${item.name}</div>
+                        <div class="card-category">
+                            <i class="fas fa-tag"></i> ${item.category || 'General'}
+                        </div>
+                    </div>
+                `;
+            }
+
+            playChannel(url, name) {
+                if (!url) return;
+                
+                const video = document.getElementById('videoPlayer');
+                const player = document.getElementById('playerSection');
+                
+                // Detener reproducción anterior
+                video.pause();
+                video.removeAttribute('src');
+                video.load();
+                
+                // Cargar nueva URL
+                video.src = url;
+                video.load();
+                
+                // Mostrar reproductor
+                player.classList.add('active');
+                document.getElementById('nowPlaying').textContent = name || 'Reproduciendo...';
+                
+                // Intentar reproducir
+                video.play().catch(error => {
+                    console.error('Error reproduciendo:', error);
+                    this.toast('❌ Error al reproducir. Probá con otra URL.', 'error');
+                });
+            }
+
+            closePlayer() {
+                const player = document.getElementById('playerSection');
+                const video = document.getElementById('videoPlayer');
+                
+                player.classList.remove('active');
+                video.pause();
+                video.removeAttribute('src');
+                video.load();
+            }
+
+            switchTab(tabName) {
+                // Actualizar pestañas
+                document.querySelectorAll('.tab').forEach(tab => {
+                    tab.classList.remove('active');
+                });
+                document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
+                
+                // Actualizar contenido
+                document.querySelectorAll('.content-grid').forEach(grid => {
+                    grid.style.display = 'none';
+                });
+                document.getElementById(`${tabName}Content`).style.display = 'grid';
             }
 
             updateCounts() {
-                document.getElementById('liveCount').innerHTML = this.channels.length;
-                document.getElementById('movieCount').innerHTML = this.movies.length;
-                document.getElementById('seriesCount').innerHTML = this.series.length;
+                document.getElementById('liveCount').textContent = this.liveChannels.length;
+                document.getElementById('movieCount').textContent = this.movies.length;
+                document.getElementById('seriesCount').textContent = this.series.length;
+                
+                document.getElementById('liveTabCount').textContent = this.liveChannels.length;
+                document.getElementById('moviesTabCount').textContent = this.movies.length;
+                document.getElementById('seriesTabCount').textContent = this.series.length;
             }
 
-            openParental() {
+            openParentalModal() {
+                const modal = document.getElementById('parentalModal');
                 const list = document.getElementById('categoriesList');
-                const categories = ['+18', 'Adultos', 'XXX', 'Violencia', 'Terror'];
                 
-                let html = '';
-                for (let i = 0; i < categories.length; i++) {
-                    const cat = categories[i];
+                // Crear lista de categorías con checkboxes
+                list.innerHTML = this.allCategories.map(cat => {
                     const checked = this.blockedCategories.includes(cat) ? 'checked' : '';
-                    html += '<div class="checkbox-item">';
-                    html += '<input type="checkbox" value="' + cat + '" ' + checked + '>';
-                    html += '<span>' + cat + '</span>';
-                    html += '</div>';
-                }
-                list.innerHTML = html;
+                    return `
+                        <div class="category-item">
+                            <input type="checkbox" value="${cat}" ${checked}>
+                            <span class="category-name">${cat}</span>
+                        </div>
+                    `;
+                }).join('');
                 
-                document.getElementById('parentalModal').classList.add('active');
+                modal.classList.add('active');
             }
 
-            saveParental() {
+            saveParentalSettings() {
+                const modal = document.getElementById('parentalModal');
                 const checkboxes = document.querySelectorAll('#categoriesList input:checked');
-                this.blockedCategories = [];
-                for (let i = 0; i < checkboxes.length; i++) {
-                    this.blockedCategories.push(checkboxes[i].value);
-                }
-                localStorage.setItem('blocked', JSON.stringify(this.blockedCategories));
-                this.renderChannels();
-                this.closeParental();
-                this.toast('Configuracion guardada');
+                
+                this.blockedCategories = Array.from(checkboxes).map(cb => cb.value);
+                localStorage.setItem('blockedCategories', JSON.stringify(this.blockedCategories));
+                
+                this.renderContent();
+                this.closeParentalModal();
+                this.toast('✅ Configuración guardada');
             }
 
-            closeParental() {
+            closeParentalModal() {
                 document.getElementById('parentalModal').classList.remove('active');
             }
 
-            toast(msg, type = 'success') {
+            toast(message, type = 'success') {
                 const toast = document.getElementById('toast');
-                toast.innerHTML = msg;
+                toast.textContent = message;
                 toast.className = 'toast show';
                 if (type === 'error') {
                     toast.classList.add('error');
                 }
                 setTimeout(() => {
                     toast.classList.remove('show');
-                }, 2000);
+                }, 3000);
+            }
+
+            loadSampleData() {
+                // Datos de ejemplo para probar
+                this.liveChannels = [
+                    { name: 'Canal 24h Noticias', url: 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8', category: 'Noticias' },
+                    { name: 'Deportes en Vivo', url: 'https://test-streams.mux.dev/bbb_sunflower_1080p_30fps_normal.mp4', category: 'Deportes' },
+                    { name: 'Cine Clásico', url: '#', category: 'Cine' },
+                    { name: 'Canal Infantil', url: '#', category: 'Infantil' },
+                    { name: 'Música 24/7', url: '#', category: 'Música' }
+                ];
+                
+                this.movies = [
+                    { name: 'El Padrino', url: '#', category: 'Cine' },
+                    { name: 'Toy Story', url: '#', category: 'Infantil' },
+                    { name: 'Rocky', url: '#', category: 'Deportes' },
+                    { name: 'Terror Nocturno', url: '#', category: 'Terror' }
+                ];
+                
+                this.series = [
+                    { name: 'Juego de Tronos', url: '#', category: 'Cine' },
+                    { name: 'Los Simpson', url: '#', category: 'Infantil' },
+                    { name: 'La Casa de Papel', url: '#', category: 'Cine' }
+                ];
+                
+                this.extractCategories();
+                this.renderContent();
+                this.updateCounts();
             }
         }
 
