@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#8B4513">
-    <title>🏴‍☠️ LA PERLA NEGRA - IPTV PIRATA</title>
+    <title>🏴‍☠️ LA PERLA NEGRA</title>
     
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -19,98 +18,38 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
         }
 
         body {
             background: #0a0a0a;
-            background-image: 
-                linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100"><path d="M20,20 L80,20 L80,80 L20,80 Z" fill="none" stroke="%238B4513" stroke-width="0.5" opacity="0.3"/><circle cx="50" cy="50" r="5" fill="%23D4AF37" opacity="0.2"/></svg>');
             color: #fff;
-            min-height: 100vh;
             font-family: 'Cinzel', serif;
         }
 
-        /* Efecto pergamino */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100"><path d="M10,10 Q30,5 50,10 Q70,15 90,10 L90,90 Q70,85 50,90 Q30,95 10,90 Z" fill="none" stroke="%23D4AF37" stroke-width="0.3" opacity="0.1"/></svg>');
-            pointer-events: none;
-            z-index: 0;
-        }
-
         .container {
-            position: relative;
-            z-index: 1;
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
         }
 
-        /* Header pirata */
         .header {
             background: #2c1810;
             border: 3px solid #8B4513;
-            border-radius: 30px 30px 10px 10px;
+            border-radius: 30px;
             padding: 30px;
             margin-bottom: 25px;
-            position: relative;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.8), inset 0 0 50px rgba(139,69,19,0.3);
             text-align: center;
-        }
-
-        .header::before, .header::after {
-            content: '⚓';
-            position: absolute;
-            font-size: 2em;
-            color: #D4AF37;
-            opacity: 0.3;
-        }
-
-        .header::before {
-            top: 10px;
-            left: 20px;
-            transform: rotate(-15deg);
-        }
-
-        .header::after {
-            bottom: 10px;
-            right: 20px;
-            transform: rotate(15deg);
         }
 
         h1 {
             font-family: 'Pirata One', cursive;
             font-size: 3.5em;
-            background: linear-gradient(45deg, #D4AF37, #FFD700, #D4AF37);
+            background: linear-gradient(45deg, #D4AF37, #FFD700);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
             margin: 10px 0;
-            text-shadow: 3px 3px 0 #000, 6px 6px 0 #8B4513;
-            letter-spacing: 4px;
         }
 
-        .subtitle {
-            color: #00FFFF;
-            font-size: 1.2em;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            text-shadow: 0 0 20px rgba(0,255,255,0.5);
-            border-top: 2px solid #8B4513;
-            border-bottom: 2px solid #8B4513;
-            padding: 10px;
-            display: inline-block;
-        }
-
-        /* Input pirata */
         .input-section {
             background: #2c1810;
             border: 3px solid #8B4513;
@@ -118,8 +57,6 @@
             padding: 5px;
             display: flex;
             margin: 30px 0;
-            overflow: hidden;
-            box-shadow: 0 5px 30px rgba(0,0,0,0.8);
         }
 
         .input-section input {
@@ -129,13 +66,8 @@
             padding: 18px 25px;
             color: #D4AF37;
             font-size: 1em;
-            font-family: 'Cinzel', serif;
             outline: none;
-        }
-
-        .input-section input::placeholder {
-            color: #6b4f3a;
-            font-style: italic;
+            border-radius: 50px;
         }
 
         .input-section button {
@@ -146,17 +78,9 @@
             font-weight: bold;
             font-size: 1.1em;
             cursor: pointer;
-            transition: 0.3s;
             font-family: 'Pirata One', cursive;
-            letter-spacing: 2px;
         }
 
-        .input-section button:hover {
-            background: #FFD700;
-            transform: scale(1.02);
-        }
-
-        /* Panel de estadísticas */
         .stats-panel {
             background: #2c1810;
             border: 3px solid #8B4513;
@@ -164,7 +88,7 @@
             padding: 20px;
             margin: 20px 0;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            grid-template-columns: repeat(3, 1fr);
             gap: 15px;
         }
 
@@ -176,67 +100,38 @@
             border: 2px solid #D4AF37;
         }
 
-        .stat-label {
-            color: #D4AF37;
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 8px;
-        }
-
         .stat-value {
             color: #00FFFF;
             font-size: 24px;
             font-weight: bold;
         }
 
-        /* Pestañas */
         .nav-tabs {
             display: flex;
-            justify-content: center;
             gap: 10px;
-            margin: 20px 0 25px;
-            flex-wrap: wrap;
+            margin: 20px 0;
             background: #2c1810;
             padding: 15px;
             border-radius: 50px;
-            border: 2px solid #8B4513;
         }
 
         .tab-btn {
+            flex: 1;
             background: #1a0f0a;
             color: #D4AF37;
             border: 2px solid #8B4513;
-            padding: 12px 30px;
+            padding: 12px;
             border-radius: 30px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: bold;
             font-family: 'Pirata One', cursive;
             font-size: 1.2em;
-            letter-spacing: 1px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
         }
 
         .tab-btn.active {
             background: #D4AF37;
             color: #000;
-            border-color: #D4AF37;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(212,175,55,0.3);
         }
 
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        /* Grid de categorías */
         .categories-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
@@ -250,43 +145,19 @@
             border-radius: 20px;
             padding: 20px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .category-card::before {
-            content: '🏴‍☠️';
-            position: absolute;
-            bottom: -10px;
-            right: -10px;
-            font-size: 4em;
-            opacity: 0.1;
-            transform: rotate(15deg);
-        }
-
-        .category-card:hover {
-            transform: translateY(-5px);
-            border-color: #D4AF37;
-            box-shadow: 0 15px 40px rgba(212,175,55,0.2);
         }
 
         .category-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 15px;
             border-bottom: 2px solid #8B4513;
             padding-bottom: 10px;
         }
 
         .category-title {
             font-size: 1.2em;
-            font-weight: bold;
             color: #D4AF37;
-            display: flex;
-            align-items: center;
-            gap: 10px;
             font-family: 'Pirata One', cursive;
         }
 
@@ -295,8 +166,6 @@
             color: #000;
             padding: 5px 15px;
             border-radius: 30px;
-            font-size: 1em;
-            font-weight: bold;
         }
 
         .channels-list {
@@ -314,67 +183,39 @@
             background: #1a0f0a;
             border-radius: 12px;
             margin-bottom: 8px;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-        }
-
-        .channel-item:hover {
-            border-color: #D4AF37;
-            background: #2a1a12;
         }
 
         .channel-item.blocked {
-            opacity: 0.4;
-            filter: blur(2px);
+            opacity: 0.3;
+            filter: blur(1px);
             pointer-events: none;
-        }
-
-        .channel-info {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .channel-name {
-            font-weight: bold;
-            color: #fff;
-            font-size: 1em;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .channel-category {
-            color: #D4AF37;
-            font-size: 0.8em;
-            margin-top: 3px;
-        }
-
-        .channel-actions {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-            flex-shrink: 0;
         }
 
         .play-btn {
             background: #D4AF37;
-            color: #000;
             border: none;
             padding: 8px 15px;
             border-radius: 30px;
             cursor: pointer;
-            font-size: 0.9em;
-            font-weight: bold;
-            transition: all 0.3s ease;
             font-family: 'Pirata One', cursive;
         }
 
-        .play-btn:hover {
-            transform: scale(1.1);
-            background: #FFD700;
+        .parental-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #2c1810;
+            border: 3px solid #D4AF37;
+            border-radius: 60px;
+            padding: 15px 25px;
+            cursor: pointer;
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #D4AF37;
         }
 
-        /* Modal parental */
         .modal {
             display: none;
             position: fixed;
@@ -399,109 +240,8 @@
             padding: 30px;
             max-width: 500px;
             width: 90%;
-            max-height: 80vh;
-            overflow: hidden;
         }
 
-        .modal-header {
-            border-bottom: 2px solid #8B4513;
-            padding-bottom: 15px;
-            margin-bottom: 20px;
-        }
-
-        .modal-header h2 {
-            color: #D4AF37;
-            font-family: 'Pirata One', cursive;
-            font-size: 2em;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .modal-body {
-            max-height: 50vh;
-            overflow-y: auto;
-            padding: 10px;
-        }
-
-        .category-checkbox {
-            display: flex;
-            align-items: center;
-            padding: 12px;
-            border-bottom: 1px solid #8B4513;
-            cursor: pointer;
-        }
-
-        .category-checkbox:hover {
-            background: #1a0f0a;
-        }
-
-        .category-checkbox input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
-            margin-right: 15px;
-            accent-color: #D4AF37;
-        }
-
-        .modal-footer {
-            border-top: 2px solid #8B4513;
-            padding-top: 20px;
-            margin-top: 20px;
-            display: flex;
-            gap: 10px;
-        }
-
-        .modal-btn {
-            flex: 1;
-            background: #D4AF37;
-            border: none;
-            border-radius: 30px;
-            padding: 15px;
-            font-weight: bold;
-            font-size: 1.1em;
-            cursor: pointer;
-            font-family: 'Pirata One', cursive;
-            transition: 0.3s;
-        }
-
-        .modal-btn.secondary {
-            background: #1a0f0a;
-            color: #D4AF37;
-            border: 2px solid #D4AF37;
-        }
-
-        .modal-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(212,175,55,0.3);
-        }
-
-        /* Botón parental flotante */
-        .parental-float {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: #2c1810;
-            border: 3px solid #D4AF37;
-            border-radius: 60px;
-            padding: 15px 25px;
-            cursor: pointer;
-            z-index: 2000;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-family: 'Pirata One', cursive;
-            font-size: 1.2em;
-            color: #D4AF37;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-
-        .parental-float:hover {
-            background: #D4AF37;
-            color: #000;
-            transform: scale(1.05);
-        }
-
-        /* Reproductor flotante */
         .player-section {
             position: fixed;
             bottom: 100px;
@@ -513,37 +253,17 @@
             padding: 15px;
             z-index: 2500;
             display: none;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.8);
         }
 
         .player-section.active {
             display: block;
         }
 
-        .player-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 10px;
-            color: #D4AF37;
-            font-family: 'Pirata One', cursive;
-        }
-
-        .close-player {
-            background: none;
-            border: none;
-            color: #D4AF37;
-            font-size: 1.5em;
-            cursor: pointer;
-        }
-
         video {
             width: 100%;
             border-radius: 15px;
-            background: #000;
         }
 
-        /* Toast */
         .toast-message {
             position: fixed;
             bottom: 30px;
@@ -554,19 +274,12 @@
             border-radius: 50px;
             padding: 15px 30px;
             color: #D4AF37;
-            font-weight: bold;
             transition: 0.3s;
             z-index: 4000;
         }
 
         .toast-message.show {
             transform: translateX(-50%) translateY(0);
-        }
-
-        .toast-message.error {
-            border-color: #ff4444;
-            background: #330000;
-            color: #ff9999;
         }
 
         .loading {
@@ -576,7 +289,6 @@
             background: #2c1810;
             border: 3px solid #D4AF37;
             border-radius: 20px;
-            margin: 20px 0;
         }
 
         .spinner {
@@ -595,101 +307,49 @@
         }
 
         @media (max-width: 768px) {
-            h1 {
-                font-size: 2.5em;
-            }
-            
             .input-section {
                 flex-direction: column;
-                border-radius: 20px;
             }
-            
-            .input-section button {
-                padding: 15px;
-            }
-            
-            .categories-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .nav-tabs {
-                flex-direction: column;
-                border-radius: 20px;
-            }
-            
             .player-section {
                 width: calc(100% - 40px);
                 right: 20px;
-                bottom: 80px;
             }
-            
-            .parental-float {
-                bottom: 20px;
-                right: 20px;
-                padding: 12px 20px;
-            }
-        }
-
-        /* Scroll */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: #1a0f0a;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: #D4AF37;
-            border-radius: 4px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- HEADER PIRATA -->
         <div class="header">
-            <div style="font-size: 3em; margin-bottom: 10px;">🏴‍☠️</div>
-            <h1>LA PERLA NEGRA</h1>
-            <div class="subtitle">EL TESORO IPTV MÁS BUSCADO</div>
+            <h1>🏴‍☠️ LA PERLA NEGRA</h1>
+            <div style="color: #00FFFF;">EL TESORO IPTV MÁS BUSCADO</div>
         </div>
 
-        <!-- INPUT PIRATA -->
         <div class="input-section">
-            <input type="text" id="url" placeholder="🌊 Pega tu lista M3U aquí... (ej: http://ejemplo.com/list.m3u)">
+            <input type="text" id="url" placeholder="🌊 Pega tu lista M3U aquí...">
             <button id="analyzeBtn">⚓ CARGAR</button>
         </div>
 
-        <!-- ESTADÍSTICAS -->
         <div class="stats-panel">
             <div class="stat-card">
-                <div class="stat-label">📺 TV</div>
+                <div>📺 TV</div>
                 <div class="stat-value" id="liveCount">0</div>
             </div>
             <div class="stat-card">
-                <div class="stat-label">🎬 PELÍCULAS</div>
+                <div>🎬 PELIS</div>
                 <div class="stat-value" id="vodCount">0</div>
             </div>
             <div class="stat-card">
-                <div class="stat-label">📚 SERIES</div>
+                <div>📚 SERIES</div>
                 <div class="stat-value" id="seriesCount">0</div>
             </div>
         </div>
 
-        <!-- PESTAÑAS -->
         <div class="nav-tabs">
-            <button class="tab-btn active" data-tab="live">
-                <i class="fas fa-tv"></i> TV
-            </button>
-            <button class="tab-btn" data-tab="movies">
-                <i class="fas fa-film"></i> PELÍCULAS
-            </button>
-            <button class="tab-btn" data-tab="series">
-                <i class="fas fa-list"></i> SERIES
-            </button>
+            <button class="tab-btn active" data-tab="live">📺 TV</button>
+            <button class="tab-btn" data-tab="movies">🎬 PELIS</button>
+            <button class="tab-btn" data-tab="series">📚 SERIES</button>
         </div>
 
-        <!-- CONTENIDO -->
         <div id="liveTab" class="tab-content active">
             <div id="liveContent" class="categories-grid"></div>
         </div>
@@ -700,66 +360,49 @@
             <div id="seriesContent" class="categories-grid"></div>
         </div>
 
-        <!-- LOADING -->
         <div class="loading" id="loading">
             <div class="spinner"></div>
-            <p style="color: #D4AF37;">⚓ Navegando hacia el tesoro...</p>
+            <p style="color: #D4AF37;">⚓ Cargando...</p>
         </div>
     </div>
 
-    <!-- BOTÓN PARENTAL FLOTANTE -->
     <div class="parental-float" id="parentalBtn">
         <i class="fas fa-lock"></i>
-        <span>CONTROL PARENTAL</span>
+        <span>CONTROL</span>
     </div>
 
-    <!-- MODAL PARENTAL -->
     <div class="modal" id="parentalModal">
         <div class="modal-content">
-            <div class="modal-header">
-                <h2>
-                    <i class="fas fa-lock"></i>
-                    CONTROL PARENTAL
-                </h2>
-                <p style="color: #D4AF37;">Marca las categorías a BLOQUEAR</p>
-            </div>
-            <div class="modal-body" id="categoriesList"></div>
-            <div class="modal-footer">
-                <button class="modal-btn secondary" id="cancelParentalBtn">CANCELAR</button>
-                <button class="modal-btn" id="saveParentalBtn">GUARDAR</button>
+            <h2 style="color: #D4AF37; margin-bottom: 20px;">⚓ CONTROL PARENTAL</h2>
+            <div id="categoriesList" style="max-height: 300px; overflow-y: auto;"></div>
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button class="tab-btn" id="saveParentalBtn" style="flex:1;">GUARDAR</button>
+                <button class="tab-btn" id="cancelParentalBtn" style="flex:1;">CANCELAR</button>
             </div>
         </div>
     </div>
 
-    <!-- REPRODUCTOR FLOTANTE -->
     <div class="player-section" id="playerSection">
-        <div class="player-header">
-            <span id="nowPlaying">⚓ Reproduciendo...</span>
-            <button class="close-player" id="closePlayerBtn">✖</button>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+            <span id="nowPlaying" style="color: #D4AF37;">⚓ Reproduciendo...</span>
+            <button class="close-player" id="closePlayerBtn" style="background: none; border: none; color: #D4AF37; font-size: 1.5em; cursor: pointer;">✖</button>
         </div>
         <video id="videoPlayer" controls playsinline></video>
     </div>
 
-    <!-- TOAST -->
     <div class="toast-message" id="toastMessage"></div>
 
     <script>
         // Variables globales
         let hls = null;
-        let currentData = null;
-        let currentUrl = null;
         let liveStreams = [];
         let vodStreams = [];
         let seriesList = [];
         let allCategories = [];
         let blockedCategories = JSON.parse(localStorage.getItem('blockedCategories')) || [];
 
-        // User-Agent fijo
         const USER_AGENT = 'okhttp/4.11.0';
-
-        // ============================
-        // FUNCIONES PRINCIPALES
-        // ============================
+        const PROXY_URL = 'https://cors-anywhere.herokuapp.com/'; // Proxy CORS
 
         async function analyzeUrl() {
             const url = document.getElementById('url').value.trim();
@@ -771,27 +414,33 @@
             showLoading(true);
             
             try {
-                // Intentar cargar como M3U primero
-                const response = await fetch(url, {
-                    headers: { 'User-Agent': USER_AGENT }
+                // Usar proxy para evitar problemas de CORS y Mixed Content
+                const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+                const finalUrl = proxyUrl + url;
+                
+                const response = await fetch(finalUrl, {
+                    headers: { 
+                        'User-Agent': USER_AGENT,
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
                 });
+                
                 const text = await response.text();
                 
                 if (text.includes('#EXTM3U')) {
-                    parseM3U(text, url);
+                    parseM3U(text);
                 } else {
                     showToast('❌ Formato no válido', false);
                 }
             } catch (error) {
                 console.error(error);
-                showToast('❌ Error al cargar', false);
+                showToast('❌ Error al cargar: ' + error.message, false);
             } finally {
                 showLoading(false);
             }
         }
 
-        function parseM3U(text, baseUrl) {
-            // Reset
+        function parseM3U(text) {
             liveStreams = [];
             vodStreams = [];
             seriesList = [];
@@ -803,23 +452,18 @@
                 const line = lines[i].trim();
                 
                 if (line.startsWith('#EXTINF:')) {
-                    // Extraer grupo (categoría)
                     const groupMatch = line.match(/group-title="([^"]+)"/);
                     const category = groupMatch ? groupMatch[1] : 'General';
                     
-                    // Extraer nombre
                     const nameMatch = line.match(/,(.+)$/);
                     const name = nameMatch ? nameMatch[1] : 'Canal';
                     
                     currentItem = { name, category };
                 } else if (line && !line.startsWith('#') && currentItem) {
-                    // Es la URL
                     currentItem.url = line;
                     
-                    // Clasificar
                     if (line.includes('.mp4') || line.includes('.mkv') || 
-                        currentItem.name.toLowerCase().includes('película') ||
-                        currentItem.name.toLowerCase().includes('movie')) {
+                        currentItem.name.toLowerCase().includes('película')) {
                         vodStreams.push({...currentItem});
                     } else if (currentItem.name.toLowerCase().includes('capítulo') ||
                               currentItem.name.toLowerCase().includes('episodio')) {
@@ -832,10 +476,7 @@
                 }
             }
             
-            // Extraer categorías
             extractCategories();
-            
-            // Actualizar UI
             updateCounts();
             displayContent();
             
@@ -844,11 +485,9 @@
 
         function extractCategories() {
             const cats = new Set();
-            
             [...liveStreams, ...vodStreams, ...seriesList].forEach(item => {
                 if (item.category) cats.add(item.category);
             });
-            
             allCategories = Array.from(cats).sort();
         }
 
@@ -865,7 +504,6 @@
                 return;
             }
             
-            // Agrupar por categoría
             const grouped = {};
             liveStreams.forEach(stream => {
                 const cat = stream.category || 'General';
@@ -881,18 +519,15 @@
                 html += `
                     <div class="category-card" onclick="toggleCategory('${categoryId}')">
                         <div class="category-header">
-                            <div class="category-title">
-                                <i class="fas fa-tv"></i> ${category}
-                            </div>
+                            <div class="category-title">📺 ${category}</div>
                             <div class="category-count">${items.length}</div>
                         </div>
                         <div class="channels-list" id="${categoryId}">
                 `;
                 
                 items.forEach(item => {
-                    const itemBlocked = isBlocked;
                     html += `
-                        <div class="channel-item ${itemBlocked ? 'blocked' : ''}">
+                        <div class="channel-item ${isBlocked ? 'blocked' : ''}">
                             <div class="channel-info">
                                 <div class="channel-name">${item.name}</div>
                                 <div class="channel-category">${item.category}</div>
@@ -917,7 +552,6 @@
                 return;
             }
             
-            // Agrupar por categoría
             const grouped = {};
             vodStreams.forEach(stream => {
                 const cat = stream.category || 'General';
@@ -933,18 +567,15 @@
                 html += `
                     <div class="category-card" onclick="toggleCategory('${categoryId}')">
                         <div class="category-header">
-                            <div class="category-title">
-                                <i class="fas fa-film"></i> ${category}
-                            </div>
+                            <div class="category-title">🎬 ${category}</div>
                             <div class="category-count">${items.length}</div>
                         </div>
                         <div class="channels-list" id="${categoryId}">
                 `;
                 
                 items.forEach(item => {
-                    const itemBlocked = isBlocked;
                     html += `
-                        <div class="channel-item ${itemBlocked ? 'blocked' : ''}">
+                        <div class="channel-item ${isBlocked ? 'blocked' : ''}">
                             <div class="channel-info">
                                 <div class="channel-name">${item.name}</div>
                                 <div class="channel-category">${item.category}</div>
@@ -969,7 +600,6 @@
                 return;
             }
             
-            // Agrupar por categoría
             const grouped = {};
             seriesList.forEach(series => {
                 const cat = series.category || 'General';
@@ -985,18 +615,15 @@
                 html += `
                     <div class="category-card" onclick="toggleCategory('${categoryId}')">
                         <div class="category-header">
-                            <div class="category-title">
-                                <i class="fas fa-list"></i> ${category}
-                            </div>
+                            <div class="category-title">📚 ${category}</div>
                             <div class="category-count">${items.length}</div>
                         </div>
                         <div class="channels-list" id="${categoryId}">
                 `;
                 
                 items.forEach(item => {
-                    const itemBlocked = isBlocked;
                     html += `
-                        <div class="channel-item ${itemBlocked ? 'blocked' : ''}">
+                        <div class="channel-item ${isBlocked ? 'blocked' : ''}">
                             <div class="channel-info">
                                 <div class="channel-name">${item.name}</div>
                                 <div class="channel-category">${item.category}</div>
@@ -1029,27 +656,29 @@
             video.removeAttribute('src');
             video.load();
             
-            // Detectar si es HLS
+            // También usar proxy para los streams si son HTTP
+            let streamUrl = url;
+            if (url.startsWith('http:')) {
+                streamUrl = PROXY_URL + url;
+            }
+            
             if (url.includes('.m3u8')) {
                 if (Hls.isSupported()) {
                     hls = new Hls();
-                    hls.loadSource(url);
+                    hls.loadSource(streamUrl);
                     hls.attachMedia(video);
                     hls.on(Hls.Events.MANIFEST_PARSED, () => {
                         video.play().catch(e => console.warn('Autoplay error', e));
                     });
-                } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-                    video.src = url;
-                    video.load();
-                    video.play().catch(e => console.warn('Autoplay error', e));
                 } else {
-                    video.src = url;
+                    video.src = streamUrl;
                 }
             } else {
-                video.src = url;
-                video.load();
-                video.play().catch(e => console.warn('Autoplay error', e));
+                video.src = streamUrl;
             }
+            
+            video.load();
+            video.play().catch(e => console.warn('Autoplay error', e));
             
             player.classList.add('active');
             document.getElementById('nowPlaying').textContent = `⚓ ${title || 'Reproduciendo'}`;
@@ -1087,18 +716,14 @@
             document.getElementById('loading').style.display = show ? 'block' : 'none';
         }
 
-        // ============================
-        // CONTROL PARENTAL
-        // ============================
-
         function openParentalModal() {
             const modal = document.getElementById('parentalModal');
             const list = document.getElementById('categoriesList');
             
             list.innerHTML = allCategories.map(cat => `
-                <label class="category-checkbox">
-                    <input type="checkbox" value="${cat}" ${blockedCategories.includes(cat) ? 'checked' : ''}>
-                    <span>${cat}</span>
+                <label style="display: flex; align-items: center; padding: 10px; border-bottom: 1px solid #8B4513;">
+                    <input type="checkbox" value="${cat}" ${blockedCategories.includes(cat) ? 'checked' : ''} style="margin-right: 10px;">
+                    <span style="color: #D4AF37;">${cat}</span>
                 </label>
             `).join('');
             
@@ -1110,19 +735,14 @@
             blockedCategories = Array.from(checkboxes).map(cb => cb.value);
             localStorage.setItem('blockedCategories', JSON.stringify(blockedCategories));
             
-            // Recargar contenido
             displayContent();
             closeParentalModal();
-            showToast('✅ Configuración guardada', true);
+            showToast('✅ Guardado', true);
         }
 
         function closeParentalModal() {
             document.getElementById('parentalModal').classList.remove('active');
         }
-
-        // ============================
-        // TOAST
-        // ============================
 
         function showToast(message, isSuccess = true) {
             const toast = document.getElementById('toastMessage');
@@ -1134,10 +754,6 @@
             }, 3000);
         }
 
-        // ============================
-        // PESTAÑAS
-        // ============================
-
         function switchTab(tabName) {
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
@@ -1146,52 +762,23 @@
             document.getElementById(`${tabName}Tab`).classList.add('active');
         }
 
-        // ============================
-        // INICIALIZACIÓN
-        // ============================
-
+        // Event listeners
         document.addEventListener('DOMContentLoaded', () => {
-            // Eventos
             document.getElementById('analyzeBtn').addEventListener('click', analyzeUrl);
             document.getElementById('closePlayerBtn').addEventListener('click', closePlayer);
             document.getElementById('parentalBtn').addEventListener('click', openParentalModal);
-            document.getElementById('cancelParentalBtn').addEventListener('click', closeParentalModal);
             document.getElementById('saveParentalBtn').addEventListener('click', saveParentalSettings);
+            document.getElementById('cancelParentalBtn').addEventListener('click', closeParentalModal);
             
-            // Pestañas
             document.querySelectorAll('.tab-btn').forEach(btn => {
                 btn.addEventListener('click', (e) => {
-                    const tab = e.target.closest('.tab-btn').dataset.tab;
-                    switchTab(tab);
+                    switchTab(e.target.dataset.tab);
                 });
             });
             
-            // Enter
             document.getElementById('url').addEventListener('keypress', (e) => {
                 if (e.key === 'Enter') analyzeUrl();
             });
-            
-            // Datos de ejemplo
-            setTimeout(() => {
-                liveStreams = [
-                    { name: 'Canal 24h Noticias', url: 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8', category: 'Noticias' },
-                    { name: 'Deportes en Vivo', url: 'https://test-streams.mux.dev/bbb_sunflower_1080p_30fps_normal.mp4', category: 'Deportes' },
-                    { name: 'Cine Clásico', url: '#', category: 'Cine' },
-                    { name: 'Canal +18', url: '#', category: '+18' }
-                ];
-                vodStreams = [
-                    { name: 'El Padrino', url: '#', category: 'Cine' },
-                    { name: 'Pelicula +18', url: '#', category: '+18' }
-                ];
-                seriesList = [
-                    { name: 'Serie Infantil', url: '#', category: 'Infantil' },
-                    { name: 'Serie +18', url: '#', category: '+18' }
-                ];
-                
-                extractCategories();
-                updateCounts();
-                displayContent();
-            }, 1000);
         });
     </script>
 </body>
