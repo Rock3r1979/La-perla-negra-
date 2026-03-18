@@ -724,4 +724,480 @@
                 <i class="fas fa-crown"></i>
                 CAMAROTE DEL CAPITÁN
                 <i class="fas fa-crown"></i>
-           
+            </div>
+            
+            <!-- Candado parental -->
+            <div class="parental-lock">
+                <div class="lock-header">
+                    <i class="fas fa-lock"></i>
+                    <span>BAÚL DEL TESORO (CONTROL PARENTAL)</span>
+                    <i class="fas fa-key"></i>
+                </div>
+                
+                <div class="pin-container">
+                    <input type="password" class="pin-input" id="pinInput" placeholder="****" maxlength="4" pattern="\d*">
+                    <button class="pirate-btn" id="setPinBtn">
+                        <i class="fas fa-save"></i> GRABAR PIN
+                    </button>
+                    <button class="pirate-btn danger" id="disablePinBtn">
+                        <i class="fas fa-unlock"></i> ABRIR BAÚL
+                    </button>
+                </div>
+            </div>
+
+            <!-- Cofre de categorías -->
+            <div class="categories-chest">
+                <div class="chest-title">
+                    <i class="fas fa-treasure-chest"></i>
+                    CATEGORÍAS DEL BOTÍN
+                </div>
+                
+                <div class="category-map" id="categoryMap">
+                    <!-- Se llena con JS -->
+                </div>
+                
+                <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-top: 25px;">
+                    <button class="pirate-btn" id="addCategoryBtn">
+                        <i class="fas fa-plus"></i> AÑADIR CATEGORÍA
+                    </button>
+                    <button class="pirate-btn success" id="unlockAllBtn">
+                        <i class="fas fa-key"></i> ABRIR TODO
+                    </button>
+                </div>
+            </div>
+
+            <!-- Brújula de actividad -->
+            <div class="compass-log">
+                <h3 style="color: #D4AF37; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-compass"></i> BITÁCORA DE ABORDAJES
+                </h3>
+                <div id="activityLog">
+                    <!-- Log entries -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Barco de búsqueda -->
+        <div class="ship-search">
+            <input type="text" id="urlInput" placeholder="🏴‍☠️ Introduce el mapa del tesoro (URL M3U o Xtream)...">
+            <button class="pirate-btn" id="analyzeBtn">
+                <i class="fas fa-ship"></i> ¡AL ABORDAJE!
+            </button>
+            <button class="pirate-btn danger" id="clearBtn">
+                <i class="fas fa-trash"></i> LIMPIAR
+            </button>
+        </div>
+
+        <!-- Tesoro (grid de contenido) -->
+        <div class="treasure-grid" id="treasureGrid">
+            <!-- Aquí va el contenido -->
+        </div>
+
+        <!-- Modal del capitán -->
+        <div class="captain-modal" id="captainModal">
+            <div class="modal-content">
+                <div class="modal-title">¡ALTO O TE HAGO CAMINAR POR LA PLANCHA!</div>
+                <div class="pin-display" id="modalPinDisplay">****</div>
+                <div class="pin-wheel" id="pinWheel"></div>
+                <button class="pirate-btn danger" id="cancelModalBtn" style="width: 100%;">
+                    <i class="fas fa-times"></i> RENDIRSE
+                </button>
+            </div>
+        </div>
+
+        <!-- Toast del capitán -->
+        <div class="captain-toast" id="captainToast"></div>
+    </div>
+
+    <script>
+        // ============================================
+        // CLASE DEL CAPITÁN (CONTROL PARENTAL)
+        // ============================================
+        
+        class CaptainHook {
+            constructor() {
+                this.pin = localStorage.getItem('perlaNegraPin') || null;
+                this.blockedCategories = JSON.parse(localStorage.getItem('perlaNegraBloqueadas')) || ['+18', 'Adultos', 'XXX', 'Solo adultos'];
+                this.attempts = 0;
+                this.maxAttempts = 3;
+                this.lockedUntil = null;
+                this.activityLog = JSON.parse(localStorage.getItem('perlaNegraBitacora')) || [];
+                
+                this.init();
+            }
+
+            init() {
+                this.renderCategories();
+                this.renderActivityLog();
+                this.setupEventListeners();
+            }
+
+            setupEventListeners() {
+                document.getElementById('setPinBtn').addEventListener('click', () => this.handleSetPin());
+                document.getElementById('disablePinBtn').addEventListener('click', () => this.handleDisablePin());
+                document.getElementById('addCategoryBtn').addEventListener('click', () => this.addCategory());
+                document.getElementById('unlockAllBtn').addEventListener('click', () => this.unlockAll());
+                document.getElementById('analyzeBtn').addEventListener('click', () => this.analyzeTreasure());
+                document.getElementById('clearBtn').addEventListener('click', () => this.clearTreasure());
+                document.getElementById('cancelModalBtn').addEventListener('click', () => this.closeModal());
+            }
+
+            // Verificar PIN
+            verifyPin(inputPin) {
+                const now = Date.now();
+                
+                if (this.lockedUntil && now < this.lockedUntil) {
+                    const waitTime = Math.ceil((this.lockedUntil - now) / 1000);
+                    this.addToLog('¡TIMBRE!', `Esperar ${waitTime}s`, true);
+                    this.showToast(`⏳ Espera ${waitTime} segundos, grumete`, 'error');
+                    return false;
+                }
+
+                const isValid = this.pin && inputPin === this.pin;
+                
+                if (!isValid) {
+                    this.attempts++;
+                    this.addToLog('¡PIN ERRÓNEO!', `Intento ${this.attempts}/${this.maxAttempts}`, true);
+                    
+                    if (this.attempts >= this.maxAttempts) {
+                        this.lockedUntil = now + (5 * 60 * 1000); // 5 minutos
+                        this.addToLog('¡BLOQUEADO!', '5 minutos en el calabozo', true);
+                        this.showToast('🔒 5 MINUTOS EN EL CALABOZO', 'error');
+                        this.attempts = 0;
+                    }
+                } else {
+                    this.attempts = 0;
+                    this.lockedUntil = null;
+                    this.addToLog('¡PIN CORRECTO!', 'Acceso concedido', false);
+                }
+                
+                return isValid;
+            }
+
+            // Establecer PIN
+            setPin(newPin) {
+                if (newPin && newPin.length === 4 && /^\d+$/.test(newPin)) {
+                    this.pin = newPin;
+                    localStorage.setItem('perlaNegraPin', newPin);
+                    this.addToLog('¡NUEVO PIN!', 'Candado colocado', false);
+                    this.showToast('✅ PIN guardado en el cofre', 'success');
+                    return true;
+                }
+                this.showToast('❌ El PIN debe tener 4 números', 'error');
+                return false;
+            }
+
+            // Desactivar PIN
+            disablePin() {
+                this.pin = null;
+                localStorage.removeItem('perlaNegraPin');
+                this.addToLog('¡PIN ELIMINADO!', 'Cofre abierto', false);
+                this.showToast('🔓 Cofre abierto - Sin candado', 'success');
+            }
+
+            // Toggle categoría bloqueada
+            toggleCategory(category) {
+                const index = this.blockedCategories.indexOf(category);
+                if (index === -1) {
+                    this.blockedCategories.push(category);
+                    this.addToLog('⚓ CATEGORÍA BLOQUEADA', category, true);
+                } else {
+                    this.blockedCategories.splice(index, 1);
+                    this.addToLog('🏴‍☠️ CATEGORÍA LIBERADA', category, false);
+                }
+                localStorage.setItem('perlaNegraBloqueadas', JSON.stringify(this.blockedCategories));
+                this.renderCategories();
+                this.updateContentBlocks();
+            }
+
+            // Verificar si está bloqueado
+            isBlocked(item) {
+                if (!item || !item.category) return false;
+                return this.blockedCategories.some(cat => 
+                    item.category.toLowerCase().includes(cat.toLowerCase())
+                );
+            }
+
+            // Añadir categoría personalizada
+            addCategory() {
+                const category = prompt('🏴‍☠️ ¿Qué categoría quieres bloquear?');
+                if (category && category.trim()) {
+                    if (!this.blockedCategories.includes(category.trim())) {
+                        this.blockedCategories.push(category.trim());
+                        localStorage.setItem('perlaNegraBloqueadas', JSON.stringify(this.blockedCategories));
+                        this.renderCategories();
+                        this.addToLog('➕ NUEVA CATEGORÍA', category.trim(), true);
+                        this.showToast(`🔒 "${category}" bloqueada`, 'success');
+                    }
+                }
+            }
+
+            // Desbloquear todo
+            unlockAll() {
+                if (this.pin) {
+                    this.showPinModal('DESBLOQUEAR TODO', () => {
+                        this.blockedCategories = [];
+                        localStorage.setItem('perlaNegraBloqueadas', '[]');
+                        this.renderCategories();
+                        this.updateContentBlocks();
+                        this.addToLog('🔓 ¡TODO DESBLOQUEADO!', 'El capitán lo ordenó', false);
+                        this.showToast('🏴‍☠️ ¡Todo el botín está disponible!', 'success');
+                    });
+                } else {
+                    this.blockedCategories = [];
+                    localStorage.setItem('perlaNegraBloqueadas', '[]');
+                    this.renderCategories();
+                    this.updateContentBlocks();
+                    this.addToLog('🔓 ¡TODO DESBLOQUEADO!', 'Sin candado', false);
+                    this.showToast('🏴‍☠️ ¡Todo el botín está disponible!', 'success');
+                }
+            }
+
+            // Renderizar categorías
+            renderCategories() {
+                const map = document.getElementById('categoryMap');
+                const allCategories = [
+                    '+18', 'Adultos', 'XXX', 'Solo adultos', 'Violencia',
+                    'Terror', 'Nocturno', 'Infantil', 'Deportes', 'Cine'
+                ];
+                
+                map.innerHTML = allCategories.map(cat => {
+                    const isLocked = this.blockedCategories.includes(cat);
+                    return `
+                        <div class="category-tag ${isLocked ? 'locked' : ''}" onclick="captain.toggleCategory('${cat}')">
+                            <i class="fas ${isLocked ? 'fa-lock' : 'fa-unlock'}"></i>
+                            ${cat}
+                            ${isLocked ? '<span class="lock-indicator">🔒</span>' : ''}
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            // Renderizar bitácora
+            renderActivityLog() {
+                const log = document.getElementById('activityLog');
+                if (this.activityLog.length === 0) {
+                    log.innerHTML = '<div style="text-align: center; color: #6b4f3a; padding: 20px;">⚓ Bitácora vacía, grumete</div>';
+                    return;
+                }
+                
+                log.innerHTML = this.activityLog.map(entry => {
+                    const time = new Date(entry.timestamp).toLocaleTimeString();
+                    return `
+                        <div class="log-entry">
+                            <span class="log-time">${time}</span>
+                            <span class="log-action ${entry.isFailed ? 'failed' : ''}">
+                                ${entry.isFailed ? '💀' : '🏴‍☠️'} ${entry.action}
+                            </span>
+                            <span style="color: #cdb38c;">${entry.details}</span>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            // Añadir a bitácora
+            addToLog(action, details, isFailed = false) {
+                const entry = {
+                    timestamp: new Date().toISOString(),
+                    action,
+                    details,
+                    isFailed
+                };
+                
+                this.activityLog.unshift(entry);
+                if (this.activityLog.length > 15) this.activityLog.pop();
+                
+                localStorage.setItem('perlaNegraBitacora', JSON.stringify(this.activityLog));
+                this.renderActivityLog();
+            }
+
+            // Mostrar modal de PIN
+            showPinModal(reason, onSuccess) {
+                const modal = document.getElementById('captainModal');
+                const display = document.getElementById('modalPinDisplay');
+                const wheel = document.getElementById('pinWheel');
+                let pin = '';
+                
+                modal.classList.add('active');
+                display.textContent = '****';
+                
+                // Generar rueda de números
+                wheel.innerHTML = '';
+                for (let i = 1; i <= 9; i++) {
+                    const btn = document.createElement('div');
+                    btn.className = 'pin-number';
+                    btn.textContent = i;
+                    btn.onclick = () => {
+                        if (pin.length < 4) {
+                            pin += i;
+                            display.textContent = '•'.repeat(pin.length) + '*'.repeat(4 - pin.length);
+                        }
+                    };
+                    wheel.appendChild(btn);
+                }
+                
+                // Botón 0
+                const zeroBtn = document.createElement('div');
+                zeroBtn.className = 'pin-number';
+                zeroBtn.textContent = '0';
+                zeroBtn.onclick = () => {
+                    if (pin.length < 4) {
+                        pin += '0';
+                        display.textContent = '•'.repeat(pin.length) + '*'.repeat(4 - pin.length);
+                    }
+                };
+                wheel.appendChild(zeroBtn);
+                
+                // Botón borrar
+                const delBtn = document.createElement('div');
+                delBtn.className = 'pin-number';
+                delBtn.innerHTML = '⌫';
+                delBtn.onclick = () => {
+                    pin = pin.slice(0, -1);
+                    display.textContent = '•'.repeat(pin.length) + '*'.repeat(4 - pin.length);
+                };
+                wheel.appendChild(delBtn);
+                
+                // Botón OK
+                const okBtn = document.createElement('div');
+                okBtn.className = 'pin-number';
+                okBtn.innerHTML = '✓';
+                okBtn.style.background = '#2d5a27';
+                okBtn.onclick = () => {
+                    if (this.verifyPin(pin)) {
+                        modal.classList.remove('active');
+                        onSuccess();
+                    } else {
+                        this.showToast('❌ ¡PIN INCORRECTO, GRUMETE!', 'error');
+                        pin = '';
+                        display.textContent = '****';
+                    }
+                };
+                wheel.appendChild(okBtn);
+            }
+
+            closeModal() {
+                document.getElementById('captainModal').classList.remove('active');
+            }
+
+            // Manejar set PIN
+            handleSetPin() {
+                const pin = document.getElementById('pinInput').value;
+                this.setPin(pin);
+                document.getElementById('pinInput').value = '';
+            }
+
+            // Manejar disable PIN
+            handleDisablePin() {
+                if (this.pin) {
+                    this.showPinModal('DESACTIVAR PIN', () => this.disablePin());
+                } else {
+                    this.disablePin();
+                }
+            }
+
+            // Analizar tesoro (simulado)
+            analyzeTreasure() {
+                const url = document.getElementById('urlInput').value;
+                if (!url) {
+                    this.showToast('❌ ¡Necesitas un mapa del tesoro!', 'error');
+                    return;
+                }
+                
+                this.showToast('⚓ ¡Zarpamos! Analizando...', 'success');
+                
+                // Simular carga
+                setTimeout(() => {
+                    this.generateMockTreasure();
+                    this.showToast('🏴‍☠️ ¡Tesoro encontrado!', 'success');
+                }, 1500);
+            }
+
+            // Generar contenido de prueba
+            generateMockTreasure() {
+                const treasures = [
+                    { name: 'Canal Discovery', category: 'Infantil', type: 'TV', icon: 'fa-tv' },
+                    { name: 'Cine +18', category: '+18', type: 'Película', icon: 'fa-film' },
+                    { name: 'Partido Champions', category: 'Deportes', type: 'Deportes', icon: 'fa-futbol' },
+                    { name: 'Series Adultos', category: 'Adultos', type: 'Serie', icon: 'fa-mask' },
+                    { name: 'Dibujos Animados', category: 'Infantil', type: 'Infantil', icon: 'fa-child' },
+                    { name: 'Pelicula Terror', category: 'Terror', type: 'Película', icon: 'fa-ghost' },
+                    { name: 'Canal XXX', category: 'XXX', type: '+18', icon: 'fa-ban' },
+                    { name: 'Noticias', category: 'Información', type: 'TV', icon: 'fa-newspaper' }
+                ];
+                
+                this.renderTreasures(treasures);
+            }
+
+            // Renderizar tesoros
+            renderTreasures(treasures) {
+                const grid = document.getElementById('treasureGrid');
+                
+                grid.innerHTML = treasures.map(item => {
+                    const isBlocked = this.isBlocked(item);
+                    return `
+                        <div class="treasure-card ${isBlocked ? 'looted' : ''}">
+                            <div class="card-badge">${item.type}</div>
+                            <div class="treasure-icon">
+                                <i class="fas ${item.icon}"></i>
+                            </div>
+                            <div class="treasure-name">${item.name}</div>
+                            <div class="treasure-category">
+                                <i class="fas fa-tag"></i> ${item.category}
+                            </div>
+                            ${!isBlocked ? `
+                                <button class="treasure-btn" onclick="captain.showToast('🎬 Reproduciendo...', 'success')">
+                                    <i class="fas fa-play"></i> VER TESORO
+                                </button>
+                            ` : `
+                                <button class="treasure-btn" disabled>
+                                    <i class="fas fa-lock"></i> BLOQUEADO
+                                </button>
+                            `}
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            // Actualizar bloques de contenido
+            updateContentBlocks() {
+                // Re-renderizar con los datos actuales
+                if (window.currentTreasures) {
+                    this.renderTreasures(window.currentTreasures);
+                }
+            }
+
+            // Limpiar todo
+            clearTreasure() {
+                document.getElementById('urlInput').value = '';
+                document.getElementById('treasureGrid').innerHTML = '';
+                window.currentTreasures = null;
+                this.showToast('🧹 ¡Mapa limpiado, capitán!', 'success');
+            }
+
+            // Mostrar toast
+            showToast(message, type = 'success') {
+                const toast = document.getElementById('captainToast');
+                toast.textContent = message;
+                toast.className = 'captain-toast show' + (type === 'error' ? ' error' : '');
+                
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 3000);
+            }
+        }
+
+        // ============================================
+        // INICIALIZACIÓN
+        // ============================================
+        
+        const captain = new CaptainHook();
+        window.captain = captain; // Hacer global
+
+        // Generar contenido inicial de prueba
+        setTimeout(() => {
+            captain.generateMockTreasure();
+        }, 1000);
+    </script>
+</body>
+</html>
