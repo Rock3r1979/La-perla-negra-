@@ -20,10 +20,12 @@
     <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏴‍☠️</text></svg>">
     
     <!-- Scripts -->
+    <script src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     
     <!-- Styles -->
+    <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
     
     <style>
@@ -35,7 +37,7 @@
         }
 
         body {
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
+            background: radial-gradient(circle at center, #1a0f0f 0%, #050000 100%);
             color: #ffffff;
             font-family: 'Orbitron', sans-serif;
             margin: 0;
@@ -44,6 +46,16 @@
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/black-scales.png');
+            opacity: 0.5;
+            z-index: -1;
+            pointer-events: none;
         }
 
         .container {
@@ -1148,6 +1160,101 @@
             background: #ff3333;
             border-radius: 4px;
         }
+    
+        /* Buscador */
+        .search-container {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .search-input {
+            width: 100%;
+            max-width: 600px;
+            padding: 12px 20px;
+            background: rgba(0,0,0,0.8);
+            border: 2px solid #ff3333;
+            color: #fff;
+            border-radius: 25px;
+            font-size: 16px;
+            font-family: 'Orbitron', sans-serif;
+            outline: none;
+            box-shadow: 0 5px 15px rgba(255,51,51,0.2);
+            transition: all 0.3s ease;
+        }
+        .search-input:focus {
+            box-shadow: 0 5px 25px rgba(255,51,51,0.4);
+        }
+
+        /* Modal de Series */
+        .series-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 3000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .series-content {
+            background: linear-gradient(135deg, #1a0f0f 0%, #0a0000 100%);
+            border: 2px solid #ff3333;
+            border-radius: 15px;
+            width: 100%;
+            max-width: 800px;
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: 20px;
+            position: relative;
+            box-shadow: 0 10px 40px rgba(255,51,51,0.3);
+        }
+        .close-series {
+            position: absolute;
+            top: 15px; right: 15px;
+            background: #ff3333;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 35px; height: 35px;
+            font-weight: bold;
+            font-size: 18px;
+            cursor: pointer;
+            z-index: 10;
+        }
+        .season-block { margin-bottom: 15px; }
+        .season-title {
+            background: #ff3333;
+            color: #fff;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+        .episode-list {
+            display: none;
+            flex-direction: column;
+            gap: 8px;
+            padding: 0 10px;
+        }
+        .episode-list.active { display: flex; }
+        .episode-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background: rgba(255,51,51,0.1);
+            border: 1px solid rgba(255,51,51,0.3);
+            border-radius: 8px;
+        }
+
+        .plyr--video {
+            border-radius: 15px;
+            overflow: hidden;
+            border: 2px solid #ff3333;
+            box-shadow: 0 10px 30px rgba(255,51,51,0.4);
+        }
+
     </style>
 </head>
 <body>
@@ -1170,6 +1277,18 @@
 
     <!-- Toast Message -->
     <div class="toast-message" id="toastMessage"></div>
+
+    
+    <!-- Series Modal -->
+    <div class="series-modal" id="seriesModal">
+        <div class="series-content">
+            <button class="close-series" onclick="closeSeriesModal()">×</button>
+            <h2 id="seriesModalTitle" style="color: #FFD700; margin-top: 0;">Cargando Serie...</h2>
+            <div id="seriesModalBody">
+                <div class="spinner"></div>
+            </div>
+        </div>
+    </div>
 
     <!-- Confirm Dialog -->
     <div class="confirm-dialog" id="confirmDialog">
@@ -1288,21 +1407,15 @@
             </div>
             
             <div class="favorite-actions">
-                <button class="favorite-btn" id="exportFavoritesBtn">
-                    <span>📤</span> Exportar Favoritos
-                </button>
+                
                 <button class="favorite-btn" id="importFavoritesBtn">
                     <span>📥</span> Importar Favoritos
                 </button>
                 <button class="favorite-btn danger" id="clearFavoritesBtn">
                     <span>🗑️</span> Limpiar Todo
                 </button>
-                <button class="favorite-btn success" id="mergeFavoritesBtn">
-                    <span>🔄</span> Unificar Listas
-                </button>
-                <button class="favorite-btn" id="exportM3UBtn" style="background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); color: #000;">
-                    <span>📼</span> Exportar M3U
-                </button>
+                
+                
             </div>
         </div>
 
@@ -1329,6 +1442,11 @@
             <button class="tab-btn favorites-tab" data-tab="favorites">
                 <span>⭐</span> FAVORITOS <span id="favoritesCount" class="status-indicator"></span>
             </button>
+        </div>
+
+        
+        <div class="search-container" id="searchContainer" style="display: none;">
+            <input type="text" id="searchInput" class="search-input" placeholder="🏴‍☠️ Buscar canal, película o serie...">
         </div>
 
         <!-- CONTENIDO DE LAS PESTAÑAS -->
@@ -1412,22 +1530,6 @@
     <input type="file" id="importFile" accept=".txt,.json" style="display: none;">
 
     <script>
-        
-        // Configuración de Proxy para User-Agent okhttp/4.11.0
-        const PROXY_URL = 'https://quiet-lake-ca31perlanegraproxy.rickgar600.workers.dev/?url='; 
-
-        // Interceptor de Axios para usar el proxy en todas las peticiones
-        axios.interceptors.request.use(function (config) {
-            if (config.url && !config.url.startsWith(PROXY_URL)) {
-                // Pasamos la URL original a través del proxy
-                config.url = PROXY_URL + encodeURIComponent(config.url);
-                config.headers['X-Custom-User-Agent'] = 'okhttp/4.11.0';
-            }
-            return config;
-        }, function (error) {
-            return Promise.reject(error);
-        });
-
         // Variables globales
         let hls = null;
         let floatingHls = null;
