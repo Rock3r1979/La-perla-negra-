@@ -1377,8 +1377,14 @@
             </div>
         </div>
 
-        <div class="loading" id="loading">
-            <div class="spinner"></div>
+        <div class="loading" id="loading" style="display: none; text-align: center; padding: 40px; background: rgba(0,0,0,0.95); border-radius: 20px; margin: 20px 0; border: 3px solid #ff3333;">
+            <div style="font-size: 3em; margin-bottom: 10px;">🏴‍☠️</div>
+            <h3 style="color: #ff3333; margin-bottom: 15px;" id="loadingText">Abordando servidor...</h3>
+            <div style="width: 100%; background: #222; border-radius: 10px; overflow: hidden; border: 1px solid #FFD700; height: 20px;">
+                <div id="loadingBar" style="width: 0%; height: 100%; background: linear-gradient(90deg, #ff3333, #FFD700); transition: width 0.3s ease;"></div>
+            </div>
+            <p id="loadingPercent" style="color: #FFD700; font-weight: bold; margin-top: 10px;">0%</p>
+        </div>
             <p>🏴‍☠️ Analizando contenido... Esto puede tomar unos momentos</p>
         </div>
 
@@ -2567,48 +2573,74 @@
             const panel = new URL(url).hostname;
             const serverIp = await getHostIP(panel);
             document.getElementById('serverIpInfo').textContent = serverIp;
-            
+
             const apiUrl = url.replace('get.php', 'player_api.php');
-            const userInfo = await axios.get(apiUrl, { timeout: 10000 });
+
+            const updateProgress = (text, percent) => {
+                const textEl = document.getElementById('loadingText');
+                const barEl = document.getElementById('loadingBar');
+                const pctEl = document.getElementById('loadingPercent');
+                if (textEl) textEl.textContent = text;
+                if (barEl) barEl.style.width = percent + '%';
+                if (pctEl) pctEl.textContent = percent + '%';
+            };
+
+            updateProgress("Verificando credenciales...", 10);
+            const userInfo = await axios.get(apiUrl, { timeout: 15000 });
             const data = userInfo.data;
-            
+
             if (data.user_info) {
                 document.getElementById('userInfo').textContent = data.user_info.username || 'N/A';
                 document.getElementById('passInfo').textContent = data.user_info.password || 'N/A';
                 document.getElementById('statusInfo').textContent = data.user_info.status === 'Active' ? 'ACTIVA' : 'INACTIVA';
                 document.getElementById('statusInfo').style.color = data.user_info.status === 'Active' ? '#00FF00' : '#FF4444';
                 document.getElementById('serverInfo').textContent = data.server_info?.url || 'N/A';
-                
+
                 if (!data.user_info.exp_date || data.user_info.exp_date === "0") {
                     document.getElementById('expiryInfo').textContent = 'Ilimitada';
                 } else {
                     document.getElementById('expiryInfo').textContent = new Date(data.user_info.exp_date * 1000).toLocaleDateString('es-ES');
                 }
-                
+
                 document.getElementById('connectionsInfo').textContent = 
                     `${data.user_info.active_cons || 0}/${data.user_info.max_connections || 'N/A'}`;
 
-                const [live, vod, series, liveCat, vodCat, seriesCat] = await Promise.all([
-                    axios.get(`${apiUrl}&action=get_live_streams`).catch(() => ({ data: [] })),
-                    axios.get(`${apiUrl}&action=get_vod_streams`).catch(() => ({ data: [] })),
-                    axios.get(`${apiUrl}&action=get_series`).catch(() => ({ data: [] })),
-                    axios.get(`${apiUrl}&action=get_live_categories`).catch(() => ({ data: [] })),
-                    axios.get(`${apiUrl}&action=get_vod_categories`).catch(() => ({ data: [] })),
-                    axios.get(`${apiUrl}&action=get_series_categories`).catch(() => ({ data: [] }))
-                ]);
+                // Fetch step by step to show progress
+                updateProgress("Descargando canales TV...", 25);
+                const live = await axios.get(`${apiUrl}&action=get_live_streams`).catch(() => ({ data: [] }));
+
+                updateProgress("Descargando películas (VOD)...", 45);
+                const vod = await axios.get(`${apiUrl}&action=get_vod_streams`).catch(() => ({ data: [] }));
+
+                updateProgress("Descargando series...", 65);
+                const series = await axios.get(`${apiUrl}&action=get_series`).catch(() => ({ data: [] }));
+
+                updateProgress("Cargando categorías TV...", 80);
+                const liveCat = await axios.get(`${apiUrl}&action=get_live_categories`).catch(() => ({ data: [] }));
+
+                updateProgress("Cargando categorías Películas...", 90);
+                const vodCat = await axios.get(`${apiUrl}&action=get_vod_categories`).catch(() => ({ data: [] }));
+
+                updateProgress("Cargando categorías Series...", 95);
+                const seriesCat = await axios.get(`${apiUrl}&action=get_series_categories`).catch(() => ({ data: [] }));
+
+                updateProgress("Procesando interfaz...", 100);
 
                 document.getElementById('liveCountInfo').textContent = live.data.length || 0;
                 document.getElementById('vodCountInfo').textContent = vod.data.length || 0;
                 document.getElementById('seriesCountInfo').textContent = series.data.length || 0;
                 document.getElementById('liveCount').textContent = live.data.length || 0;
                 document.getElementById('moviesCount').textContent = vod.data.length || 0;
+
+                document.getElementById('moviesCount').textContent = vod.data.length || 0;
                 document.getElementById('searchContainer').style.display = 'flex';
+
                 document.getElementById('seriesCount').textContent = series.data.length || 0;
-                
+
                 displayLiveContent(liveCat.data, live.data, url);
                 displayMovieContent(vodCat.data, vod.data, url);
                 displaySeriesContent(seriesCat.data, series.data, url);
-                
+
                 currentUserData = data;
                 currentContentData = {
                     liveStreams: live.data,
@@ -2616,10 +2648,18 @@
                     series: series.data
                 };
                 currentOriginalUrl = originalUrl;
+
+                setTimeout(() => {
+                    document.getElementById('loading').style.display = 'none';
+                    document.getElementById('result').style.display = 'block';
+                    updateProgress("Abordando servidor...", 0); // reset for next time
+                }, 500);
+            } else {
+                showToast('❌ Error: Credenciales inválidas', false);
+                document.getElementById('loading').style.display = 'none';
             }
         }
-
-        async function analyzeDomainOnly(url) {
+async function analyzeDomainOnly(url) {
             let hostname;
             try {
                 hostname = new URL(url).hostname;
@@ -2832,7 +2872,7 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            initFloatingPlayer();
+            
             
             document.getElementById('analyzeBtn').addEventListener('click', analyzeUrl);
             document.getElementById('clearBtn').addEventListener('click', clearForm);
