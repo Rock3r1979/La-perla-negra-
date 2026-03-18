@@ -2454,6 +2454,15 @@
         
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
+
+            setTimeout(() => {
+                const splash = document.getElementById('splashScreen');
+                if(splash) {
+                    splash.style.opacity = '0';
+                    setTimeout(() => splash.style.display = 'none', 500);
+                }
+            }, 1500);
+
                 navigator.serviceWorker.register('service-worker.js').catch(() => {});
             });
         }
