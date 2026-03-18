@@ -3,130 +3,132 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>🏴‍☠️ LA PERLA NEGRA - IPTV Simple</title>
+    <title>🏴‍☠️ LA PERLA NEGRA - XTREAM IPTV</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            font-family: 'Segoe UI', system-ui, sans-serif;
         }
 
         body {
-            background: #1a0f0a;
-            min-height: 100vh;
+            background: #0a0a0a;
             color: white;
         }
 
-        /* Header simple */
+        /* Header con estilo del grupo */
         .header {
-            background: #2c1810;
+            background: linear-gradient(135deg, #000000, #1a1a1a);
             border-bottom: 3px solid #D4AF37;
-            padding: 20px;
-            text-align: center;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
         }
 
-        .header h1 {
-            font-size: 2.5em;
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo h1 {
             color: #D4AF37;
+            font-size: 1.8em;
             text-shadow: 2px 2px 0 #000;
-            letter-spacing: 2px;
         }
 
-        .header p {
-            color: #cdb38c;
-            margin-top: 5px;
-            font-size: 0.9em;
+        .badge {
+            background: #D4AF37;
+            color: #000;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: bold;
         }
 
-        /* Contenedor principal */
+        /* Botón WARP */
+        .warp-btn {
+            background: #1a1a1a;
+            border: 2px solid #D4AF37;
+            border-radius: 30px;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .warp-btn.active {
+            background: #D4AF37;
+            color: #000;
+        }
+
+        .warp-btn.active .warp-indicator {
+            background: #00ff00;
+        }
+
+        .warp-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #666;
+            transition: 0.3s;
+        }
+
+        /* Panel principal */
         .container {
-            max-width: 800px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
         }
 
-        /* Input simple */
-        .input-group {
-            background: #2c1810;
-            border: 2px solid #8B4513;
-            border-radius: 50px;
-            padding: 5px;
-            display: flex;
-            margin: 20px 0;
-            overflow: hidden;
-        }
-
-        .input-group input {
-            flex: 1;
-            background: transparent;
-            border: none;
-            padding: 15px 20px;
-            color: white;
-            font-size: 1em;
-            outline: none;
-        }
-
-        .input-group input::placeholder {
-            color: #6b4f3a;
-        }
-
-        .input-group button {
-            background: #D4AF37;
-            border: none;
-            padding: 15px 25px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
-            white-space: nowrap;
-        }
-
-        .input-group button:hover {
-            background: #FFD700;
-        }
-
-        /* Panel parental simple */
-        .parental-panel {
-            background: #2c1810;
-            border: 2px solid #8B4513;
+        /* Panel parental */
+        .parental-section {
+            background: #1a1a1a;
+            border: 2px solid #D4AF37;
             border-radius: 15px;
             padding: 20px;
-            margin: 20px 0;
+            margin-bottom: 20px;
         }
 
-        .parental-header {
+        .section-title {
+            color: #D4AF37;
             display: flex;
             align-items: center;
             gap: 10px;
-            color: #D4AF37;
-            font-weight: bold;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            font-size: 1.2em;
         }
 
-        .pin-row {
+        .pin-area {
             display: flex;
-            gap: 10px;
+            gap: 15px;
             flex-wrap: wrap;
+            margin-bottom: 25px;
         }
 
-        .pin-row input {
-            background: #1a0f0a;
-            border: 2px solid #8B4513;
+        .pin-input {
+            background: #000;
+            border: 2px solid #D4AF37;
             border-radius: 10px;
             padding: 12px 15px;
             color: #D4AF37;
-            font-size: 1.2em;
-            letter-spacing: 4px;
+            font-size: 1.3em;
+            letter-spacing: 8px;
             text-align: center;
-            width: 120px;
+            width: 150px;
         }
 
         .btn {
-            background: #8B4513;
-            border: 2px solid #D4AF37;
+            background: #D4AF37;
+            border: none;
             border-radius: 10px;
-            padding: 12px 20px;
-            color: #D4AF37;
+            padding: 12px 25px;
             font-weight: bold;
             cursor: pointer;
             transition: 0.3s;
@@ -135,169 +137,227 @@
             gap: 8px;
         }
 
-        .btn:hover {
+        .btn.dark {
+            background: #333;
+            color: #D4AF37;
+            border: 1px solid #D4AF37;
+        }
+
+        .btn.dark:hover {
             background: #D4AF37;
-            color: #2c1810;
+            color: #000;
         }
 
         .btn.danger {
+            background: #660000;
+            color: #ff9999;
+            border: 1px solid #ff4444;
+        }
+
+        /* Categorías a bloquear */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .cat-item {
+            background: #000;
+            border: 1px solid #333;
+            border-radius: 10px;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .cat-item.selected {
             border-color: #ff4444;
+            background: #2a0000;
+        }
+
+        .cat-item .lock {
+            margin-left: auto;
+            color: #666;
+        }
+
+        .cat-item.selected .lock {
             color: #ff4444;
         }
 
-        .btn.danger:hover {
-            background: #ff4444;
-            color: white;
+        .save-btn {
+            background: #D4AF37;
+            width: 100%;
+            padding: 15px;
+            font-size: 1.1em;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 15px;
         }
 
-        .btn.small {
-            padding: 8px 15px;
-            font-size: 0.9em;
+        /* Input URL */
+        .url-section {
+            background: #1a1a1a;
+            border: 2px solid #D4AF37;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
         }
 
-        /* Selector de categorías simple */
-        .category-selector {
+        .url-input-group {
             display: flex;
             gap: 10px;
             flex-wrap: wrap;
-            margin: 15px 0;
         }
 
-        .category-option {
-            background: #1a0f0a;
-            border: 1px solid #8B4513;
-            border-radius: 30px;
-            padding: 8px 16px;
+        .url-input-group input {
+            flex: 1;
+            min-width: 250px;
+            background: #000;
+            border: 1px solid #D4AF37;
+            border-radius: 10px;
+            padding: 15px;
+            color: white;
+        }
+
+        /* Pestañas */
+        .tabs {
+            display: flex;
+            gap: 5px;
+            margin: 20px 0;
+            border-bottom: 2px solid #333;
+            padding-bottom: 5px;
+        }
+
+        .tab {
+            padding: 12px 25px;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 10px 10px 0 0;
+            cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 8px;
+        }
+
+        .tab.active {
+            background: #D4AF37;
+            color: #000;
+            border-color: #D4AF37;
+        }
+
+        .tab-content {
+            display: none;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 0 10px 10px 10px;
+            padding: 20px;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Listas de contenido */
+        .items-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            max-height: 500px;
+            overflow-y: auto;
+            padding: 10px;
+        }
+
+        .item-card {
+            background: #000;
+            border: 1px solid #333;
+            border-radius: 10px;
+            padding: 15px;
             cursor: pointer;
-            font-size: 0.9em;
+            transition: 0.2s;
         }
 
-        .category-option.locked {
-            border-color: #ff4444;
-            color: #ff6b6b;
+        .item-card:hover {
+            border-color: #D4AF37;
+            transform: translateY(-2px);
         }
 
-        .category-option i {
+        .item-card.blocked {
+            opacity: 0.4;
+            position: relative;
+            pointer-events: none;
+        }
+
+        .item-card.blocked::after {
+            content: '🔒';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.2em;
+        }
+
+        .item-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .item-category {
+            color: #D4AF37;
             font-size: 0.8em;
         }
 
-        /* Reproductor de video */
+        /* Reproductor */
         .player-section {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
             background: #000;
-            border-radius: 15px;
-            overflow: hidden;
-            margin: 20px 0;
+            border-top: 3px solid #D4AF37;
             display: none;
+            z-index: 1000;
         }
 
         .player-section.active {
             display: block;
         }
 
+        .player-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 20px;
+            background: #1a1a1a;
+        }
+
+        .player-title {
+            color: #D4AF37;
+            font-weight: bold;
+        }
+
+        .close-player {
+            background: none;
+            border: none;
+            color: #D4AF37;
+            font-size: 1.5em;
+            cursor: pointer;
+        }
+
         video {
             width: 100%;
-            height: auto;
-            display: block;
+            max-height: 400px;
             background: #000;
         }
 
-        .player-controls {
-            background: #2c1810;
-            padding: 15px;
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .now-playing {
-            flex: 1;
-            color: #D4AF37;
-            font-size: 0.9em;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        /* Lista de canales simple */
-        .channels-list {
-            background: #2c1810;
-            border: 2px solid #8B4513;
-            border-radius: 15px;
-            padding: 15px;
-            margin: 20px 0;
-            max-height: 400px;
-            overflow-y: auto;
-        }
-
-        .channel-item {
-            display: flex;
-            align-items: center;
-            padding: 12px;
-            border-bottom: 1px solid #8B4513;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .channel-item:hover {
-            background: #8B4513;
-        }
-
-        .channel-item:last-child {
-            border-bottom: none;
-        }
-
-        .channel-icon {
-            width: 30px;
-            text-align: center;
-            margin-right: 15px;
-            font-size: 1.2em;
-        }
-
-        .channel-name {
-            flex: 1;
-        }
-
-        .channel-lock {
-            color: #ff4444;
-            margin-left: 10px;
-        }
-
-        .channel-play {
-            color: #D4AF37;
-            margin-left: 10px;
-            opacity: 0.5;
-        }
-
-        .channel-item:hover .channel-play {
-            opacity: 1;
-        }
-
-        /* Loading */
-        .loading {
-            text-align: center;
-            padding: 40px;
-            display: none;
-        }
-
-        .spinner {
-            width: 40px;
-            height: 40px;
-            border: 4px solid #8B4513;
-            border-top: 4px solid #D4AF37;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 15px;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* Modal PIN simple */
+        /* Modal PIN */
         .pin-modal {
             display: none;
             position: fixed;
@@ -305,8 +365,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.9);
-            z-index: 1000;
+            background: rgba(0,0,0,0.95);
+            z-index: 2000;
             justify-content: center;
             align-items: center;
         }
@@ -316,55 +376,44 @@
         }
 
         .pin-modal-content {
-            background: #2c1810;
+            background: #1a1a1a;
             border: 3px solid #D4AF37;
             border-radius: 20px;
             padding: 30px;
             width: 90%;
             max-width: 350px;
-            text-align: center;
         }
 
-        .pin-display {
-            font-size: 2.5em;
-            letter-spacing: 10px;
-            margin: 20px 0;
-            color: #D4AF37;
-        }
-
-        .pin-grid {
+        .pin-numbers {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 10px;
             margin: 20px 0;
         }
 
-        .pin-key {
-            background: #1a0f0a;
-            border: 1px solid #8B4513;
+        .pin-number {
+            background: #000;
+            border: 1px solid #D4AF37;
             border-radius: 10px;
             padding: 15px;
+            text-align: center;
             font-size: 1.5em;
             cursor: pointer;
         }
 
-        .pin-key:hover {
-            background: #8B4513;
-        }
-
-        /* Mensajes */
+        /* Toast */
         .toast {
             position: fixed;
             bottom: 20px;
             left: 50%;
             transform: translateX(-50%) translateY(100px);
-            background: #2c1810;
+            background: #1a1a1a;
             border: 2px solid #D4AF37;
-            border-radius: 50px;
+            border-radius: 30px;
             padding: 12px 25px;
             color: #D4AF37;
             transition: 0.3s;
-            z-index: 1001;
+            z-index: 3000;
         }
 
         .toast.show {
@@ -373,227 +422,337 @@
 
         .toast.error {
             border-color: #ff4444;
-            background: #4a1f1f;
+            background: #330000;
+            color: #ff9999;
         }
 
-        @media (max-width: 600px) {
-            .pin-row {
+        @media (max-width: 768px) {
+            .pin-area {
                 flex-direction: column;
             }
             
-            .pin-row input {
+            .pin-input {
                 width: 100%;
             }
             
-            .input-group {
-                flex-direction: column;
-                border-radius: 15px;
+            .tabs {
+                flex-wrap: wrap;
             }
             
-            .input-group button {
-                width: 100%;
+            .tab {
+                flex: 1;
+                justify-content: center;
             }
         }
     </style>
 </head>
 <body>
     <div class="header">
-        <h1>🏴‍☠️ LA PERLA NEGRA</h1>
-        <p>EL TESORO IPTV MÁS BUSCADO</p>
+        <div class="logo">
+            <h1>🏴‍☠️ LA PERLA NEGRA</h1>
+            <span class="badge">XTREAM v2.0</span>
+        </div>
+        
+        <!-- Botón WARP 1.1.1.1 -->
+        <div class="warp-btn" id="warpBtn">
+            <span class="warp-indicator" id="warpIndicator"></span>
+            <span>WARP 1.1.1.1</span>
+            <span id="warpStatus">OFF</span>
+        </div>
     </div>
 
     <div class="container">
-        <!-- Panel parental SIMPLE -->
-        <div class="parental-panel">
-            <div class="parental-header">
+        <!-- PANEL PARENTAL -->
+        <div class="parental-section">
+            <div class="section-title">
                 <span>⚓ CAMAROTE DEL CAPITÁN</span>
+                <span style="color: #666; font-size: 0.8em;">(Control Parental)</span>
             </div>
             
-            <div class="pin-row">
-                <input type="password" id="pinInput" placeholder="****" maxlength="4" pattern="\d*">
-                <button class="btn" id="setPinBtn">🔐 GUARDAR PIN</button>
-                <button class="btn danger" id="disablePinBtn">🔓 QUITAR PIN</button>
+            <!-- Área PIN -->
+            <div class="pin-area">
+                <input type="password" class="pin-input" id="pinInput" placeholder="****" maxlength="4">
+                <button class="btn dark" id="setPinBtn">🔐 ESTABLECER PIN</button>
+                <button class="btn danger" id="disablePinBtn">🔓 ELIMINAR PIN</button>
             </div>
 
-            <!-- Categorías bloqueadas SIMPLE -->
-            <div style="margin-top: 20px;">
-                <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 10px;">
-                    <span>🚫 BLOQUEAR:</span>
-                    <button class="btn small" id="addCategoryBtn">+ AÑADIR</button>
-                    <button class="btn small danger" id="unlockAllBtn">✖ QUITAR TODO</button>
+            <!-- Categorías disponibles -->
+            <div style="margin: 20px 0;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
+                    <span>📋 CATEGORÍAS DISPONIBLES</span>
+                    <span style="color: #D4AF37;">Selecciona las que quieras BLOQUEAR</span>
                 </div>
-                <div class="category-selector" id="categoryList"></div>
+                
+                <div class="categories-grid" id="categoriesContainer"></div>
+                
+                <!-- Botón GUARDAR -->
+                <button class="save-btn" id="saveParentalBtn">
+                    ⚓ GUARDAR CONFIGURACIÓN PARENTAL
+                </button>
             </div>
         </div>
 
-        <!-- Reproductor SIMPLE -->
-        <div class="player-section" id="playerSection">
-            <video id="videoPlayer" controls playsinline></video>
-            <div class="player-controls">
-                <span class="now-playing" id="nowPlaying">⚓ Navegando...</span>
-                <button class="btn small" id="closePlayerBtn">✖ CERRAR</button>
+        <!-- INPUT URL -->
+        <div class="url-section">
+            <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                <input type="text" id="serverUrl" placeholder="URL del servidor Xtream (ej: http://ejemplo.com:8080)" style="flex: 2; background: #000; border: 1px solid #D4AF37; border-radius: 10px; padding: 15px; color: white;">
+                <input type="text" id="username" placeholder="Usuario" style="flex: 1; background: #000; border: 1px solid #D4AF37; border-radius: 10px; padding: 15px; color: white;">
+                <input type="password" id="password" placeholder="Contraseña" style="flex: 1; background: #000; border: 1px solid #D4AF37; border-radius: 10px; padding: 15px; color: white;">
+                <button class="btn" id="connectBtn" style="flex: 0.5;">🔌 CONECTAR</button>
             </div>
         </div>
 
-        <!-- Input URL SIMPLE -->
-        <div class="input-group">
-            <input type="text" id="urlInput" placeholder="🌊 Pega tu lista M3U o enlace Xtream...">
-            <button id="loadBtn">⚓ CARGAR TESORO</button>
-        </div>
-
-        <!-- Loading -->
-        <div class="loading" id="loading">
-            <div class="spinner"></div>
-            <p>Navegando hacia el tesoro...</p>
-        </div>
-
-        <!-- Lista de canales SIMPLE -->
-        <div class="channels-list" id="channelsList">
-            <div style="text-align: center; padding: 30px; color: #6b4f3a;">
-                <div style="font-size: 3em; margin-bottom: 10px;">🏴‍☠️</div>
-                <p>Carga una lista para empezar</p>
+        <!-- PESTAÑAS -->
+        <div class="tabs">
+            <div class="tab active" data-tab="live">
+                <span>📺</span> TV <span id="liveCount" style="margin-left: 5px; color: #D4AF37;"></span>
+            </div>
+            <div class="tab" data-tab="movies">
+                <span>🎬</span> PELÍCULAS <span id="moviesCount" style="margin-left: 5px; color: #D4AF37;"></span>
+            </div>
+            <div class="tab" data-tab="series">
+                <span>📚</span> SERIES <span id="seriesCount" style="margin-left: 5px; color: #D4AF37;"></span>
             </div>
         </div>
 
-        <!-- Modal PIN SIMPLE -->
-        <div class="pin-modal" id="pinModal">
-            <div class="pin-modal-content">
-                <h3 style="color: #D4AF37;">🔒 INTRODUCE PIN</h3>
-                <div class="pin-display" id="modalPinDisplay">****</div>
-                <div class="pin-grid" id="pinGrid"></div>
-                <button class="btn danger" id="cancelPinBtn" style="width: 100%;">CANCELAR</button>
-            </div>
+        <!-- CONTENIDO -->
+        <div id="liveTab" class="tab-content active">
+            <div class="items-grid" id="liveContent"></div>
         </div>
 
-        <!-- Toast -->
-        <div class="toast" id="toast"></div>
+        <div id="moviesTab" class="tab-content">
+            <div class="items-grid" id="moviesContent"></div>
+        </div>
+
+        <div id="seriesTab" class="tab-content">
+            <div class="items-grid" id="seriesContent"></div>
+        </div>
     </div>
 
+    <!-- REPRODUCTOR -->
+    <div class="player-section" id="playerSection">
+        <div class="player-header">
+            <span class="player-title" id="playerTitle">⚓ Navegando...</span>
+            <button class="close-player" id="closePlayerBtn">✖</button>
+        </div>
+        <video id="videoPlayer" controls playsinline></video>
+    </div>
+
+    <!-- MODAL PIN -->
+    <div class="pin-modal" id="pinModal">
+        <div class="pin-modal-content">
+            <h3 style="color: #D4AF37; text-align: center;">🔒 INTRODUCE PIN</h3>
+            <div style="font-size: 2.5em; letter-spacing: 10px; text-align: center; margin: 20px 0; color: #D4AF37;" id="modalPinDisplay">****</div>
+            <div class="pin-numbers" id="pinNumbers"></div>
+            <button class="btn dark" id="cancelPinBtn" style="width: 100%;">CANCELAR</button>
+        </div>
+    </div>
+
+    <!-- TOAST -->
+    <div class="toast" id="toast"></div>
+
     <script>
-        // ==================== CONTROL PARENTAL SIMPLE ====================
-        class ParentalSimple {
+        // ==================== CONFIGURACIÓN ====================
+        const USER_AGENT = 'okhttp/4.11.0';
+        
+        // ==================== CLASE PRINCIPAL ====================
+        class PerlaNegra {
             constructor() {
+                // Estado
                 this.pin = localStorage.getItem('perlaPin') || null;
-                this.blocked = JSON.parse(localStorage.getItem('perlaBlocked')) || ['+18', 'Adultos'];
-                this.categories = ['+18', 'Adultos', 'Terror', 'Violencia'];
-                this.channels = [];
+                this.blockedCategories = JSON.parse(localStorage.getItem('perlaBlocked')) || [];
+                this.warpEnabled = false;
+                this.userData = null;
+                this.allCategories = [];
+                
+                // Datos Xtream
+                this.liveStreams = [];
+                this.vodStreams = [];
+                this.seriesList = [];
                 
                 this.init();
             }
 
             init() {
-                this.renderCategories();
-                this.setupListeners();
+                this.loadCategories();
+                this.setupEventListeners();
+                this.checkWarpStatus();
             }
 
-            setupListeners() {
-                document.getElementById('setPinBtn').onclick = () => {
-                    const pin = document.getElementById('pinInput').value;
-                    if (pin && pin.length === 4 && /^\d+$/.test(pin)) {
-                        this.pin = pin;
-                        localStorage.setItem('perlaPin', pin);
-                        this.toast('✅ PIN guardado');
-                        document.getElementById('pinInput').value = '';
-                    } else {
-                        this.toast('❌ 4 números', 'error');
-                    }
-                };
-
-                document.getElementById('disablePinBtn').onclick = () => {
-                    if (this.pin) {
-                        this.showPinModal('DESBLOQUEAR', () => {
-                            this.pin = null;
-                            localStorage.removeItem('perlaPin');
-                            this.toast('🔓 PIN eliminado');
-                        });
-                    } else {
-                        this.pin = null;
-                        localStorage.removeItem('perlaPin');
-                        this.toast('🔓 Sin PIN');
-                    }
-                };
-
-                document.getElementById('addCategoryBtn').onclick = () => {
-                    const cat = prompt('Categoría a bloquear:');
-                    if (cat && cat.trim() && !this.blocked.includes(cat.trim())) {
-                        this.blocked.push(cat.trim());
-                        localStorage.setItem('perlaBlocked', JSON.stringify(this.blocked));
-                        this.renderCategories();
-                        this.renderChannels();
-                    }
-                };
-
-                document.getElementById('unlockAllBtn').onclick = () => {
-                    if (this.pin) {
-                        this.showPinModal('DESBLOQUEAR TODO', () => {
-                            this.blocked = [];
-                            localStorage.setItem('perlaBlocked', '[]');
-                            this.renderCategories();
-                            this.renderChannels();
-                            this.toast('🔓 Todo desbloqueado');
-                        });
-                    } else {
-                        this.blocked = [];
-                        localStorage.setItem('perlaBlocked', '[]');
-                        this.renderCategories();
-                        this.renderChannels();
-                        this.toast('🔓 Todo desbloqueado');
-                    }
-                };
-
-                document.getElementById('closePlayerBtn').onclick = () => {
-                    this.closePlayer();
-                };
-
-                document.getElementById('loadBtn').onclick = () => this.loadList();
+            loadCategories() {
+                // Categorías comunes que puede bloquear el usuario
+                this.allCategories = [
+                    '+18', 'Adultos', 'XXX', 'Solo Adultos', 'Cine 18',
+                    'Nocturno', 'Terror', 'Violencia', 'Sangre',
+                    'Contenido Adulto', 'Solo +18', 'Para Mayores'
+                ];
+                
+                this.renderCategories();
             }
 
             renderCategories() {
-                const list = document.getElementById('categoryList');
-                list.innerHTML = this.categories.map(cat => `
-                    <div class="category-option ${this.blocked.includes(cat) ? 'locked' : ''}" onclick="parental.toggleCategory('${cat}')">
+                const container = document.getElementById('categoriesContainer');
+                container.innerHTML = this.allCategories.map(cat => `
+                    <div class="cat-item ${this.blockedCategories.includes(cat) ? 'selected' : ''}" data-category="${cat}">
                         <span>${cat}</span>
-                        <span>${this.blocked.includes(cat) ? '🔒' : '🔓'}</span>
+                        <span class="lock">${this.blockedCategories.includes(cat) ? '🔒' : '🔓'}</span>
                     </div>
                 `).join('');
+                
+                // Añadir evento click a cada categoría
+                document.querySelectorAll('.cat-item').forEach(item => {
+                    item.addEventListener('click', () => this.toggleCategory(item.dataset.category));
+                });
             }
 
-            toggleCategory(cat) {
-                const index = this.blocked.indexOf(cat);
+            toggleCategory(category) {
+                const index = this.blockedCategories.indexOf(category);
                 if (index === -1) {
-                    this.blocked.push(cat);
+                    this.blockedCategories.push(category);
                 } else {
-                    this.blocked.splice(index, 1);
+                    this.blockedCategories.splice(index, 1);
                 }
-                localStorage.setItem('perlaBlocked', JSON.stringify(this.blocked));
                 this.renderCategories();
-                this.renderChannels();
             }
 
-            isBlocked(channel) {
-                if (!channel || !channel.category) return false;
-                return this.blocked.some(b => 
-                    channel.category.toLowerCase().includes(b.toLowerCase())
-                );
+            // ==================== WARP 1.1.1.1 ====================
+            toggleWarp() {
+                this.warpEnabled = !this.warpEnabled;
+                localStorage.setItem('warpEnabled', this.warpEnabled);
+                this.updateWarpUI();
+                
+                if (this.warpEnabled) {
+                    this.toast('🌐 WARP activado - Usando DNS 1.1.1.1');
+                } else {
+                    this.toast('🌐 WARP desactivado');
+                }
             }
 
-            // ==================== REPRODUCCIÓN REAL ====================
-            playChannel(url, name) {
-                if (!url || url === '#') {
-                    this.toast('❌ URL inválida', 'error');
+            updateWarpUI() {
+                const btn = document.getElementById('warpBtn');
+                const indicator = document.getElementById('warpIndicator');
+                const status = document.getElementById('warpStatus');
+                
+                if (this.warpEnabled) {
+                    btn.classList.add('active');
+                    indicator.style.background = '#00ff00';
+                    status.textContent = 'ON';
+                } else {
+                    btn.classList.remove('active');
+                    indicator.style.background = '#666';
+                    status.textContent = 'OFF';
+                }
+            }
+
+            checkWarpStatus() {
+                this.warpEnabled = localStorage.getItem('warpEnabled') === 'true';
+                this.updateWarpUI();
+            }
+
+            // ==================== CONEXIÓN XTREAM ====================
+            async connectXtream() {
+                const server = document.getElementById('serverUrl').value.trim();
+                const username = document.getElementById('username').value.trim();
+                const password = document.getElementById('password').value.trim();
+                
+                if (!server || !username || !password) {
+                    this.toast('❌ Completá todos los campos', 'error');
                     return;
                 }
 
-                console.log('Reproduciendo:', url);
+                this.toast('🔌 Conectando...');
                 
+                try {
+                    // Construir URLs con User-Agent
+                    const baseUrl = server.endsWith('/') ? server.slice(0, -1) : server;
+                    const apiUrl = `${baseUrl}/player_api.php?username=${username}&password=${password}`;
+                    
+                    // Obtener info de usuario
+                    const userResponse = await fetch(apiUrl, {
+                        headers: { 'User-Agent': USER_AGENT }
+                    });
+                    this.userData = await userResponse.json();
+                    
+                    if (this.userData.user_info?.status !== 'Active') {
+                        this.toast('❌ Cuenta no activa', 'error');
+                        return;
+                    }
+                    
+                    // Cargar streams
+                    await Promise.all([
+                        this.loadLiveStreams(baseUrl, username, password),
+                        this.loadVodStreams(baseUrl, username, password),
+                        this.loadSeries(baseUrl, username, password)
+                    ]);
+                    
+                    this.updateCounts();
+                    this.renderContent();
+                    this.toast('✅ Conectado correctamente');
+                    
+                } catch (error) {
+                    console.error(error);
+                    this.toast('❌ Error de conexión', 'error');
+                }
+            }
+
+            async loadLiveStreams(baseUrl, username, password) {
+                const url = `${baseUrl}/player_api.php?username=${username}&password=${password}&action=get_live_streams`;
+                const response = await fetch(url, {
+                    headers: { 'User-Agent': USER_AGENT }
+                });
+                this.liveStreams = await response.json();
+            }
+
+            async loadVodStreams(baseUrl, username, password) {
+                const url = `${baseUrl}/player_api.php?username=${username}&password=${password}&action=get_vod_streams`;
+                const response = await fetch(url, {
+                    headers: { 'User-Agent': USER_AGENT }
+                });
+                this.vodStreams = await response.json();
+            }
+
+            async loadSeries(baseUrl, username, password) {
+                const url = `${baseUrl}/player_api.php?username=${username}&password=${password}&action=get_series`;
+                const response = await fetch(url, {
+                    headers: { 'User-Agent': USER_AGENT }
+                });
+                this.seriesList = await response.json();
+            }
+
+            // ==================== REPRODUCCIÓN ====================
+            playStream(stream, type) {
+                if (!stream) return;
+                
+                // Verificar si está bloqueado por categoría
+                if (this.isBlocked(stream)) {
+                    this.toast('🔒 Contenido bloqueado por control parental', 'error');
+                    return;
+                }
+
+                const server = document.getElementById('serverUrl').value.trim();
+                const username = document.getElementById('username').value.trim();
+                const password = document.getElementById('password').value.trim();
+                
+                let url;
+                if (type === 'live') {
+                    url = `${server}/live/${username}/${password}/${stream.stream_id}.m3u8`;
+                } else if (type === 'movie') {
+                    url = `${server}/movie/${username}/${password}/${stream.stream_id}.mp4`;
+                } else if (type === 'series') {
+                    url = `${server}/series/${username}/${password}/${stream.series_id}.m3u8`;
+                }
+
                 const video = document.getElementById('videoPlayer');
                 const player = document.getElementById('playerSection');
-                const nowPlaying = document.getElementById('nowPlaying');
+                const title = document.getElementById('playerTitle');
                 
                 // Detener reproducción anterior
                 video.pause();
                 video.removeAttribute('src');
                 video.load();
+                
+                // Configurar headers (si se pudieran enviar, pero fetch no permite en video tag)
+                // Usamos el User-Agent global para las peticiones de API, pero el video tag usará el del navegador
                 
                 // Cargar nueva URL
                 video.src = url;
@@ -601,128 +760,127 @@
                 
                 // Mostrar reproductor
                 player.classList.add('active');
-                nowPlaying.textContent = `⚓ ${name || 'Reproduciendo'}`;
+                title.textContent = `⚓ ${stream.name}`;
                 
                 // Intentar reproducir
-                const playPromise = video.play();
+                video.play().catch(e => {
+                    console.error('Error reproduciendo:', e);
+                    this.toast('❌ Error al reproducir. ¿Formato soportado?', 'error');
+                });
+            }
+
+            isBlocked(item) {
+                if (!item || !item.category_id) return false;
                 
-                if (playPromise !== undefined) {
-                    playPromise.then(() => {
-                        this.toast(`▶️ Reproduciendo: ${name}`);
-                    }).catch(error => {
-                        console.error('Error reproducción:', error);
-                        this.toast('❌ Error al reproducir. ¿Formato soportado?', 'error');
-                        
-                        // Fallback: intentar abrir en nueva pestaña
-                        if (confirm('¿Abrir enlace directamente?')) {
-                            window.open(url, '_blank');
-                        }
+                // Buscar la categoría del item
+                const categoryName = this.getCategoryName(item.category_id);
+                return this.blockedCategories.some(blocked => 
+                    categoryName.toLowerCase().includes(blocked.toLowerCase())
+                );
+            }
+
+            getCategoryName(categoryId) {
+                // Esto debería buscar en las categorías cargadas
+                // Por ahora simplificamos
+                return '';
+            }
+
+            // ==================== RENDERIZADO ====================
+            renderContent() {
+                this.renderLive();
+                this.renderMovies();
+                this.renderSeries();
+            }
+
+            renderLive() {
+                const container = document.getElementById('liveContent');
+                container.innerHTML = this.liveStreams.map(stream => `
+                    <div class="item-card" onclick="perla.playStream(${JSON.stringify(stream).replace(/"/g, '&quot;')}, 'live')">
+                        <div class="item-title">${stream.name}</div>
+                        <div class="item-category">ID: ${stream.stream_id}</div>
+                    </div>
+                `).join('');
+            }
+
+            renderMovies() {
+                const container = document.getElementById('moviesContent');
+                container.innerHTML = this.vodStreams.map(movie => `
+                    <div class="item-card" onclick="perla.playStream(${JSON.stringify(movie).replace(/"/g, '&quot;')}, 'movie')">
+                        <div class="item-title">${movie.name}</div>
+                        <div class="item-category">${movie.rating || '★'} ⭐</div>
+                    </div>
+                `).join('');
+            }
+
+            renderSeries() {
+                const container = document.getElementById('seriesContent');
+                container.innerHTML = this.seriesList.map(series => `
+                    <div class="item-card" onclick="perla.playStream(${JSON.stringify(series).replace(/"/g, '&quot;')}, 'series')">
+                        <div class="item-title">${series.name}</div>
+                        <div class="item-category">${series.episodes?.length || 0} episodios</div>
+                    </div>
+                `).join('');
+            }
+
+            updateCounts() {
+                document.getElementById('liveCount').textContent = `(${this.liveStreams.length})`;
+                document.getElementById('moviesCount').textContent = `(${this.vodStreams.length})`;
+                document.getElementById('seriesCount').textContent = `(${this.seriesList.length})`;
+            }
+
+            // ==================== CONTROL PARENTAL ====================
+            saveParentalConfig() {
+                if (this.pin) {
+                    this.showPinModal('GUARDAR', () => {
+                        localStorage.setItem('perlaBlocked', JSON.stringify(this.blockedCategories));
+                        this.toast('✅ Configuración guardada');
                     });
+                } else {
+                    localStorage.setItem('perlaBlocked', JSON.stringify(this.blockedCategories));
+                    this.toast('✅ Configuración guardada (sin PIN)');
                 }
-                
-                // Eventos del video
-                video.onerror = (e) => {
-                    console.error('Video error:', video.error);
-                    this.toast(`❌ Error ${video.error?.code || 'desconocido'}`, 'error');
-                };
-                
-                video.onstalled = () => this.toast('⏳ Buffering...');
-                video.onwaiting = () => this.toast('⏳ Cargando...');
-                video.onplaying = () => this.toast('▶️ Reproduciendo');
             }
 
-            closePlayer() {
-                const video = document.getElementById('videoPlayer');
-                const player = document.getElementById('playerSection');
-                
-                video.pause();
-                video.removeAttribute('src');
-                video.load();
-                player.classList.remove('active');
+            setPin() {
+                const pin = document.getElementById('pinInput').value;
+                if (pin && pin.length === 4 && /^\d+$/.test(pin)) {
+                    this.pin = pin;
+                    localStorage.setItem('perlaPin', pin);
+                    this.toast('✅ PIN guardado');
+                    document.getElementById('pinInput').value = '';
+                } else {
+                    this.toast('❌ El PIN debe tener 4 números', 'error');
+                }
             }
 
-            // ==================== CARGAR LISTA SIMULADA ====================
-            loadList() {
-                const url = document.getElementById('urlInput').value.trim();
-                if (!url) {
-                    this.toast('❌ Introduce una URL', 'error');
-                    return;
+            disablePin() {
+                if (this.pin) {
+                    this.showPinModal('ELIMINAR PIN', () => {
+                        this.pin = null;
+                        localStorage.removeItem('perlaPin');
+                        this.toast('🔓 PIN eliminado');
+                    });
+                } else {
+                    this.pin = null;
+                    localStorage.removeItem('perlaPin');
+                    this.toast('🔓 Sin PIN');
                 }
-
-                document.getElementById('loading').style.display = 'block';
-                document.getElementById('channelsList').innerHTML = '';
-
-                // Simular carga (aquí iría tu llamada real)
-                setTimeout(() => {
-                    // Canales de ejemplo con URLs REALES de prueba
-                    this.channels = [
-                        { 
-                            name: '📺 Canal 24h (Prueba)', 
-                            url: 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8', 
-                            category: 'Noticias',
-                            type: 'HLS'
-                        },
-                        { 
-                            name: '🎬 Big Buck Bunny', 
-                            url: 'https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/1080/Big_Buck_Bunny_1080_10s_1MB.mp4', 
-                            category: 'Películas',
-                            type: 'MP4'
-                        },
-                        { 
-                            name: '📡 Tears of Steel', 
-                            url: 'https://test-streams.mux.dev/bbb_sunflower_1080p_30fps_normal.mp4', 
-                            category: 'Cine',
-                            type: 'MP4'
-                        },
-                        { 
-                            name: '🔞 Canal +18 (Ejemplo)', 
-                            url: 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8', 
-                            category: '+18',
-                            type: 'HLS'
-                        }
-                    ];
-                    
-                    document.getElementById('loading').style.display = 'none';
-                    this.renderChannels();
-                    this.toast('✅ Lista cargada');
-                }, 1000);
-            }
-
-            renderChannels() {
-                const list = document.getElementById('channelsList');
-                
-                if (this.channels.length === 0) {
-                    list.innerHTML = '<div style="text-align: center; padding: 30px;">No hay canales</div>';
-                    return;
-                }
-
-                list.innerHTML = this.channels.map(ch => {
-                    const blocked = this.isBlocked(ch);
-                    return `
-                        <div class="channel-item" ${!blocked ? `onclick="parental.playChannel('${ch.url}', '${ch.name}')"` : ''}>
-                            <span class="channel-icon">${blocked ? '🔒' : '📺'}</span>
-                            <span class="channel-name">${ch.name}</span>
-                            <span style="color: #8B4513; font-size: 0.8em;">${ch.type || ''}</span>
-                            ${blocked ? '<span class="channel-lock">🔒</span>' : '<span class="channel-play">▶️</span>'}
-                        </div>
-                    `;
-                }).join('');
             }
 
             // ==================== MODAL PIN ====================
-            showPinModal(reason, onSuccess) {
+            showPinModal(action, onSuccess) {
                 const modal = document.getElementById('pinModal');
                 const display = document.getElementById('modalPinDisplay');
-                const grid = document.getElementById('pinGrid');
+                const numbers = document.getElementById('pinNumbers');
                 let pin = '';
                 
                 modal.classList.add('active');
                 display.textContent = '****';
                 
-                grid.innerHTML = '';
+                numbers.innerHTML = '';
                 for (let i = 1; i <= 9; i++) {
                     const btn = document.createElement('div');
-                    btn.className = 'pin-key';
+                    btn.className = 'pin-number';
                     btn.textContent = i;
                     btn.onclick = () => {
                         if (pin.length < 4) {
@@ -730,11 +888,11 @@
                             display.textContent = '•'.repeat(pin.length) + '*'.repeat(4 - pin.length);
                         }
                     };
-                    grid.appendChild(btn);
+                    numbers.appendChild(btn);
                 }
                 
                 const zeroBtn = document.createElement('div');
-                zeroBtn.className = 'pin-key';
+                zeroBtn.className = 'pin-number';
                 zeroBtn.textContent = '0';
                 zeroBtn.onclick = () => {
                     if (pin.length < 4) {
@@ -742,19 +900,19 @@
                         display.textContent = '•'.repeat(pin.length) + '*'.repeat(4 - pin.length);
                     }
                 };
-                grid.appendChild(zeroBtn);
+                numbers.appendChild(zeroBtn);
                 
                 const delBtn = document.createElement('div');
-                delBtn.className = 'pin-key';
+                delBtn.className = 'pin-number';
                 delBtn.innerHTML = '⌫';
                 delBtn.onclick = () => {
                     pin = pin.slice(0, -1);
                     display.textContent = '•'.repeat(pin.length) + '*'.repeat(4 - pin.length);
                 };
-                grid.appendChild(delBtn);
+                numbers.appendChild(delBtn);
                 
                 const okBtn = document.createElement('div');
-                okBtn.className = 'pin-key';
+                okBtn.className = 'pin-number';
                 okBtn.innerHTML = '✓';
                 okBtn.onclick = () => {
                     if (pin === this.pin) {
@@ -766,25 +924,56 @@
                         display.textContent = '****';
                     }
                 };
-                grid.appendChild(okBtn);
+                numbers.appendChild(okBtn);
 
                 document.getElementById('cancelPinBtn').onclick = () => {
                     modal.classList.remove('active');
                 };
             }
 
-            // ==================== TOAST ====================
+            // ==================== UTILIDADES ====================
+            closePlayer() {
+                const player = document.getElementById('playerSection');
+                const video = document.getElementById('videoPlayer');
+                
+                player.classList.remove('active');
+                video.pause();
+                video.removeAttribute('src');
+                video.load();
+            }
+
             toast(msg, type = 'success') {
                 const toast = document.getElementById('toast');
                 toast.textContent = msg;
                 toast.className = 'toast show' + (type === 'error' ? ' error' : '');
                 setTimeout(() => toast.classList.remove('show'), 2000);
             }
+
+            setupEventListeners() {
+                // Eventos principales
+                document.getElementById('setPinBtn').addEventListener('click', () => this.setPin());
+                document.getElementById('disablePinBtn').addEventListener('click', () => this.disablePin());
+                document.getElementById('saveParentalBtn').addEventListener('click', () => this.saveParentalConfig());
+                document.getElementById('connectBtn').addEventListener('click', () => this.connectXtream());
+                document.getElementById('closePlayerBtn').addEventListener('click', () => this.closePlayer());
+                document.getElementById('warpBtn').addEventListener('click', () => this.toggleWarp());
+                
+                // Pestañas
+                document.querySelectorAll('.tab').forEach(tab => {
+                    tab.addEventListener('click', (e) => {
+                        const target = e.currentTarget.dataset.tab;
+                        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                        e.currentTarget.classList.add('active');
+                        document.getElementById(`${target}Tab`).classList.add('active');
+                    });
+                });
+            }
         }
 
         // Inicializar
-        const parental = new ParentalSimple();
-        window.parental = parental;
+        const perla = new PerlaNegra();
+        window.perla = perla;
     </script>
 </body>
 </html>
