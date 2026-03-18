@@ -1731,7 +1731,20 @@
         }
 
         function closePlayer() { closeInlinePlayerFn(); }
+        
+
+        
         function minimizePlayer() {}
+        function expandPlayer() {}
+        function closeMiniPlayer() {}
+        function hideFloatingPlayer() {}
+        function expandToFullPlayer() {}
+        function togglePictureInPicture() {}
+        function showFloatingPlayer(url, title, type) { playStream(url, title, type); }
+        function fallbackToNativePlayer(video, url) {
+            video.src = url;
+            video.play().catch(() => {});
+        }
 
         function closeInlinePlayerFn() {
             if (activeHls) { activeHls.destroy(); activeHls = null; }
@@ -2181,54 +2194,11 @@
             dialog.style.display = 'flex';
         }
         
-        function minimizePlayer() {
-            const modal = 
-            const video = document.getElementById('videoPlayer');
-            const miniPlayer = document.getElementById('miniPlayer');
-            const miniVideo = document.getElementById('miniVideoPlayer');
-            const miniTitle = document.getElementById('miniPlayerTitle');
-            
-            if (!video.src) return;
-            
-            miniVideo.src = video.src;
-            miniVideo.currentTime = video.currentTime;
-            miniVideo.play().catch(console.warn);
-            miniTitle.textContent = currentStream ? currentStream.title : 'Reproduciendo';
-            
-            video.pause();
-            modal.style.display = 'none';
-            miniPlayer.style.display = 'block';
-            isMinimized = true;
-        }
         
-        function expandPlayer() {
-            const modal = 
-            const miniPlayer = document.getElementById('miniPlayer');
-            const video = document.getElementById('videoPlayer');
-            const miniVideo = document.getElementById('miniVideoPlayer');
-            
-            if (!miniVideo.src) return;
-            
-            video.src = miniVideo.src;
-            video.currentTime = miniVideo.currentTime;
-            video.play().catch(console.warn);
-            
-            miniVideo.pause();
-            miniVideo.removeAttribute('src');
-            miniPlayer.style.display = 'none';
-            
-            isMinimized = false;
-        }
         
-        function closeMiniPlayer() {
-            const miniPlayer = document.getElementById('miniPlayer');
-            const miniVideo = document.getElementById('miniVideoPlayer');
-            
-            miniVideo.pause();
-            miniVideo.removeAttribute('src');
-            miniPlayer.style.display = 'none';
-            isMinimized = false;
-        }
+        
+        
+        
         
         
         
